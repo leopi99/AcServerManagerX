@@ -1,0 +1,4 @@
+enum BlackList {
+  kickPlayer,
+  kickUntilRestart,
+}
