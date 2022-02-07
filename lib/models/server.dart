@@ -15,8 +15,8 @@ class Server extends ServerBaseSettings {
   final bool showOnLobby;
   final bool pickupLockedEntryList;
   final int resultScreenTime;
-
   final int clientsAllowed;
+  final String? managerDescription;
 
   Server({
     String adminPassword = "admin",
@@ -37,6 +37,7 @@ class Server extends ServerBaseSettings {
     this.realism = const Realism(),
     this.votingBanning = const VotingBanning(),
     this.clientsAllowed = 12,
+    this.managerDescription,
   })  : assert(clientsAllowed >= 2 && clientsAllowed <= 24),
         super(
           name: name,
@@ -68,6 +69,7 @@ class Server extends ServerBaseSettings {
     int? resultScreenTime,
     bool? showOnLobby,
     VotingBanning? votingBanning,
+    String? managerDescription,
   }) =>
       Server(
         adminPassword: adminPassword ?? this.adminPassword,
@@ -89,5 +91,6 @@ class Server extends ServerBaseSettings {
         resultScreenTime: resultScreenTime ?? this.resultScreenTime,
         showOnLobby: showOnLobby ?? this.showOnLobby,
         votingBanning: votingBanning ?? this.votingBanning,
+        managerDescription: managerDescription ?? this.managerDescription,
       );
 }
