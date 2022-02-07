@@ -9,10 +9,23 @@ class Session {
   final Race race;
   final Weather weather;
 
-  Session({
+  const Session({
     this.practice = const Practice(),
     this.qualifying = const Qualifying(),
     this.race = const Race(),
     this.weather = const Weather(),
   });
+
+  Session copyWith({
+    Practice? practice,
+    Qualifying? qualifying,
+    Race? race,
+    Weather? weather,
+  }) =>
+      Session(
+        practice: practice ?? this.practice,
+        qualifying: qualifying ?? this.qualifying,
+        race: race ?? this.race,
+        weather: weather ?? this.weather,
+      );
 }

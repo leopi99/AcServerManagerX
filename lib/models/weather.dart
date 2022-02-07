@@ -28,6 +28,36 @@ class Weather {
     this.timeOfDay = const TimeOfDay(hour: 13, minute: 0),
     this.timeOfDayMultiplier = 1,
   });
+
+  Weather copyWith({
+    WeatherTypeEnum? type,
+    int? baseAmbientTemp,
+    int? realisticRoadTemp,
+    int? baseRoadTemp,
+    int? ambientVariation,
+    int? roadVariation,
+    int? baseWindMinSpeed,
+    int? baseWindMaxSpeed,
+    int? baseWindDirection,
+    int? windDirectionVar,
+    TimeOfDay? timeOfDay,
+    int? timeOfDayMultiplier,
+  }) {
+    return Weather(
+      type: type ?? this.type,
+      baseAmbientTemp: baseAmbientTemp ?? this.baseAmbientTemp,
+      realisticRoadTemp: realisticRoadTemp ?? this.realisticRoadTemp,
+      baseRoadTemp: baseRoadTemp ?? this.baseRoadTemp,
+      ambientVariation: ambientVariation ?? this.ambientVariation,
+      roadVariation: roadVariation ?? this.roadVariation,
+      baseWindMinSpeed: baseWindMinSpeed ?? this.baseWindMinSpeed,
+      baseWindMaxSpeed: baseWindMaxSpeed ?? this.baseWindMaxSpeed,
+      baseWindDirection: baseWindDirection ?? this.baseWindDirection,
+      windDirectionVar: windDirectionVar ?? this.windDirectionVar,
+      timeOfDay: timeOfDay ?? this.timeOfDay,
+      timeOfDayMultiplier: timeOfDayMultiplier ?? this.timeOfDayMultiplier,
+    );
+  }
 }
 
 enum WeatherTypeEnum {

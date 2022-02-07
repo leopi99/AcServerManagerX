@@ -14,4 +14,20 @@ class Assists {
     this.stabilityAid = true,
     this.tyreBlankets = true,
   });
+
+  Assists copyWith({
+    AssistsEnum? abs,
+    AssistsEnum? tractionControl,
+    bool? stabilityAid,
+    bool? tyreBlankets,
+    bool? forceVirtualMirror,
+  }) {
+    return Assists(
+      abs: abs ?? this.abs,
+      tractionControl: tractionControl ?? this.tractionControl,
+      forceVirtualMirror: forceVirtualMirror ?? this.forceVirtualMirror,
+      stabilityAid: stabilityAid ?? this.stabilityAid,
+      tyreBlankets: tyreBlankets ?? this.tyreBlankets,
+    );
+  }
 }

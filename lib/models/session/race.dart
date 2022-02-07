@@ -22,4 +22,27 @@ class Race {
     this.mandatoryPit = const [0, 0],
     this.joinType = JoinTypeEnum.open,
   });
+
+  Race copyWith({
+    bool? enabled,
+    int? laps,
+    int? raceMinutes,
+    bool? extraRaceMinutes,
+    int? raceOverTime,
+    int? raceWaitTime,
+    int? reversedGrid,
+    List<int>? mandatoryPit,
+    JoinTypeEnum? joinType,
+  }) =>
+      Race(
+        enabled: enabled ?? this.enabled,
+        laps: laps ?? this.laps,
+        raceMinutes: raceMinutes ?? this.raceMinutes,
+        extraRaceMinutes: extraRaceMinutes ?? this.extraRaceMinutes,
+        raceOverTime: raceOverTime ?? this.raceOverTime,
+        raceWaitTime: raceWaitTime ?? this.raceWaitTime,
+        reversedGrid: reversedGrid ?? this.reversedGrid,
+        mandatoryPit: mandatoryPit ?? this.mandatoryPit,
+        joinType: joinType ?? this.joinType,
+      );
 }
