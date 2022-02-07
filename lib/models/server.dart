@@ -1,10 +1,12 @@
 import 'package:acservermanager/models/assists.dart';
+import 'package:acservermanager/models/realism.dart';
 import 'package:acservermanager/models/server_base_settings.dart';
 import 'package:acservermanager/models/session.dart';
 
 class Server extends ServerBaseSettings {
   final Session session;
   final Assists assists;
+  final Realism realism;
   Server({
     String adminPassword = "admin",
     required String name,
@@ -16,6 +18,7 @@ class Server extends ServerBaseSettings {
     int threads = 2,
     this.assists = const Assists(),
     this.session = const Session(),
+    this.realism = const Realism(),
   }) : super(
           name: name,
           adminPassword: adminPassword,

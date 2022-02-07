@@ -1,3 +1,4 @@
+import 'package:acservermanager/models/enums/weather_type_enum.dart';
 import 'package:flutter/material.dart';
 
 class Weather {
@@ -58,14 +59,4 @@ class Weather {
       timeOfDayMultiplier: timeOfDayMultiplier ?? this.timeOfDayMultiplier,
     );
   }
-}
-
-enum WeatherTypeEnum {
-  clear,
-  heavyClouds,
-  heavyFog,
-  lightClouds,
-  lightFog,
-  midClear,
-  midClouds,
 }
