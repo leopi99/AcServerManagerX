@@ -16,6 +16,8 @@ class Server extends ServerBaseSettings {
   final bool pickupLockedEntryList;
   final int resultScreenTime;
 
+  final int clientsAllowed;
+
   Server({
     String adminPassword = "admin",
     String name = "New Server",
@@ -34,7 +36,9 @@ class Server extends ServerBaseSettings {
     this.session = const Session(),
     this.realism = const Realism(),
     this.votingBanning = const VotingBanning(),
-  }) : super(
+    this.clientsAllowed = 12,
+  })  : assert(clientsAllowed >= 2 && clientsAllowed <= 24),
+        super(
           name: name,
           adminPassword: adminPassword,
           httpPort: httpPort,
@@ -56,6 +60,14 @@ class Server extends ServerBaseSettings {
     int? threads,
     Session? session,
     Assists? assists,
+    int? clientsAllowed,
+    bool? loopMode,
+    bool? pickupLockedEntryList,
+    bool? pickupMode,
+    Realism? realism,
+    int? resultScreenTime,
+    bool? showOnLobby,
+    VotingBanning? votingBanning,
   }) =>
       Server(
         adminPassword: adminPassword ?? this.adminPassword,
@@ -68,5 +80,14 @@ class Server extends ServerBaseSettings {
         udpPort: udpPort ?? this.udpPort,
         assists: assists ?? this.assists,
         session: session ?? this.session,
+        clientsAllowed: clientsAllowed ?? this.clientsAllowed,
+        loopMode: loopMode ?? this.loopMode,
+        pickupLockedEntryList:
+            pickupLockedEntryList ?? this.pickupLockedEntryList,
+        pickupMode: pickupMode ?? this.pickupMode,
+        realism: realism ?? this.realism,
+        resultScreenTime: resultScreenTime ?? this.resultScreenTime,
+        showOnLobby: showOnLobby ?? this.showOnLobby,
+        votingBanning: votingBanning ?? this.votingBanning,
       );
 }
