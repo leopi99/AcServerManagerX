@@ -55,8 +55,8 @@ class SkeletonPage extends StatelessWidget {
                     title: const Text('Home'),
                   ),
                   PaneItem(
-                    icon: const Icon(FluentIcons.home),
-                    title: const Text('Home'),
+                    icon: const Icon(FluentIcons.settings),
+                    title: const Text('Settings'),
                   ),
                 ],
               ),

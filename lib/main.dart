@@ -38,90 +38,90 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<bool>(
-        stream: _appearanceBloc.darkMode,
-        initialData: true,
-        builder: (context, snapshot) {
-          return FluentApp(
-            title: 'Assetto Corsa Server Manager X',
-            theme: snapshot.data! ? ThemeData.dark() : ThemeData.light(),
-            home: BlocListener<LoadingBlocBloc, LoadingBlocState>(
-              bloc: _bloc,
-              listener: (context, state) {
-                if (state is LoadingBlocSetAcPathState) {
-                  final TextEditingController _controller =
-                      TextEditingController();
-                  debugPrint('Showing the set ac path dialog');
-                  showDialog(
-                    context: context,
-                    barrierDismissible: false,
-                    builder: (context) => ContentDialog(
-                      title: const Text('Select the installation path of AC'),
-                      content: TextBox(
-                        controller: _controller,
-                        onSubmitted: (value) {
-                          if (value.isEmpty) return;
-                          _bloc.add(LoadingBlocAcPathSet(value));
-                          _controller.dispose();
-                        },
-                        suffix: Tooltip(
-                          message: 'Open the directory picker',
-                          child: IconButton(
-                            icon: const Icon(FluentIcons.folder),
-                            onPressed: () async {
-                              String? dir = await FilePicker.platform
-                                  .getDirectoryPath(
-                                      dialogTitle:
-                                          'Select the installation path of AC');
-                              if (dir != null) {
-                                dir = dir.replaceAll('\\', "/");
-                                _controller.text = dir;
-                                debugPrint('Selected directory: $dir');
-                                _bloc.add(
-                                    LoadingBlocAcPathSet(_controller.text));
-                                Navigator.pop(context);
-                              }
-                            },
-                          ),
-                        ),
-                      ),
-                      actions: [
-                        FilledButton(
-                          child: const Text('Set path'),
-                          onPressed: () {
-                            if (_controller.text.isEmpty) return;
-                            _bloc.add(LoadingBlocAcPathSet(_controller.text));
-                            _controller.dispose();
+      stream: _appearanceBloc.darkMode,
+      initialData: true,
+      builder: (context, snapshot) {
+        return FluentApp(
+          title: 'Assetto Corsa Server Manager X',
+          theme: snapshot.data! ? ThemeData.dark() : ThemeData.light(),
+          home: BlocListener<LoadingBlocBloc, LoadingBlocState>(
+            bloc: _bloc,
+            listener: (context, state) {
+              if (state is LoadingBlocSetAcPathState) {
+                final TextEditingController _controller =
+                    TextEditingController();
+                debugPrint('Showing the set ac path dialog');
+                showDialog(
+                  context: context,
+                  barrierDismissible: false,
+                  builder: (context) => ContentDialog(
+                    title: const Text('Select the installation path of AC'),
+                    content: TextBox(
+                      controller: _controller,
+                      onSubmitted: (value) {
+                        if (value.isEmpty) return;
+                        _bloc.add(LoadingBlocAcPathSet(value));
+                        _controller.dispose();
+                      },
+                      suffix: Tooltip(
+                        message: 'Open the directory picker',
+                        child: IconButton(
+                          icon: const Icon(FluentIcons.folder),
+                          onPressed: () async {
+                            String? dir = await FilePicker.platform
+                                .getDirectoryPath(
+                                    dialogTitle:
+                                        'Select the installation path of AC');
+                            if (dir != null) {
+                              dir = dir.replaceAll('\\', "/");
+                              _controller.text = dir;
+                              debugPrint('Selected directory: $dir');
+                              _bloc.add(LoadingBlocAcPathSet(_controller.text));
+                              Navigator.pop(context);
+                            }
                           },
                         ),
-                      ],
+                      ),
                     ),
+                    actions: [
+                      FilledButton(
+                        child: const Text('Set path'),
+                        onPressed: () {
+                          if (_controller.text.isEmpty) return;
+                          _bloc.add(LoadingBlocAcPathSet(_controller.text));
+                          _controller.dispose();
+                        },
+                      ),
+                    ],
+                  ),
+                );
+              }
+            },
+            child: BlocBuilder<LoadingBlocBloc, LoadingBlocState>(
+              bloc: _bloc,
+              builder: (context, state) {
+                if (state is LoadingBlocLoadingState) {
+                  debugPrint('Loading state');
+                  return const SplashScreen();
+                }
+                if (state is LoadingBlocInitial ||
+                    state is LoadingBlocSetAcPathState) {
+                  debugPrint('Showing ${state.runtimeType}');
+                  return Container(
+                    color: _appearanceBloc.backgroundColor,
                   );
                 }
+                if (state is LoadingBlocSetAppAppearanceState) {
+                  return SelectAppThemePage(
+                    bloc: _bloc,
+                  );
+                }
+                return _homepage;
               },
-              child: BlocBuilder<LoadingBlocBloc, LoadingBlocState>(
-                bloc: _bloc,
-                builder: (context, state) {
-                  if (state is LoadingBlocLoadingState) {
-                    debugPrint('Loading state');
-                    return const SplashScreen();
-                  }
-                  if (state is LoadingBlocInitial ||
-                      state is LoadingBlocSetAcPathState) {
-                    debugPrint('Showing ${state.runtimeType}');
-                    return Container(
-                      color: _appearanceBloc.backgroundColor,
-                    );
-                  }
-                  if (state is LoadingBlocSetAppAppearanceState) {
-                    return SelectAppThemePage(
-                      bloc: _bloc,
-                    );
-                  }
-                  return _homepage;
-                },
-              ),
             ),
-          );
-        });
+          ),
+        );
+      },
+    );
   }
 }
