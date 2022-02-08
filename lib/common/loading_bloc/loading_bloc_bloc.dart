@@ -20,14 +20,25 @@ class LoadingBlocBloc extends Bloc<LoadingBlocEvent, LoadingBlocState> {
     on<LoadingBlocAcPathSet>((event, emit) async {
       await _saveAcPath(event.acPath, emit);
     });
+    on<LoadingBlocAppearanceSet>((event, emit) async {
+      await _saveAppearance(event.darkMode, emit);
+    });
   }
 
   Future<void> _loadServers(Emitter<LoadingBlocState> emit) async {
     emit(LoadingBlocLoadingState());
     final String? acPath =
         await GetIt.instance<SharedManager>().getString(SharedKey.acPath);
+    debugPrint('acPath: $acPath');
     if (acPath == null) {
       emit(LoadingBlocSetAcPathState());
+      return;
+    }
+    final darkMode =
+        GetIt.instance<SharedManager>().getBool(SharedKey.appearance);
+    debugPrint('darkMode: $darkMode');
+    if (darkMode == null) {
+      emit(LoadingBlocSetAppAppearanceState());
       return;
     }
     File file = File('$acPath$_kConfigPath');
@@ -39,7 +50,15 @@ class LoadingBlocBloc extends Bloc<LoadingBlocEvent, LoadingBlocState> {
 
   Future<void> _saveAcPath(
       String acPath, Emitter<LoadingBlocState> emit) async {
+    acPath += "/server";
     await GetIt.instance<SharedManager>().setString(SharedKey.acPath, acPath);
+    await _loadServers(emit);
+  }
+
+  Future<void> _saveAppearance(
+      bool darkMode, Emitter<LoadingBlocState> emit) async {
+    await GetIt.instance<SharedManager>()
+        .setBool(SharedKey.appearance, darkMode);
     await _loadServers(emit);
   }
 }

@@ -1,5 +1,6 @@
 import 'package:acservermanager/common/loading_bloc/loading_bloc_bloc.dart';
 import 'package:acservermanager/common/singletons.dart';
+import 'package:acservermanager/presentation/select_app_theme/presentation/select_app_theme_page.dart';
 import 'package:acservermanager/presentation/skeleton/presentation/skeleton_page.dart';
 import 'package:acservermanager/presentation/splash_screen/presentation/splash_screen.dart';
 import 'package:file_picker/file_picker.dart';
@@ -66,6 +67,7 @@ class _MyAppState extends State<MyApp> {
                           dir = dir.replaceAll('\\', "/");
                           _controller.text = dir;
                           debugPrint('Selected directory: $dir');
+                          _bloc.add(LoadingBlocAcPathSet(_controller.text));
                           Navigator.pop(context);
                         }
                       },
@@ -98,6 +100,11 @@ class _MyAppState extends State<MyApp> {
               debugPrint('Showing ${state.runtimeType}');
               return Container(
                 color: Colors.white,
+              );
+            }
+            if (state is LoadingBlocSetAppAppearanceState) {
+              return SelectAppThemePage(
+                bloc: _bloc,
               );
             }
             return _homepage;

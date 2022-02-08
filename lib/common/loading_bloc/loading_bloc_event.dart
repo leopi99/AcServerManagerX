@@ -12,3 +12,9 @@ class LoadingBlocAcPathSet extends LoadingBlocEvent {
 
   LoadingBlocAcPathSet(this.acPath);
 }
+
+class LoadingBlocAppearanceSet extends LoadingBlocEvent {
+  final bool darkMode;
+
+  LoadingBlocAppearanceSet(this.darkMode);
+}

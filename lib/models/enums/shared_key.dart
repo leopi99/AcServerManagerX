@@ -1,3 +1,4 @@
 enum SharedKey {
   acPath,
+  appearance,
 }

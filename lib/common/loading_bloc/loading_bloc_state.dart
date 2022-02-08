@@ -14,3 +14,4 @@ class LoadingBlocLoadedState extends LoadingBlocState {
 }
 
 class LoadingBlocSetAcPathState extends LoadingBlocState {}
+class LoadingBlocSetAppAppearanceState extends LoadingBlocState {}

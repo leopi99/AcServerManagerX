@@ -1,7 +1,7 @@
 import 'package:acservermanager/models/layout.dart';
 
 class Track {
-  static const String _kUiDirPath = "/ui";
+  static const String kUiDirPath = "/ui";
 
   final String name;
   final String circuitName;
