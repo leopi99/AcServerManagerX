@@ -113,7 +113,6 @@ class _MyAppState extends State<MyApp> {
                 }
                 if (state is LoadingBlocInitial ||
                     state is LoadingBlocSetAcPathState) {
-                  debugPrint('Showing ${state.runtimeType}');
                   return Container(
                     color: _appearanceBloc.backgroundColor,
                   );

@@ -18,17 +18,6 @@ class SkeletonPage extends StatelessWidget {
 
   final SessionBloc _sessionBloc = SessionBloc();
 
-  final List<PaneItem> _kPaneItems = [
-    PaneItem(
-      icon: const Icon(FluentIcons.server_enviroment),
-      title: const Text('Server main settings'),
-    ),
-    PaneItem(
-      icon: const Icon(FluentIcons.server_enviroment),
-      title: const Text('Server advanced settings'),
-    ),
-  ];
-
   @override
   Widget build(BuildContext context) {
     return BlocListener<SessionBloc, SessionState>(
@@ -115,7 +104,16 @@ class SkeletonPage extends StatelessWidget {
                         title: const Text('Settings'),
                       ),
                     ],
-                    items: _kPaneItems,
+                    items: [
+                      PaneItem(
+                        icon: const Icon(FluentIcons.server_enviroment),
+                        title: const Text('Server main settings'),
+                      ),
+                      PaneItem(
+                        icon: const Icon(FluentIcons.server_enviroment),
+                        title: const Text('Server advanced settings'),
+                      ),
+                    ],
                   ),
                 );
               },
