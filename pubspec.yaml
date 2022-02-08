@@ -10,8 +10,14 @@ environment:
 dependencies:
 
   fluent_ui: 3.8.0
+
   flutter_bloc: ^8.0.1
   rxdart: ^0.27.3
+
+  shared_preferences: ^2.0.13
+  file_picker: ^4.3.3
+  
+  get_it: ^7.2.0
 
   flutter:
     sdk: flutter

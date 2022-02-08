@@ -12,3 +12,5 @@ class LoadingBlocLoadedState extends LoadingBlocState {
 
   LoadingBlocLoadedState(this.servers);
 }
+
+class LoadingBlocSetAcPathState extends LoadingBlocState {}

@@ -50,6 +50,11 @@ class Server extends ServerBaseSettings {
           udpPort: udpPort,
         );
 
+  factory Server.fromFileData(List<String> data) {
+    //The file is read as List<String>, every item is a line in the file.
+    return Server();
+  }
+
   Server copyWith({
     String? adminPassword,
     String? name,
