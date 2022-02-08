@@ -39,7 +39,6 @@ class _ServerMainSettingsState extends State<ServerMainSettings> {
       color: GetIt.instance<AppearanceBloc>().backgroundColor,
       child: ListView(
         children: [
-          const Text('Server base settings'),
           _buildServerBaseTextBox(),
         ],
       ),
@@ -48,29 +47,36 @@ class _ServerMainSettingsState extends State<ServerMainSettings> {
 
   Widget _buildServerBaseTextBox() {
     return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: TextBox(
-            controller: _nameController,
-            placeholder: 'Server name',
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: TextBox(
-            controller: _passwordController,
-            placeholder: 'Password',
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: TextBox(
-            controller: _adminPasswordController,
-            placeholder: 'Admin Password',
-          ),
-        ),
+        _buildTextBoxEntry(_nameController, 'Server Name', 'Server Name'),
+        _buildTextBoxEntry(_passwordController, 'Password', 'Password'),
+        _buildTextBoxEntry(
+            _adminPasswordController, 'Admin Password', 'Admin Password'),
       ],
+    );
+  }
+
+  Widget _buildTextBoxEntry(TextEditingController controller, String label,
+      String textBoxPlaceholder) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(label),
+          const SizedBox(width: 16),
+          SizedBox(
+            width: MediaQuery.of(context).size.width * .4,
+            child: TextBox(
+              controller: controller,
+              placeholder: textBoxPlaceholder,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
