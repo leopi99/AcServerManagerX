@@ -22,13 +22,11 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  late final Widget _homepage;
   late final LoadingBlocBloc _bloc;
   late final AppearanceBloc _appearanceBloc;
 
   @override
   void initState() {
-    _homepage = SkeletonPage();
     _appearanceBloc = GetIt.instance<AppearanceBloc>();
     _bloc = LoadingBlocBloc();
     _bloc.add(LoadingBlocLoadEvent());
@@ -95,6 +93,15 @@ class _MyAppState extends State<MyApp> {
                     ],
                   ),
                 );
+              } else if (state is LoadingBlocErrorState) {
+                showDialog(
+                  context: context,
+                  barrierDismissible: false,
+                  builder: (context) => ContentDialog(
+                    title: const Text('Ops! Something went wrong'),
+                    content: Text(state.error),
+                  ),
+                );
               }
             },
             child: BlocBuilder<LoadingBlocBloc, LoadingBlocState>(
@@ -116,7 +123,12 @@ class _MyAppState extends State<MyApp> {
                     bloc: _bloc,
                   );
                 }
-                return _homepage;
+                if (state is LoadingBlocLoadedState) {
+                  return SkeletonPage();
+                }
+                return Container(
+                  color: _appearanceBloc.backgroundColor,
+                );
               },
             ),
           ),

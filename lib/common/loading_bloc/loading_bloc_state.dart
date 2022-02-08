@@ -14,4 +14,11 @@ class LoadingBlocLoadedState extends LoadingBlocState {
 }
 
 class LoadingBlocSetAcPathState extends LoadingBlocState {}
+
 class LoadingBlocSetAppAppearanceState extends LoadingBlocState {}
+
+class LoadingBlocErrorState extends LoadingBlocState {
+  final String error;
+
+  LoadingBlocErrorState(this.error);
+}

@@ -41,12 +41,29 @@ class LoadingBlocBloc extends Bloc<LoadingBlocEvent, LoadingBlocState> {
       emit(LoadingBlocSetAppAppearanceState());
       return;
     }
-    File file = File('$acPath$_kConfigPath');
-    List<String> data = await file.readAsLines();
-    final server = await compute(Server.fromFileData, data);
+    List<File> files = [];
+    try {
+      List<String> serverNames = [];
+      Directory(acPath).listSync().forEach((element) {
+        Directory dir = Directory(element.path);
+        if (dir.listSync().length == 2) {
+          serverNames.add(dir.path.replaceAll('\\', '/').split('/').last);
+        }
+      });
+      for (String name in serverNames) {
+        files.add(File('$acPath/$name/$_kConfigPath'));
+      }
+      debugPrint('Servers: ${serverNames.toString()}');
+    } catch (e, stacktrace) {
+      debugPrint("Error: $e\nStacktrace:\n$stacktrace");
+      emit(LoadingBlocErrorState("An error accoured, please try again.\n$e"));
+      return;
+    }
+    // List<String> data = await file.readAsLines();
+    // final server = await compute(Server.fromFileData, data);
+    final server = [Server(), Server(name: 'Another test')];
     GetIt.instance.registerSingleton(server);
-    //TODO: Load all servers saved, not only the first one
-    emit(LoadingBlocLoadedState([server]));
+    emit(LoadingBlocLoadedState(server));
   }
 
   Future<void> _saveAcPath(
