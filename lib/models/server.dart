@@ -17,6 +17,7 @@ class Server extends ServerBaseSettings {
   final int resultScreenTime;
   final int clientsAllowed;
   final String? managerDescription;
+  final String serverFilesPath;
 
   Server({
     String adminPassword = "admin",
@@ -38,6 +39,7 @@ class Server extends ServerBaseSettings {
     this.votingBanning = const VotingBanning(),
     this.clientsAllowed = 12,
     this.managerDescription,
+    required this.serverFilesPath,
   })  : assert(clientsAllowed >= 2 && clientsAllowed <= 24),
         super(
           name: name,
@@ -52,8 +54,11 @@ class Server extends ServerBaseSettings {
 
   factory Server.fromFileData(List<String> data) {
     //The file is read as List<String>, every item is a line in the file.
-    return Server();
+    return Server(serverFilesPath: '');
   }
+
+  String get cfgFilePath => '$serverFilesPath/server_cfg.ini';
+  String get entryListPath => '$serverFilesPath/entry_list.ini';
 
   Server copyWith({
     String? adminPassword,
@@ -75,6 +80,7 @@ class Server extends ServerBaseSettings {
     bool? showOnLobby,
     VotingBanning? votingBanning,
     String? managerDescription,
+    String? serverFilesPath,
   }) =>
       Server(
         adminPassword: adminPassword ?? this.adminPassword,
@@ -97,5 +103,6 @@ class Server extends ServerBaseSettings {
         showOnLobby: showOnLobby ?? this.showOnLobby,
         votingBanning: votingBanning ?? this.votingBanning,
         managerDescription: managerDescription ?? this.managerDescription,
+        serverFilesPath: serverFilesPath ?? this.serverFilesPath,
       );
 }

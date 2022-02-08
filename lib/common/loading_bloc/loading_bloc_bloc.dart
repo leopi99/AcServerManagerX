@@ -51,7 +51,7 @@ class LoadingBlocBloc extends Bloc<LoadingBlocEvent, LoadingBlocState> {
         }
       });
       for (String name in serverNames) {
-        files.add(File('$acPath/$name/$_kConfigPath'));
+        files.add(File('$acPath/$name'));
       }
       debugPrint('Servers: ${serverNames.toString()}');
     } catch (e, stacktrace) {
@@ -59,9 +59,13 @@ class LoadingBlocBloc extends Bloc<LoadingBlocEvent, LoadingBlocState> {
       emit(LoadingBlocErrorState("An error accoured, please try again.\n$e"));
       return;
     }
-    // List<String> data = await file.readAsLines();
-    // final server = await compute(Server.fromFileData, data);
-    final server = [Server(), Server(name: 'Another test')];
+    final server = List.generate(
+      files.length,
+      (index) {
+        debugPrint('Server path: ${files[index].path}');
+        return Server(serverFilesPath: files[index].path);
+      },
+    );
     GetIt.instance.registerSingleton(server);
     emit(LoadingBlocLoadedState(server));
   }
