@@ -18,7 +18,7 @@ class _HomepageState extends State<Homepage> {
 
   @override
   void didChangeDependencies() {
-    Server server = GetIt.I<Server>();
+    Server server = GetIt.I<List<Server>>().first;
     _nameController.text = server.name;
     _passwordController.text = server.password ?? '';
     _adminPasswordController.text = server.adminPassword;

@@ -64,9 +64,7 @@ class SkeletonPage extends StatelessWidget {
                         barrierDismissible: true,
                         builder: (context) => ContentDialog(
                           content: ServerSelectorWidget(
-                            servers: [
-                              GetIt.I<Server>(),
-                            ],
+                            servers: GetIt.I<List<Server>>(),
                           ),
                           actions: [
                             FilledButton(
