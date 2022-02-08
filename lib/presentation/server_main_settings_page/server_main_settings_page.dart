@@ -3,14 +3,14 @@ import 'package:acservermanager/models/server.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:get_it/get_it.dart';
 
-class Homepage extends StatefulWidget {
-  const Homepage({Key? key}) : super(key: key);
+class ServerMainSettings extends StatefulWidget {
+  const ServerMainSettings({Key? key}) : super(key: key);
 
   @override
-  State<Homepage> createState() => _HomepageState();
+  State<ServerMainSettings> createState() => _ServerMainSettingsState();
 }
 
-class _HomepageState extends State<Homepage> {
+class _ServerMainSettingsState extends State<ServerMainSettings> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _adminPasswordController =

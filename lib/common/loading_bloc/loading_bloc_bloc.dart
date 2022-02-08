@@ -61,10 +61,7 @@ class LoadingBlocBloc extends Bloc<LoadingBlocEvent, LoadingBlocState> {
     }
     final server = List.generate(
       files.length,
-      (index) {
-        debugPrint('Server path: ${files[index].path}');
-        return Server(serverFilesPath: files[index].path);
-      },
+      (index) => Server(serverFilesPath: files[index].path),
     );
     GetIt.instance.registerSingleton(server);
     emit(LoadingBlocLoadedState(server));

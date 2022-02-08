@@ -1,6 +1,6 @@
 import 'package:acservermanager/common/inherited_widgets/selected_server_inherited.dart';
 import 'package:acservermanager/models/server.dart';
-import 'package:acservermanager/presentation/homepage/homepage.dart';
+import 'package:acservermanager/presentation/server_main_settings_page/server_main_settings_page.dart';
 import 'package:acservermanager/presentation/settings/settings_page.dart';
 import 'package:acservermanager/presentation/skeleton/bloc/skeleton_bloc.dart';
 import 'package:acservermanager/presentation/skeleton/presentation/widgets/server_selector_widget.dart';
@@ -29,7 +29,7 @@ class SkeletonPage extends StatelessWidget {
                 content: NavigationBody(
                   index: snapshot.data!,
                   children: const [
-                    Homepage(),
+                    ServerMainSettings(),
                     SettingsPage(),
                   ],
                 ),
@@ -86,8 +86,8 @@ class SkeletonPage extends StatelessWidget {
                   ],
                   items: [
                     PaneItem(
-                      icon: const Icon(FluentIcons.home),
-                      title: const Text('Home'),
+                      icon: const Icon(FluentIcons.server_enviroment),
+                      title: const Text('Server main settings'),
                     ),
                   ],
                 ),
