@@ -44,6 +44,7 @@ class LoadingBlocBloc extends Bloc<LoadingBlocEvent, LoadingBlocState> {
     File file = File('$acPath$_kConfigPath');
     List<String> data = await file.readAsLines();
     final server = await compute(Server.fromFileData, data);
+    GetIt.instance.registerSingleton(server);
     //TODO: Load all servers saved, not only the first one
     emit(LoadingBlocLoadedState([server]));
   }

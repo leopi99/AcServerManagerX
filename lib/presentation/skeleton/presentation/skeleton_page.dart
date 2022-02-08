@@ -1,4 +1,5 @@
 import 'package:acservermanager/presentation/homepage/homepage.dart';
+import 'package:acservermanager/presentation/settings/settings_page.dart';
 import 'package:acservermanager/presentation/skeleton/bloc/skeleton_bloc.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter/material.dart' as material;
@@ -23,7 +24,7 @@ class SkeletonPage extends StatelessWidget {
                 index: snapshot.data!,
                 children: const [
                   Homepage(),
-                  Homepage(),
+                  SettingsPage(),
                 ],
               ),
               pane: NavigationPane(
@@ -49,14 +50,20 @@ class SkeletonPage extends StatelessWidget {
                     ? PaneDisplayMode.open
                     : PaneDisplayMode.compact,
                 selected: snapshot.data!,
+                header: Button(
+                  child: const Text('Select server'),
+                  onPressed: () {},
+                ),
+                footerItems: [
+                  PaneItem(
+                    icon: const Icon(FluentIcons.settings),
+                    title: const Text('Settings'),
+                  ),
+                ],
                 items: [
                   PaneItem(
                     icon: const Icon(FluentIcons.home),
                     title: const Text('Home'),
-                  ),
-                  PaneItem(
-                    icon: const Icon(FluentIcons.settings),
-                    title: const Text('Settings'),
                   ),
                 ],
               ),
