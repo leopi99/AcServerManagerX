@@ -13,14 +13,30 @@ class SkeletonPage extends StatelessWidget {
       stream: _bloc.currentPage,
       initialData: 0,
       builder: (context, snapshot) {
-        return TabView(
-          currentIndex: snapshot.data!,
-          tabs: const [
-            Tab(text: Text('Homepage')),
-          ],
-          bodies: const [
-            Homepage(),
-          ],
+        return NavigationView(
+          content: NavigationBody(
+            index: snapshot.data!,
+            children: const [
+              Homepage(),
+              Homepage(),
+            ],
+          ),
+          pane: NavigationPane(
+            onChanged: (index) {
+              _bloc.changePage(index);
+            },
+            selected: snapshot.data!,
+            items: [
+              PaneItem(
+                icon: const Icon(FluentIcons.home),
+                title: const Text('Home'),
+              ),
+              PaneItem(
+                icon: const Icon(FluentIcons.home),
+                title: const Text('Home'),
+              ),
+            ],
+          ),
         );
       },
     );

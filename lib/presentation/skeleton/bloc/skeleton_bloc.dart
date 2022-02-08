@@ -6,4 +6,5 @@ class SkeletonBloc {
   Stream<int> get currentPage => _currentPageSubject.stream;
 
   void changePage(int index) => _currentPageSubject.add(index);
+  int get currentPageSync => _currentPageSubject.value;
 }

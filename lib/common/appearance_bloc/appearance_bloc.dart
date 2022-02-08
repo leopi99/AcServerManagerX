@@ -1,3 +1,4 @@
+import 'package:fluent_ui/fluent_ui.dart';
 import 'package:rxdart/rxdart.dart';
 
 class AppearanceBloc {
@@ -7,4 +8,8 @@ class AppearanceBloc {
   void setDarkMode({bool? value}) {
     _darkModeSubject.add(value ?? !_darkModeSubject.value);
   }
+
+  Color get backgroundColor => _darkModeSubject.value
+      ? const Color.fromARGB(255, 36, 36, 36)
+      : Colors.white;
 }
