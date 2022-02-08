@@ -44,10 +44,10 @@ class LoadingBlocBloc extends Bloc<LoadingBlocEvent, LoadingBlocState> {
     List<File> files = [];
     try {
       List<String> serverNames = [];
-      Directory(acPath).listSync().forEach((element) {
+      Directory(acPath + '/presets').listSync().forEach((element) {
         Directory dir = Directory(element.path);
         if (dir.listSync().length == 2) {
-          serverNames.add(dir.path.replaceAll('\\', '/').split('/').last);
+          serverNames.add(dir.path.split('\\').last);
         }
       });
       for (String name in serverNames) {
