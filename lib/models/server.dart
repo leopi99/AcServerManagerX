@@ -55,65 +55,41 @@ class Server extends ServerBaseSettings {
 
   factory Server.fromFileData(List<String> data, String path) {
     //The file is read as List<String>, every item is a line in the file.
-    debugPrint('From $path\n$data');
     return Server(
-      name: data
-          .firstWhere((element) => element.contains("NAME"))
-          .split('=')
-          .last,
-      adminPassword: data
-          .firstWhere((element) => element.contains("ADMIN_PASSWORD"))
-          .split('=')
-          .last,
-      httpPort: data
-          .firstWhere((element) => element.contains("HTTP_PORT"))
-          .split('=')
-          .last,
-      udpPort: data
-          .firstWhere((element) => element.contains("UDP_PORT"))
-          .split('=')
-          .last,
-      tcpPort: data
-          .firstWhere((element) => element.contains("TCP_PORT"))
-          .split('=')
-          .last,
-      packetHz: int.tryParse(data
-              .firstWhere(
-                  (element) => element.contains("CLIENT_SEND_INTERVAL_HZ"))
-              .split('=')
-              .last) ??
-          18,
-      loopMode: data
-              .firstWhere((element) => element.contains("LOOP_MODE"))
-              .split('=')
-              .last ==
-          "1",
-      password: data
-          .firstWhere((element) => element.contains("PASSWORD"))
-          .split('=')
-          .last,
-      pickupMode: data
-              .firstWhere((element) => element.contains("PICKUP_MODE_ENABLED"))
-              .split('=')
-              .last ==
-          "1",
-      pickupLockedEntryList: data
-              .firstWhere((element) => element.contains("LOCKED_ENTRY_LIST"))
-              .split('=')
-              .last ==
-          "1",
-      threads: int.tryParse(data
-              .firstWhere((element) => element.contains("THREADS"))
-              .split('=')
-              .last) ??
-          2,
-      showOnLobby: data
-              .firstWhere((element) => element.contains("REGISTER_TO_LOBBY"))
-              .split('=')
-              .last ==
-          "1",
+      name: _getStringFromData(data, "NAME"),
+      adminPassword: _getStringFromData(data, "ADMIN_PASSWORD"),
+      httpPort: _getStringFromData(data, "HTTP_PORT"),
+      udpPort: _getStringFromData(data, "UDP_PORT"),
+      tcpPort: _getStringFromData(data, "TCP_PORT"),
+      packetHz: _getIntFromData(data, "CLIENT_SEND_INTERVAL_HZ", 18),
+      loopMode: _getBoolFromData(data, "LOOP_MODE"),
+      password: _getStringFromData(data, "PASSWORD"),
+      pickupMode: _getBoolFromData(data, "PICKUP_MODE_ENABLED"),
+      pickupLockedEntryList: _getBoolFromData(data, "LOCKED_ENTRY_LIST"),
+      threads: _getIntFromData(data, "THREADS", 2),
+      showOnLobby: _getBoolFromData(data, "REGISTER_TO_LOBBY"),
       serverFilesPath: path,
     );
+  }
+
+  static String _getStringFromData(List<String> data, String key) {
+    return data.firstWhere((element) => element.contains(key)).split('=').last;
+  }
+
+  static bool _getBoolFromData(List<String> data, String key) {
+    return data
+            .firstWhere((element) => element.contains(key))
+            .split('=')
+            .last ==
+        "1";
+  }
+
+  static int _getIntFromData(List<String> data, String key, int defaultValue) {
+    return int.tryParse(data
+            .firstWhere((element) => element.contains(key))
+            .split('=')
+            .last) ??
+        defaultValue;
   }
 
   String get cfgFilePath => '$serverFilesPath/server_cfg.ini';
