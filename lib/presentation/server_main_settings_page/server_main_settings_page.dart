@@ -19,6 +19,7 @@ class _ServerMainSettingsState extends State<ServerMainSettings> {
 
   @override
   void didChangeDependencies() {
+    debugPrint('ServerMainSettingsPage.didChangeDependencies');
     Server server = SelectedServerInherited.of(context).selectedServer.server!;
     _nameController.text = server.name;
     _passwordController.text = server.password ?? '';
