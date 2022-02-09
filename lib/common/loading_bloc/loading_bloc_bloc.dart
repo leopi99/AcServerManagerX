@@ -1,11 +1,11 @@
 import 'dart:io';
 
+import 'package:acservermanager/common/inherited_widgets/selected_server_inherited.dart';
 import 'package:acservermanager/common/shared_manager.dart';
-import 'package:acservermanager/common/singletons/selected_server_singleton.dart';
 import 'package:acservermanager/models/enums/shared_key.dart';
 import 'package:acservermanager/models/server.dart';
 import 'package:bloc/bloc.dart';
-import 'package:flutter/foundation.dart';
+import 'package:fluent_ui/fluent_ui.dart';
 import 'package:get_it/get_it.dart';
 
 part 'loading_bloc_event.dart';
@@ -14,17 +14,18 @@ part 'loading_bloc_state.dart';
 class LoadingBlocBloc extends Bloc<LoadingBlocEvent, LoadingBlocState> {
   LoadingBlocBloc() : super(LoadingBlocInitial()) {
     on<LoadingBlocLoadEvent>((event, emit) async {
-      await _loadServers(emit);
+      await _loadServers(emit, event.context);
     });
     on<LoadingBlocAcPathSet>((event, emit) async {
-      await _saveAcPath(event.acPath, emit);
+      await _saveAcPath(event.acPath, emit, event.context);
     });
     on<LoadingBlocAppearanceSet>((event, emit) async {
-      await _saveAppearance(event.darkMode, emit);
+      await _saveAppearance(event.darkMode, emit, event.context);
     });
   }
 
-  Future<void> _loadServers(Emitter<LoadingBlocState> emit) async {
+  Future<void> _loadServers(
+      Emitter<LoadingBlocState> emit, BuildContext context) async {
     emit(LoadingBlocLoadingState());
     final String? acPath =
         await GetIt.instance<SharedManager>().getString(SharedKey.acPath);
@@ -75,21 +76,25 @@ class LoadingBlocBloc extends Bloc<LoadingBlocEvent, LoadingBlocState> {
       return;
     }
     GetIt.instance.registerSingleton(server);
-    GetIt.I.registerLazySingleton(() => SelectedServerSingleton(server.first));
+    SelectedServerInherited.of(context).selectedServer.setServer(server.first);
     emit(LoadingBlocLoadedState(server));
   }
 
-  Future<void> _saveAcPath(
-      String acPath, Emitter<LoadingBlocState> emit) async {
+  Future<void> _saveAcPath(String acPath, Emitter<LoadingBlocState> emit,
+      BuildContext context) async {
     acPath += "/server";
     await GetIt.instance<SharedManager>().setString(SharedKey.acPath, acPath);
-    await _loadServers(emit);
+    await _loadServers(emit, context);
   }
 
-  Future<void> _saveAppearance(
-      bool darkMode, Emitter<LoadingBlocState> emit) async {
+  Future<void> _saveAppearance(bool darkMode, Emitter<LoadingBlocState> emit,
+      BuildContext context) async {
+    final bool? loadServers =
+        GetIt.instance<SharedManager>().getBool(SharedKey.appearance);
     await GetIt.instance<SharedManager>()
         .setBool(SharedKey.appearance, darkMode);
-    await _loadServers(emit);
+    if (loadServers == null) {
+      await _loadServers(emit, context);
+    }
   }
 }

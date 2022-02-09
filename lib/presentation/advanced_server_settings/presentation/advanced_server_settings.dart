@@ -1,5 +1,5 @@
 import 'package:acservermanager/common/appearance_bloc/appearance_bloc.dart';
-import 'package:acservermanager/common/singletons/selected_server_singleton.dart';
+import 'package:acservermanager/common/inherited_widgets/selected_server_inherited.dart';
 import 'package:acservermanager/models/server.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:get_it/get_it.dart';
@@ -19,7 +19,7 @@ class _AdvancedServerSettingsState extends State<AdvancedServerSettings> {
 
   @override
   void didChangeDependencies() {
-    Server server = GetIt.I<SelectedServerSingleton>().server;
+    Server server = SelectedServerInherited.of(context).selectedServer.server!;
     _udpPortController.text = server.udpPort.toString();
     _tcpPortController.text = server.tcpPort.toString();
     _httpPortController.text = server.httpPort.toString();

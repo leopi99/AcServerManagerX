@@ -1,6 +1,7 @@
 import 'package:acservermanager/models/enums/join_type_enum.dart';
+import 'package:equatable/equatable.dart';
 
-class Race {
+class Race extends Equatable {
   final bool enabled;
   final int laps;
   final int raceMinutes;
@@ -45,4 +46,17 @@ class Race {
         mandatoryPit: mandatoryPit ?? this.mandatoryPit,
         joinType: joinType ?? this.joinType,
       );
+
+  @override
+  List<Object?> get props => [
+        enabled,
+        laps,
+        raceMinutes,
+        extraRaceMinutes,
+        raceOverTime,
+        raceWaitTime,
+        reversedGrid,
+        mandatoryPit,
+        joinType,
+      ];
 }

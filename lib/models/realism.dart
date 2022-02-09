@@ -1,6 +1,7 @@
 import 'package:acservermanager/models/enums/jump_start_enum.dart';
+import 'package:equatable/equatable.dart';
 
-class Realism {
+class Realism extends Equatable {
   final int fuelRate;
   final int damageRate;
   final int tyreWearRate;
@@ -18,4 +19,15 @@ class Realism {
     this.disableGasCutPenalty = false,
     this.jumpStartType = JumpStartEnum.teleportToPit,
   });
+
+  @override
+  List<Object?> get props => [
+        fuelRate,
+        damageRate,
+        tyreWearRate,
+        allowedTyresOut,
+        maxBallast,
+        disableGasCutPenalty,
+        jumpStartType,
+      ];
 }

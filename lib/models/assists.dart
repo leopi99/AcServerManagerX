@@ -1,6 +1,7 @@
 import 'package:acservermanager/models/enums/assists_enum.dart';
+import 'package:equatable/equatable.dart';
 
-class Assists {
+class Assists extends Equatable {
   final AssistsEnum abs;
   final AssistsEnum tractionControl;
   final bool stabilityAid;
@@ -30,4 +31,13 @@ class Assists {
       tyreBlankets: tyreBlankets ?? this.tyreBlankets,
     );
   }
+
+  @override
+  List<Object?> get props => [
+        abs,
+        tractionControl,
+        forceVirtualMirror,
+        stabilityAid,
+        tyreBlankets,
+      ];
 }

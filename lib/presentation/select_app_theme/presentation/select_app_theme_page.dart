@@ -81,7 +81,8 @@ class _SelectAppThemePageState extends State<SelectAppThemePage> {
                   child: FilledButton(
                     child: const Text('Done'),
                     onPressed: () {
-                      widget.bloc.add(LoadingBlocAppearanceSet(snapshot.data!));
+                      widget.bloc.add(LoadingBlocAppearanceSet(snapshot.data!,
+                          context: context));
                     },
                   ),
                 ),

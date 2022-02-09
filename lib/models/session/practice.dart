@@ -20,4 +20,11 @@ class Practice extends SessionBase {
       canJoin: canJoin ?? this.canJoin,
     );
   }
+
+  @override
+  List<Object?> get props => [
+        enabled,
+        time,
+        canJoin,
+      ];
 }

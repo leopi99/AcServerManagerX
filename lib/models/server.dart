@@ -4,9 +4,10 @@ import 'package:acservermanager/models/server/server_base_settings.dart';
 import 'package:acservermanager/models/server/server_file_names.dart';
 import 'package:acservermanager/models/session.dart';
 import 'package:acservermanager/models/voting_banning.dart';
+import 'package:equatable/equatable.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 
-class Server extends ServerBaseSettings {
+class Server extends ServerBaseSettings implements Equatable {
   final Session session;
   final Assists assists;
   final Realism realism;
@@ -154,4 +155,30 @@ class Server extends ServerBaseSettings {
         managerDescription: managerDescription ?? this.managerDescription,
         serverFilesPath: serverFilesPath ?? this.serverFilesPath,
       );
+
+  @override
+  List<Object?> get props => [
+        name,
+        password,
+        httpPort,
+        packetHz,
+        tcpPort,
+        udpPort,
+        threads,
+        session,
+        assists,
+        clientsAllowed,
+        loopMode,
+        pickupLockedEntryList,
+        pickupMode,
+        realism,
+        resultScreenTime,
+        showOnLobby,
+        votingBanning,
+        managerDescription,
+        serverFilesPath
+      ];
+
+  @override
+  bool? get stringify => true;
 }

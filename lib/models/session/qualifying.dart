@@ -24,4 +24,12 @@ class Qualifying extends SessionBase {
       qualifyLimitPerc: qualifyLimitPerc ?? this.qualifyLimitPerc,
     );
   }
+
+  @override
+  List<Object?> get props => [
+        enabled,
+        time,
+        canJoin,
+        qualifyLimitPerc,
+      ];
 }

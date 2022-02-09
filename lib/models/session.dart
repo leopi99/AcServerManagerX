@@ -3,8 +3,9 @@ import 'package:acservermanager/models/session/qualifying.dart';
 import 'package:acservermanager/models/session/race.dart';
 import 'package:acservermanager/models/track.dart';
 import 'package:acservermanager/models/weather.dart';
+import 'package:equatable/equatable.dart';
 
-class Session {
+class Session extends Equatable {
   final Practice practice;
   final Qualifying qualifying;
   final Race race;
@@ -33,4 +34,13 @@ class Session {
         weather: weather ?? this.weather,
         selectedTrack: selectedTrack ?? this.selectedTrack,
       );
+
+  @override
+  List<Object?> get props => [
+        practice,
+        qualifying,
+        race,
+        weather,
+        selectedTrack,
+      ];
 }

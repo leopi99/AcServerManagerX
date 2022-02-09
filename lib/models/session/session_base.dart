@@ -1,4 +1,6 @@
-abstract class SessionBase {
+import 'package:equatable/equatable.dart';
+
+abstract class SessionBase extends Equatable {
   final bool enabled;
   final int time;
 
