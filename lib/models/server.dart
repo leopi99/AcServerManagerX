@@ -4,6 +4,7 @@ import 'package:acservermanager/models/server/server_base_settings.dart';
 import 'package:acservermanager/models/server/server_file_names.dart';
 import 'package:acservermanager/models/session.dart';
 import 'package:acservermanager/models/voting_banning.dart';
+import 'package:fluent_ui/fluent_ui.dart';
 
 class Server extends ServerBaseSettings {
   final Session session;
@@ -75,13 +76,16 @@ class Server extends ServerBaseSettings {
 
   ///Returns the [String] value of the [key] in the [data] list.
   static String _getStringFromData(List<String> data, String key) {
-    return data.firstWhere((element) => element.contains(key)).split('=').last;
+    return data
+        .firstWhere((element) => element.split('=').first == key)
+        .split('=')
+        .last;
   }
 
   ///Returns the [int] value of the [key] in the [data] list.
   static bool _getBoolFromData(List<String> data, String key) {
     return data
-            .firstWhere((element) => element.contains(key))
+            .firstWhere((element) => element.split('=').first == key)
             .split('=')
             .last ==
         "1";
@@ -91,11 +95,15 @@ class Server extends ServerBaseSettings {
   ///
   ///If none is found (or an error occurred), returns the [defaultValue].
   static int _getIntFromData(List<String> data, String key, int defaultValue) {
-    return int.tryParse(data
-            .firstWhere((element) => element.contains(key))
-            .split('=')
-            .last) ??
-        defaultValue;
+    int? result = int.tryParse(data
+        .firstWhere((element) => element.split('=').first == key)
+        .split('=')
+        .last);
+    if (result == null) {
+      result = defaultValue;
+      debugPrint('Using defaultValue for $key -> $defaultValue');
+    }
+    return result;
   }
 
   String get cfgFilePath => '$serverFilesPath/server_cfg.ini';

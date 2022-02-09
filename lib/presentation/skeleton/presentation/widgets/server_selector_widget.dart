@@ -1,6 +1,7 @@
-import 'package:acservermanager/common/inherited_widgets/selected_server_inherited.dart';
+import 'package:acservermanager/common/singletons/selected_server_singleton.dart';
 import 'package:acservermanager/models/server.dart';
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:get_it/get_it.dart';
 
 class ServerSelectorWidget extends StatefulWidget {
   final List<Server> servers;
@@ -28,8 +29,7 @@ class _ServerSelectorWidgetState extends State<ServerSelectorWidget> {
         (index) => DropDownButtonItem(
           onTap: () {
             selectedServer = index;
-            SelectedServerInheritedWidget.of(context).selectedServer =
-                widget.servers[index];
+            GetIt.I<SelectedServerSingleton>().setServer(widget.servers[index]);
           },
           title: Text(widget.servers[index].name),
         ),

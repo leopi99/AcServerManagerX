@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:acservermanager/common/shared_manager.dart';
+import 'package:acservermanager/common/singletons/selected_server_singleton.dart';
 import 'package:acservermanager/models/enums/shared_key.dart';
 import 'package:acservermanager/models/server.dart';
 import 'package:bloc/bloc.dart';
@@ -62,15 +63,19 @@ class LoadingBlocBloc extends Bloc<LoadingBlocEvent, LoadingBlocState> {
     try {
       server = List.generate(
         files.length,
-        (index) => Server.fromFileData(
-            files[index].readAsLinesSync(), '$acPath/${serverNames[index]}'),
+        (index) => Server.fromFileData(files[index].readAsLinesSync(),
+            '$acPath/presets/${serverNames[index]}'),
       );
+      if (server.isEmpty) {
+        server.add(Server(serverFilesPath: '$acPath/presets/SERVER_00'));
+      }
     } catch (e, stacktrace) {
       debugPrint("Error: $e\nStacktrace:\n$stacktrace");
       emit(LoadingBlocErrorState("An error accoured, please try again.\n$e"));
       return;
     }
     GetIt.instance.registerSingleton(server);
+    GetIt.I.registerLazySingleton(() => SelectedServerSingleton(server.first));
     emit(LoadingBlocLoadedState(server));
   }
 

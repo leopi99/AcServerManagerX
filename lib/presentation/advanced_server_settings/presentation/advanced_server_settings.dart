@@ -1,4 +1,6 @@
 import 'package:acservermanager/common/appearance_bloc/appearance_bloc.dart';
+import 'package:acservermanager/common/singletons/selected_server_singleton.dart';
+import 'package:acservermanager/models/server.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:get_it/get_it.dart';
 
@@ -14,6 +16,16 @@ class _AdvancedServerSettingsState extends State<AdvancedServerSettings> {
   final TextEditingController _tcpPortController = TextEditingController();
   final TextEditingController _httpPortController = TextEditingController();
   final TextEditingController _packetHzController = TextEditingController();
+
+  @override
+  void didChangeDependencies() {
+    Server server = GetIt.I<SelectedServerSingleton>().server;
+    _udpPortController.text = server.udpPort.toString();
+    _tcpPortController.text = server.tcpPort.toString();
+    _httpPortController.text = server.httpPort.toString();
+    _packetHzController.text = server.packetHz.toString();
+    super.didChangeDependencies();
+  }
 
   @override
   void dispose() {

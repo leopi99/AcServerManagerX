@@ -1,4 +1,5 @@
 import 'package:acservermanager/common/appearance_bloc/appearance_bloc.dart';
+import 'package:acservermanager/common/singletons/selected_server_singleton.dart';
 import 'package:acservermanager/models/server.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:get_it/get_it.dart';
@@ -18,7 +19,7 @@ class _ServerMainSettingsState extends State<ServerMainSettings> {
 
   @override
   void didChangeDependencies() {
-    Server server = GetIt.I<List<Server>>().first;
+    Server server = GetIt.I<SelectedServerSingleton>().server;
     _nameController.text = server.name;
     _passwordController.text = server.password ?? '';
     _adminPasswordController.text = server.adminPassword;

@@ -8,9 +8,8 @@ class Singletons {
     //Registers the shared manager
     await SharedPreferences.getInstance().then((value) {
       // value.clear();
-      GetIt.instance.registerSingleton<SharedManager>(SharedManager(value));
+      GetIt.I.registerSingleton<SharedManager>(SharedManager(value));
     });
-    GetIt.instance
-        .registerLazySingleton<AppearanceBloc>(() => AppearanceBloc());
+    GetIt.I.registerLazySingleton<AppearanceBloc>(() => AppearanceBloc());
   }
 }
