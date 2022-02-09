@@ -42,8 +42,8 @@ class LoadingBlocBloc extends Bloc<LoadingBlocEvent, LoadingBlocState> {
       return;
     }
     List<File> files = [];
+    List<String> serverNames = [];
     try {
-      List<String> serverNames = [];
       Directory(acPath + '/presets').listSync().forEach((element) {
         Directory dir = Directory(element.path);
         if (dir.listSync().length == 2) {
@@ -51,7 +51,7 @@ class LoadingBlocBloc extends Bloc<LoadingBlocEvent, LoadingBlocState> {
         }
       });
       for (String name in serverNames) {
-        files.add(File('$acPath/$name'));
+        files.add(File('$acPath/presets/$name/server_cfg.ini'));
       }
       debugPrint('Servers: ${serverNames.toString()}');
     } catch (e, stacktrace) {
@@ -59,10 +59,19 @@ class LoadingBlocBloc extends Bloc<LoadingBlocEvent, LoadingBlocState> {
       emit(LoadingBlocErrorState("An error accoured, please try again.\n$e"));
       return;
     }
-    final server = List.generate(
-      files.length,
-      (index) => Server(serverFilesPath: files[index].path),
-    );
+    List<Server> server = [];
+
+    try {
+      server = List.generate(
+        files.length,
+        (index) => Server.fromFileData(
+            files[index].readAsLinesSync(), '$acPath/${serverNames[index]}'),
+      );
+    } catch (e, stacktrace) {
+      debugPrint("Error: $e\nStacktrace:\n$stacktrace");
+      emit(LoadingBlocErrorState("An error accoured, please try again.\n$e"));
+      return;
+    }
     GetIt.instance.registerSingleton(server);
     emit(LoadingBlocLoadedState(server));
   }
