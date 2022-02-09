@@ -13,7 +13,8 @@ class SelectedServerInherited extends InheritedWidget {
 
   @override
   bool updateShouldNotify(SelectedServerInherited oldWidget) =>
-      oldWidget.selectedServer.server!.name != selectedServer.server!.name;
+      (oldWidget.selectedServer.server?.name ?? '') !=
+      (selectedServer.server?.name ?? '');
 
   static SelectedServerInherited of(BuildContext context) =>
       context.dependOnInheritedWidgetOfExactType<SelectedServerInherited>()!;

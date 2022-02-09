@@ -25,9 +25,11 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   late final LoadingBlocBloc _bloc;
   late final AppearanceBloc _appearanceBloc;
+  late final SelectedServer _selectedServer;
 
   @override
   void initState() {
+    _selectedServer = SelectedServer(null);
     _appearanceBloc = GetIt.instance<AppearanceBloc>();
     _bloc = LoadingBlocBloc();
     super.initState();
@@ -36,7 +38,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return SelectedServerInherited(
-      selectedServer: SelectedServer(null),
+      selectedServer: _selectedServer,
       child: Builder(builder: (context) {
         //Sets the loading state of the app
         if (_bloc.state is LoadingBlocInitial) {
