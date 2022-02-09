@@ -72,10 +72,12 @@ class Server extends ServerBaseSettings {
     );
   }
 
+  ///Returns the [String] value of the [key] in the [data] list.
   static String _getStringFromData(List<String> data, String key) {
     return data.firstWhere((element) => element.contains(key)).split('=').last;
   }
 
+  ///Returns the [int] value of the [key] in the [data] list.
   static bool _getBoolFromData(List<String> data, String key) {
     return data
             .firstWhere((element) => element.contains(key))
@@ -84,6 +86,9 @@ class Server extends ServerBaseSettings {
         "1";
   }
 
+  ///Returns the [int] value of the [key] in the [data] list.
+  ///
+  ///If none is found (or an error occurred), returns the [defaultValue].
   static int _getIntFromData(List<String> data, String key, int defaultValue) {
     return int.tryParse(data
             .firstWhere((element) => element.contains(key))
