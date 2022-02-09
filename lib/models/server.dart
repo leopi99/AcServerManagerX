@@ -1,9 +1,9 @@
 import 'package:acservermanager/models/assists.dart';
 import 'package:acservermanager/models/realism.dart';
-import 'package:acservermanager/models/server_base_settings.dart';
+import 'package:acservermanager/models/server/server_base_settings.dart';
+import 'package:acservermanager/models/server/server_file_names.dart';
 import 'package:acservermanager/models/session.dart';
 import 'package:acservermanager/models/voting_banning.dart';
-import 'package:fluent_ui/fluent_ui.dart';
 
 class Server extends ServerBaseSettings {
   final Session session;
@@ -56,18 +56,19 @@ class Server extends ServerBaseSettings {
   factory Server.fromFileData(List<String> data, String path) {
     //The file is read as List<String>, every item is a line in the file.
     return Server(
-      name: _getStringFromData(data, "NAME"),
-      adminPassword: _getStringFromData(data, "ADMIN_PASSWORD"),
-      httpPort: _getStringFromData(data, "HTTP_PORT"),
-      udpPort: _getStringFromData(data, "UDP_PORT"),
-      tcpPort: _getStringFromData(data, "TCP_PORT"),
-      packetHz: _getIntFromData(data, "CLIENT_SEND_INTERVAL_HZ", 18),
-      loopMode: _getBoolFromData(data, "LOOP_MODE"),
-      password: _getStringFromData(data, "PASSWORD"),
-      pickupMode: _getBoolFromData(data, "PICKUP_MODE_ENABLED"),
-      pickupLockedEntryList: _getBoolFromData(data, "LOCKED_ENTRY_LIST"),
-      threads: _getIntFromData(data, "THREADS", 2),
-      showOnLobby: _getBoolFromData(data, "REGISTER_TO_LOBBY"),
+      name: _getStringFromData(data, ServerFileNames.serverName),
+      adminPassword: _getStringFromData(data, ServerFileNames.adminPassword),
+      httpPort: _getStringFromData(data, ServerFileNames.httpPort),
+      udpPort: _getStringFromData(data, ServerFileNames.udpPort),
+      tcpPort: _getStringFromData(data, ServerFileNames.tcpPort),
+      packetHz: _getIntFromData(data, ServerFileNames.packetHz, 18),
+      loopMode: _getBoolFromData(data, ServerFileNames.loopMode),
+      password: _getStringFromData(data, ServerFileNames.password),
+      pickupMode: _getBoolFromData(data, ServerFileNames.pickupModeEnabled),
+      pickupLockedEntryList:
+          _getBoolFromData(data, ServerFileNames.lockedEntryList),
+      threads: _getIntFromData(data, ServerFileNames.numThreads, 2),
+      showOnLobby: _getBoolFromData(data, ServerFileNames.registerToLobby),
       serverFilesPath: path,
     );
   }

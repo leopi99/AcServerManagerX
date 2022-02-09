@@ -11,8 +11,6 @@ part 'loading_bloc_event.dart';
 part 'loading_bloc_state.dart';
 
 class LoadingBlocBloc extends Bloc<LoadingBlocEvent, LoadingBlocState> {
-  static const String _kConfigPath = "/cfg/server_cfg.ini";
-
   LoadingBlocBloc() : super(LoadingBlocInitial()) {
     on<LoadingBlocLoadEvent>((event, emit) async {
       await _loadServers(emit);
