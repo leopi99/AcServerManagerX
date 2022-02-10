@@ -25,8 +25,6 @@ class _ServerMainSettingsState extends State<ServerMainSettings> {
     sub = SelectedServerInherited.of(context)
         .selectedServerStream
         .listen((event) {
-      debugPrint(
-          'ServerMainSettingsPage.didChangeDependencies serverName ${event.name}');
       _nameController.text = event.name;
       _passwordController.text = event.password ?? '';
       _adminPasswordController.text = event.adminPassword;

@@ -19,103 +19,106 @@ class SkeletonPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<SessionBloc, SessionState>(
-      bloc: _sessionBloc,
-      listenWhen: (previous, current) => current is SessionLoadingState,
-      listener: (context, state) {
-        showDialog(
-          context: context,
-          barrierDismissible: false,
-          builder: (context) {
-            return const ContentDialog(
-              content: ProgressRing(),
-            );
-          },
-        );
-      },
-      child: StreamBuilder<int>(
-        stream: _bloc.currentPage,
-        initialData: 0,
-        builder: (context, snapshot) {
-          return StreamBuilder<bool>(
-            stream: _bloc.panelOpen,
-            initialData: true,
-            builder: (context, panelOpenSnapshot) {
-              return NavigationView(
-                content: NavigationBody(
-                  index: snapshot.data!,
-                  children: const [
-                    ServerMainSettings(),
-                    AdvancedServerSettings(),
-                    SettingsPage(),
-                  ],
-                ),
-                pane: NavigationPane(
-                  onChanged: _bloc.changePage,
-                  menuButton: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: panelOpenSnapshot.data!
-                          ? MainAxisAlignment.start
-                          : MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        IconButton(
-                          icon: const Icon(material.Icons.menu),
-                          onPressed: () {
-                            _bloc.changePaneOpen(!panelOpenSnapshot.data!);
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                  displayMode: panelOpenSnapshot.data!
-                      ? PaneDisplayMode.open
-                      : PaneDisplayMode.compact,
-                  selected: snapshot.data!,
-                  header: Button(
-                    child: const Text('Select server'),
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        barrierDismissible: true,
-                        builder: (context) => ContentDialog(
-                          content: ServerSelectorWidget(
-                            servers: GetIt.I<List<Server>>(),
-                          ),
-                          actions: [
-                            FilledButton(
-                              child: const Text('Ok'),
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                            ),
-                          ],
-                        ),
-                      );
-                    },
-                  ),
-                  footerItems: [
-                    PaneItem(
-                      icon: const Icon(FluentIcons.settings),
-                      title: const Text('Settings'),
-                    ),
-                  ],
-                  items: [
-                    PaneItem(
-                      icon: const Icon(FluentIcons.server_enviroment),
-                      title: const Text('Server main settings'),
-                    ),
-                    PaneItem(
-                      icon: const Icon(FluentIcons.server_enviroment),
-                      title: const Text('Server advanced settings'),
-                    ),
-                  ],
-                ),
+    return BlocProvider(
+      create: (context) => _sessionBloc,
+      child: BlocListener<SessionBloc, SessionState>(
+        bloc: _sessionBloc,
+        listenWhen: (previous, current) => current is SessionLoadingState,
+        listener: (context, state) {
+          showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (context) {
+              return const ContentDialog(
+                content: ProgressRing(),
               );
             },
           );
         },
+        child: StreamBuilder<int>(
+          stream: _bloc.currentPage,
+          initialData: 0,
+          builder: (context, snapshot) {
+            return StreamBuilder<bool>(
+              stream: _bloc.panelOpen,
+              initialData: true,
+              builder: (context, panelOpenSnapshot) {
+                return NavigationView(
+                  content: NavigationBody(
+                    index: snapshot.data!,
+                    children: const [
+                      ServerMainSettings(),
+                      AdvancedServerSettings(),
+                      SettingsPage(),
+                    ],
+                  ),
+                  pane: NavigationPane(
+                    onChanged: _bloc.changePage,
+                    menuButton: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: panelOpenSnapshot.data!
+                            ? MainAxisAlignment.start
+                            : MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          IconButton(
+                            icon: const Icon(material.Icons.menu),
+                            onPressed: () {
+                              _bloc.changePaneOpen(!panelOpenSnapshot.data!);
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                    displayMode: panelOpenSnapshot.data!
+                        ? PaneDisplayMode.open
+                        : PaneDisplayMode.compact,
+                    selected: snapshot.data!,
+                    header: Button(
+                      child: const Text('Select server'),
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          barrierDismissible: true,
+                          builder: (context) => ContentDialog(
+                            content: ServerSelectorWidget(
+                              servers: GetIt.I<List<Server>>(),
+                            ),
+                            actions: [
+                              FilledButton(
+                                child: const Text('Ok'),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                    footerItems: [
+                      PaneItem(
+                        icon: const Icon(FluentIcons.settings),
+                        title: const Text('Settings'),
+                      ),
+                    ],
+                    items: [
+                      PaneItem(
+                        icon: const Icon(FluentIcons.server_enviroment),
+                        title: const Text('Server main settings'),
+                      ),
+                      PaneItem(
+                        icon: const Icon(FluentIcons.server_enviroment),
+                        title: const Text('Server advanced settings'),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            );
+          },
+        ),
       ),
     );
   }

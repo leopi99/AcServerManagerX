@@ -25,8 +25,6 @@ class _AdvancedServerSettingsState extends State<AdvancedServerSettings> {
     sub = SelectedServerInherited.of(context)
         .selectedServerStream
         .listen((event) {
-      debugPrint(
-          'ServerAdvancedSettingsPage.didChangeDependencies serverName ${event.name}');
       _udpPortController.text = event.udpPort.toString();
       _tcpPortController.text = event.tcpPort.toString();
       _httpPortController.text = event.httpPort.toString();

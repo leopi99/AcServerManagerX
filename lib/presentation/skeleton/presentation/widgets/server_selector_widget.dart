@@ -30,8 +30,10 @@ class _ServerSelectorWidgetState extends State<ServerSelectorWidget> {
             widget.servers.length,
             (index) => DropDownButtonItem(
               onTap: () {
-                SelectedServerInherited.of(context)
-                    .changeServer(widget.servers[index]);
+                if (widget.servers[index] != snapshot.data!) {
+                  SelectedServerInherited.of(context)
+                      .changeServer(widget.servers[index]);
+                }
               },
               title: Text(widget.servers[index].name),
             ),
