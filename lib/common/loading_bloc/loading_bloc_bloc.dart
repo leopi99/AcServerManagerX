@@ -14,44 +14,42 @@ part 'loading_bloc_state.dart';
 class LoadingBlocBloc extends Bloc<LoadingBlocEvent, LoadingBlocState> {
   LoadingBlocBloc() : super(LoadingBlocInitial()) {
     on<LoadingBlocLoadEvent>((event, emit) async {
+      final darkMode =
+          GetIt.instance<SharedManager>().getBool(SharedKey.appearance);
+      final acPath =
+          await GetIt.instance<SharedManager>().getString(SharedKey.acPath);
+      if (darkMode == null || acPath == null) {
+        add(LoadingBlocShowOnboardingEvent(
+            showAcPath: acPath == null, showAppearance: darkMode == null));
+        return;
+      }
       await _loadServers(emit, event.context);
     });
-    on<LoadingBlocAcPathSet>((event, emit) async {
-      await _saveAcPath(event.acPath, emit, event.context);
-    });
-    on<LoadingBlocAppearanceSet>((event, emit) async {
-      await _saveAppearance(event.darkMode, emit, event.context);
+    on<LoadingBlocShowOnboardingEvent>((event, emit) {
+      emit(LoadingBlocShowOnboardingState(
+          showAcPath: event.showAcPath, showAppearance: event.showAppearance));
     });
   }
 
   Future<void> _loadServers(
       Emitter<LoadingBlocState> emit, BuildContext context) async {
     emit(LoadingBlocLoadingState());
-    final String? acPath =
-        await GetIt.instance<SharedManager>().getString(SharedKey.acPath);
-    debugPrint('acPath: $acPath');
-    if (acPath == null) {
-      emit(LoadingBlocSetAcPathState());
-      return;
-    }
-    final darkMode =
-        GetIt.instance<SharedManager>().getBool(SharedKey.appearance);
-    debugPrint('darkMode: $darkMode');
-    if (darkMode == null) {
-      emit(LoadingBlocSetAppAppearanceState());
-      return;
-    }
+    final String acPath =
+        (await GetIt.instance<SharedManager>().getString(SharedKey.acPath))!;
+    debugPrint('AcPath: $acPath');
     List<File> files = [];
     List<String> serverNames = [];
+    final String presetsPath = acPath + '/server/presets';
+    //Searched for already configured servers
     try {
-      Directory(acPath + '/presets').listSync().forEach((element) {
+      Directory(presetsPath).listSync().forEach((element) {
         Directory dir = Directory(element.path);
         if (dir.listSync().length == 2) {
           serverNames.add(dir.path.split('\\').last);
         }
       });
       for (String name in serverNames) {
-        files.add(File('$acPath/presets/$name/server_cfg.ini'));
+        files.add(File('$presetsPath/$name/server_cfg.ini'));
       }
       debugPrint('Servers: ${serverNames.toString()}');
     } catch (e, stacktrace) {
@@ -59,42 +57,24 @@ class LoadingBlocBloc extends Bloc<LoadingBlocEvent, LoadingBlocState> {
       emit(LoadingBlocErrorState("An error accoured, please try again.\n$e"));
       return;
     }
-    List<Server> server = [];
-
+    List<Server> servers = [];
+    //Loads the servers found in the previous step
     try {
-      server = List.generate(
+      servers = List.generate(
         files.length,
         (index) => Server.fromFileData(files[index].readAsLinesSync(),
-            '$acPath/presets/${serverNames[index]}'),
+            '$presetsPath/${serverNames[index]}'),
       );
-      if (server.isEmpty) {
-        server.add(Server(serverFilesPath: '$acPath/presets/SERVER_00'));
+      if (servers.isEmpty) {
+        servers.add(Server(serverFilesPath: '$presetsPath/SERVER_00'));
       }
     } catch (e, stacktrace) {
       debugPrint("Error: $e\nStacktrace:\n$stacktrace");
       emit(LoadingBlocErrorState("An error accoured, please try again.\n$e"));
       return;
     }
-    GetIt.instance.registerSingleton(server);
-    SelectedServerInherited.of(context).changeServer(server.first);
-    emit(LoadingBlocLoadedState(server));
-  }
-
-  Future<void> _saveAcPath(String acPath, Emitter<LoadingBlocState> emit,
-      BuildContext context) async {
-    acPath += "/server";
-    await GetIt.instance<SharedManager>().setString(SharedKey.acPath, acPath);
-    await _loadServers(emit, context);
-  }
-
-  Future<void> _saveAppearance(bool darkMode, Emitter<LoadingBlocState> emit,
-      BuildContext context) async {
-    final bool? loadServers =
-        GetIt.instance<SharedManager>().getBool(SharedKey.appearance);
-    await GetIt.instance<SharedManager>()
-        .setBool(SharedKey.appearance, darkMode);
-    if (loadServers == null) {
-      await _loadServers(emit, context);
-    }
+    GetIt.instance.registerSingleton(servers);
+    SelectedServerInherited.of(context).changeServer(servers.first);
+    emit(LoadingBlocLoadedState(servers));
   }
 }

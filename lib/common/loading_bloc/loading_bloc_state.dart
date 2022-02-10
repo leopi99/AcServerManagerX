@@ -13,12 +13,18 @@ class LoadingBlocLoadedState extends LoadingBlocState {
   LoadingBlocLoadedState(this.servers);
 }
 
-class LoadingBlocSetAcPathState extends LoadingBlocState {}
-
-class LoadingBlocSetAppAppearanceState extends LoadingBlocState {}
-
 class LoadingBlocErrorState extends LoadingBlocState {
   final String error;
 
   LoadingBlocErrorState(this.error);
+}
+
+class LoadingBlocShowOnboardingState extends LoadingBlocState {
+  final bool showAppearance;
+  final bool showAcPath;
+
+  LoadingBlocShowOnboardingState({
+    required this.showAcPath,
+    required this.showAppearance,
+  });
 }

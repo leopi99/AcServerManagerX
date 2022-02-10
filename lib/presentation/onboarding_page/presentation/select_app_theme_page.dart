@@ -1,13 +1,12 @@
 import 'package:acservermanager/common/appearance_bloc/appearance_bloc.dart';
-import 'package:acservermanager/common/loading_bloc/loading_bloc_bloc.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:get_it/get_it.dart';
 
 class SelectAppThemePage extends StatefulWidget {
-  final LoadingBlocBloc bloc;
+  final Function() onDone;
   const SelectAppThemePage({
     Key? key,
-    required this.bloc,
+    required this.onDone,
   }) : super(key: key);
 
   @override
@@ -81,8 +80,7 @@ class _SelectAppThemePageState extends State<SelectAppThemePage> {
                   child: FilledButton(
                     child: const Text('Done'),
                     onPressed: () {
-                      widget.bloc.add(LoadingBlocAppearanceSet(snapshot.data!,
-                          context: context));
+                      widget.onDone();
                     },
                   ),
                 ),

@@ -3,7 +3,8 @@ import 'package:acservermanager/common/inherited_widgets/selected_server_inherit
 import 'package:acservermanager/common/loading_bloc/loading_bloc_bloc.dart';
 import 'package:acservermanager/common/singletons.dart';
 import 'package:acservermanager/models/server.dart';
-import 'package:acservermanager/presentation/select_app_theme/presentation/select_app_theme_page.dart';
+import 'package:acservermanager/presentation/onboarding_page/presentation/select_ac_path_page.dart';
+import 'package:acservermanager/presentation/onboarding_page/presentation/select_app_theme_page.dart';
 import 'package:acservermanager/presentation/skeleton/presentation/skeleton_page.dart';
 import 'package:acservermanager/presentation/splash_screen/presentation/splash_screen.dart';
 import 'package:file_picker/file_picker.dart';
@@ -56,59 +57,7 @@ class _MyAppState extends State<MyApp> {
               home: BlocListener<LoadingBlocBloc, LoadingBlocState>(
                 bloc: _bloc,
                 listener: (context, state) {
-                  if (state is LoadingBlocSetAcPathState) {
-                    final TextEditingController _controller =
-                        TextEditingController();
-                    debugPrint('Showing the set ac path dialog');
-                    showDialog(
-                      context: context,
-                      barrierDismissible: false,
-                      builder: (context) => ContentDialog(
-                        title: const Text('Select the installation path of AC'),
-                        content: TextBox(
-                          controller: _controller,
-                          onSubmitted: (value) {
-                            if (value.isEmpty) return;
-                            _bloc.add(
-                                LoadingBlocAcPathSet(value, context: context));
-                            _controller.dispose();
-                          },
-                          suffix: Tooltip(
-                            message: 'Open the directory picker',
-                            child: IconButton(
-                              icon: const Icon(FluentIcons.folder),
-                              onPressed: () async {
-                                String? dir = await FilePicker.platform
-                                    .getDirectoryPath(
-                                        dialogTitle:
-                                            'Select the installation path of AC');
-                                if (dir != null) {
-                                  dir = dir.replaceAll('\\', "/");
-                                  _controller.text = dir;
-                                  debugPrint('Selected directory: $dir');
-                                  _bloc.add(LoadingBlocAcPathSet(
-                                      _controller.text,
-                                      context: context));
-                                  Navigator.pop(context);
-                                }
-                              },
-                            ),
-                          ),
-                        ),
-                        actions: [
-                          FilledButton(
-                            child: const Text('Set path'),
-                            onPressed: () {
-                              if (_controller.text.isEmpty) return;
-                              _bloc.add(LoadingBlocAcPathSet(_controller.text,
-                                  context: context));
-                              _controller.dispose();
-                            },
-                          ),
-                        ],
-                      ),
-                    );
-                  } else if (state is LoadingBlocErrorState) {
+                  if (state is LoadingBlocErrorState) {
                     showDialog(
                       context: context,
                       barrierDismissible: false,
@@ -123,22 +72,28 @@ class _MyAppState extends State<MyApp> {
                   bloc: _bloc,
                   builder: (context, state) {
                     if (state is LoadingBlocLoadingState) {
-                      debugPrint('Loading state');
                       return const SplashScreen();
-                    }
-                    if (state is LoadingBlocInitial ||
-                        state is LoadingBlocSetAcPathState) {
+                    } else if (state is LoadingBlocInitial) {
                       return Container(
                         color: _appearanceBloc.backgroundColor,
                       );
-                    }
-                    if (state is LoadingBlocSetAppAppearanceState) {
-                      return SelectAppThemePage(
-                        bloc: _bloc,
-                      );
-                    }
-                    if (state is LoadingBlocLoadedState) {
+                    } else if (state is LoadingBlocLoadedState) {
                       return SkeletonPage();
+                    } else if (state is LoadingBlocShowOnboardingState) {
+                      if (state.showAcPath) {
+                        return SelectAcPathPage(
+                          onDone: () {
+                            _bloc.add(LoadingBlocShowOnboardingEvent(
+                                showAcPath: false, showAppearance: true));
+                          },
+                        );
+                      } else if (state.showAppearance) {
+                        return SelectAppThemePage(
+                          onDone: () {
+                            _bloc.add(LoadingBlocLoadEvent(context: context));
+                          },
+                        );
+                      }
                     }
                     return Container(
                       color: _appearanceBloc.backgroundColor,

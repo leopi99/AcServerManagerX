@@ -9,30 +9,12 @@ class LoadingBlocLoadEvent extends LoadingBlocEvent {
   LoadingBlocLoadEvent({required this.context});
 }
 
-class LoadingBlocSaveEvent extends LoadingBlocEvent {
-  final BuildContext context;
+class LoadingBlocShowOnboardingEvent extends LoadingBlocEvent {
+  final bool showAppearance;
+  final bool showAcPath;
 
-  LoadingBlocSaveEvent({required this.context});
-}
-
-class LoadingBlocAcPathSet extends LoadingBlocEvent {
-  final String acPath;
-
-  final BuildContext context;
-
-  LoadingBlocAcPathSet(
-    this.acPath, {
-    required this.context,
-  });
-}
-
-class LoadingBlocAppearanceSet extends LoadingBlocEvent {
-  final bool darkMode;
-
-  final BuildContext context;
-
-  LoadingBlocAppearanceSet(
-    this.darkMode, {
-    required this.context,
+  LoadingBlocShowOnboardingEvent({
+    required this.showAcPath,
+    required this.showAppearance,
   });
 }
