@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:acservermanager/common/appearance_bloc/appearance_bloc.dart';
 import 'package:acservermanager/common/inherited_widgets/selected_server_inherited.dart';
 import 'package:acservermanager/models/server.dart';
+import 'package:acservermanager/presentation/advanced_server_settings/widgets/textbox_entry_widget.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:get_it/get_it.dart';
 
@@ -50,46 +51,22 @@ class _AdvancedServerSettingsState extends State<AdvancedServerSettings> {
       child: ListView(
         padding: const EdgeInsets.all(32),
         children: [
-          _buildTextBoxEntry(
+          TextBoxEntryWidget(
               controller: _udpPortController,
               label: 'Udp port',
-              textBoxPlaceholder: '9600'),
-          _buildTextBoxEntry(
+              placeHolder: '9600'),
+          TextBoxEntryWidget(
               controller: _tcpPortController,
               label: 'Tcp port',
-              textBoxPlaceholder: '9600'),
-          _buildTextBoxEntry(
+              placeHolder: '9600'),
+          TextBoxEntryWidget(
               controller: _httpPortController,
               label: 'Http port',
-              textBoxPlaceholder: '9600'),
-          _buildTextBoxEntry(
+              placeHolder: '9600'),
+          TextBoxEntryWidget(
               controller: _packetHzController,
               label: 'Packet Hz',
-              textBoxPlaceholder: '9600'),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildTextBoxEntry(
-      {required TextEditingController controller,
-      required String label,
-      required String textBoxPlaceholder}) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(label),
-          const SizedBox(width: 16),
-          SizedBox(
-            width: MediaQuery.of(context).size.width * .4,
-            child: TextBox(
-              controller: controller,
-              placeholder: textBoxPlaceholder,
-            ),
-          ),
+              placeHolder: '9600'),
         ],
       ),
     );

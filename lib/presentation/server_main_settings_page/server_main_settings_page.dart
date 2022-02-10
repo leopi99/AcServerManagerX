@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:acservermanager/common/appearance_bloc/appearance_bloc.dart';
 import 'package:acservermanager/common/inherited_widgets/selected_server_inherited.dart';
 import 'package:acservermanager/models/server.dart';
+import 'package:acservermanager/presentation/advanced_server_settings/widgets/textbox_entry_widget.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:get_it/get_it.dart';
 
@@ -58,33 +59,11 @@ class _ServerMainSettingsState extends State<ServerMainSettings> {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _buildTextBoxEntry(_nameController, 'Server Name', 'Server Name'),
-        _buildTextBoxEntry(_passwordController, 'Password', 'Password'),
-        _buildTextBoxEntry(
-            _adminPasswordController, 'Admin Password', 'Admin Password'),
+        TextBoxEntryWidget(controller: _nameController, label: 'Server Name'),
+        TextBoxEntryWidget(controller: _passwordController, label: 'Password'),
+        TextBoxEntryWidget(
+            controller: _adminPasswordController, label: 'Admin Password'),
       ],
-    );
-  }
-
-  Widget _buildTextBoxEntry(TextEditingController controller, String label,
-      String textBoxPlaceholder) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(label),
-          const SizedBox(width: 16),
-          SizedBox(
-            width: MediaQuery.of(context).size.width * .4,
-            child: TextBox(
-              controller: controller,
-              placeholder: textBoxPlaceholder,
-            ),
-          ),
-        ],
-      ),
     );
   }
 }
