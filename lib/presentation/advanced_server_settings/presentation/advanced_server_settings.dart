@@ -19,12 +19,14 @@ class _AdvancedServerSettingsState extends State<AdvancedServerSettings> {
 
   @override
   void didChangeDependencies() {
-    debugPrint('ServerAdvancedSettingsPage.didChangeDependencies');
-    Server server = SelectedServerInherited.of(context).selectedServer.server!;
-    _udpPortController.text = server.udpPort.toString();
-    _tcpPortController.text = server.tcpPort.toString();
-    _httpPortController.text = server.httpPort.toString();
-    _packetHzController.text = server.packetHz.toString();
+    SelectedServerInherited.of(context).selectedServerStream.listen((event) {
+      debugPrint(
+          'ServerAdvancedSettingsPage.didChangeDependencies serverName ${event.name}');
+      _udpPortController.text = event.udpPort.toString();
+      _tcpPortController.text = event.tcpPort.toString();
+      _httpPortController.text = event.httpPort.toString();
+      _packetHzController.text = event.packetHz.toString();
+    });
     super.didChangeDependencies();
   }
 

@@ -15,29 +15,28 @@ class ServerSelectorWidget extends StatefulWidget {
 
 class _ServerSelectorWidgetState extends State<ServerSelectorWidget> {
   final FlyoutController _flyoutController = FlyoutController();
-  int selectedServer = 0;
 
   @override
   Widget build(BuildContext context) {
-    return DropDownButton(
-      controller: _flyoutController,
-      title:
-          Text(SelectedServerInherited.of(context).selectedServer.server!.name),
-      contentWidth: 156,
-      items: List.generate(
-        widget.servers.length,
-        (index) => DropDownButtonItem(
-          onTap: () {
-            setState(() {
-              selectedServer = index;
-            });
-            SelectedServerInherited.of(context)
-                .selectedServer
-                .setServer(widget.servers[index]);
-          },
-          title: Text(widget.servers[index].name),
-        ),
-      ),
-    );
+    return StreamBuilder<Server>(
+        stream: SelectedServerInherited.of(context).selectedServerStream,
+        initialData: SelectedServerInherited.of(context).selectedServer,
+        builder: (context, snapshot) {
+          return DropDownButton(
+            controller: _flyoutController,
+            title: Text(snapshot.data!.name),
+            contentWidth: 156,
+            items: List.generate(
+              widget.servers.length,
+              (index) => DropDownButtonItem(
+                onTap: () {
+                  SelectedServerInherited.of(context)
+                      .changeServer(widget.servers[index]);
+                },
+                title: Text(widget.servers[index].name),
+              ),
+            ),
+          );
+        });
   }
 }

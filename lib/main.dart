@@ -2,6 +2,7 @@ import 'package:acservermanager/common/appearance_bloc/appearance_bloc.dart';
 import 'package:acservermanager/common/inherited_widgets/selected_server_inherited.dart';
 import 'package:acservermanager/common/loading_bloc/loading_bloc_bloc.dart';
 import 'package:acservermanager/common/singletons.dart';
+import 'package:acservermanager/models/server.dart';
 import 'package:acservermanager/presentation/select_app_theme/presentation/select_app_theme_page.dart';
 import 'package:acservermanager/presentation/skeleton/presentation/skeleton_page.dart';
 import 'package:acservermanager/presentation/splash_screen/presentation/splash_screen.dart';
@@ -9,6 +10,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:rxdart/rxdart.dart';
 
 void main() async {
   await Singletons.initSingletons();
@@ -25,11 +27,11 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   late final LoadingBlocBloc _bloc;
   late final AppearanceBloc _appearanceBloc;
-  late final SelectedServer _selectedServer;
+  late BehaviorSubject<Server> _selectedServer;
 
   @override
   void initState() {
-    _selectedServer = SelectedServer(null);
+    _selectedServer = BehaviorSubject();
     _appearanceBloc = GetIt.instance<AppearanceBloc>();
     _bloc = LoadingBlocBloc();
     super.initState();
