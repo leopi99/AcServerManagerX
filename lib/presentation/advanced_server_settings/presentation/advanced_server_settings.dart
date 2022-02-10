@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:acservermanager/common/appearance_bloc/appearance_bloc.dart';
 import 'package:acservermanager/common/inherited_widgets/selected_server_inherited.dart';
 import 'package:acservermanager/models/server.dart';
@@ -16,10 +18,13 @@ class _AdvancedServerSettingsState extends State<AdvancedServerSettings> {
   final TextEditingController _tcpPortController = TextEditingController();
   final TextEditingController _httpPortController = TextEditingController();
   final TextEditingController _packetHzController = TextEditingController();
+  late StreamSubscription<Server> sub;
 
   @override
   void didChangeDependencies() {
-    SelectedServerInherited.of(context).selectedServerStream.listen((event) {
+    sub = SelectedServerInherited.of(context)
+        .selectedServerStream
+        .listen((event) {
       debugPrint(
           'ServerAdvancedSettingsPage.didChangeDependencies serverName ${event.name}');
       _udpPortController.text = event.udpPort.toString();
@@ -32,6 +37,7 @@ class _AdvancedServerSettingsState extends State<AdvancedServerSettings> {
 
   @override
   void dispose() {
+    sub.cancel();
     _udpPortController.dispose();
     _tcpPortController.dispose();
     _httpPortController.dispose();

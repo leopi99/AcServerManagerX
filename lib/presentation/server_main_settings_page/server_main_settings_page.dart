@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:acservermanager/common/appearance_bloc/appearance_bloc.dart';
 import 'package:acservermanager/common/inherited_widgets/selected_server_inherited.dart';
 import 'package:acservermanager/models/server.dart';
@@ -16,10 +18,13 @@ class _ServerMainSettingsState extends State<ServerMainSettings> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _adminPasswordController =
       TextEditingController();
+  late StreamSubscription<Server> sub;
 
   @override
   void didChangeDependencies() {
-    SelectedServerInherited.of(context).selectedServerStream.listen((event) {
+    sub = SelectedServerInherited.of(context)
+        .selectedServerStream
+        .listen((event) {
       debugPrint(
           'ServerMainSettingsPage.didChangeDependencies serverName ${event.name}');
       _nameController.text = event.name;
@@ -31,6 +36,7 @@ class _ServerMainSettingsState extends State<ServerMainSettings> {
 
   @override
   void dispose() {
+    sub.cancel();
     _nameController.dispose();
     _passwordController.dispose();
     _adminPasswordController.dispose();
