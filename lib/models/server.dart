@@ -156,6 +156,11 @@ class Server extends ServerBaseSettings implements Equatable {
         serverFilesPath: serverFilesPath ?? this.serverFilesPath,
       );
 
+  ///TODO:
+  List<String> toStringList() {
+    return [];
+  }
+
   @override
   List<Object?> get props => [
         name,
