@@ -21,4 +21,7 @@ class SharedManager {
   bool? getBool(SharedKey key) {
     return _prefs.getBool(key.name);
   }
+
+  ///Resets all the SharedPreferences
+  Future<void> reset() async => await _prefs.clear();
 }

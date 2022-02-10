@@ -1,6 +1,7 @@
 import 'package:acservermanager/common/appearance_bloc/appearance_bloc.dart';
 import 'package:acservermanager/common/inherited_widgets/selected_server_inherited.dart';
 import 'package:acservermanager/common/loading_bloc/loading_bloc_bloc.dart';
+import 'package:acservermanager/common/shared_manager.dart';
 import 'package:acservermanager/common/singletons.dart';
 import 'package:acservermanager/models/server.dart';
 import 'package:acservermanager/presentation/onboarding_page/presentation/select_ac_path_page.dart';
@@ -62,8 +63,20 @@ class _MyAppState extends State<MyApp> {
                       context: context,
                       barrierDismissible: false,
                       builder: (context) => ContentDialog(
-                        title: const Text('Ops! Something went wrong'),
+                        title: Text(
+                          'Ops! Something went wrong',
+                          style: TextStyle(color: Colors.red),
+                        ),
                         content: Text(state.error),
+                        actions: [
+                          FilledButton(
+                            child: const Text('Reset the app'),
+                            onPressed: () async {
+                              await GetIt.I<SharedManager>().reset();
+                              const MyApp();
+                            },
+                          ),
+                        ],
                       ),
                     );
                   }
