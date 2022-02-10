@@ -7,14 +7,16 @@ import 'package:acservermanager/presentation/advanced_server_settings/widgets/te
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:get_it/get_it.dart';
 
-class AdvancedServerSettings extends StatefulWidget {
-  const AdvancedServerSettings({Key? key}) : super(key: key);
+class ServerAdvancedSettingsPage extends StatefulWidget {
+  const ServerAdvancedSettingsPage({Key? key}) : super(key: key);
 
   @override
-  State<AdvancedServerSettings> createState() => _AdvancedServerSettingsState();
+  State<ServerAdvancedSettingsPage> createState() =>
+      _ServerAdvancedSettingsPageState();
 }
 
-class _AdvancedServerSettingsState extends State<AdvancedServerSettings> {
+class _ServerAdvancedSettingsPageState
+    extends State<ServerAdvancedSettingsPage> {
   final TextEditingController _udpPortController = TextEditingController();
   final TextEditingController _tcpPortController = TextEditingController();
   final TextEditingController _httpPortController = TextEditingController();
@@ -36,6 +38,7 @@ class _AdvancedServerSettingsState extends State<AdvancedServerSettings> {
 
   @override
   void dispose() {
+    debugPrint('ServerAdvancedSettingsPage.dispose');
     sub.cancel();
     _udpPortController.dispose();
     _tcpPortController.dispose();

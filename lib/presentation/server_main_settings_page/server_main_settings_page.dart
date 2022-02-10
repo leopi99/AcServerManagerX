@@ -35,6 +35,7 @@ class _ServerMainSettingsState extends State<ServerMainSettings> {
 
   @override
   void dispose() {
+    debugPrint('ServerMainSettingsPage.dispose');
     sub.cancel();
     _nameController.dispose();
     _passwordController.dispose();

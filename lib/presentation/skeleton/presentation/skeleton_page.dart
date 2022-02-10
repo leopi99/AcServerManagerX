@@ -1,5 +1,5 @@
 import 'package:acservermanager/models/server.dart';
-import 'package:acservermanager/presentation/advanced_server_settings/presentation/advanced_server_settings.dart';
+import 'package:acservermanager/presentation/advanced_server_settings/presentation/server_advanced_settings.dart';
 import 'package:acservermanager/presentation/server_main_settings_page/server_main_settings_page.dart';
 import 'package:acservermanager/presentation/settings/settings_page.dart';
 import 'package:acservermanager/presentation/skeleton/bloc/skeleton_bloc.dart';
@@ -48,7 +48,7 @@ class SkeletonPage extends StatelessWidget {
                     index: snapshot.data!,
                     children: const [
                       ServerMainSettings(),
-                      AdvancedServerSettings(),
+                      ServerAdvancedSettingsPage(),
                       SettingsPage(),
                     ],
                   ),
