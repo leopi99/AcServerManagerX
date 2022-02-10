@@ -29,8 +29,8 @@ class SessionBloc extends Bloc<SessionEvent, SessionState> {
 
     await Future.forEach(trackDir.listSync(), (element) async {
       element as FileSystemEntity;
-      final file = File(element.path);
-      tracks.add(Track.fromData(await file.readAsLines(), file.path));
+      final dir = Directory(element.path);
+      tracks.add(Track.fromData(dir));
     });
     emit(SessionTracksLoadedState(tracks));
   }
