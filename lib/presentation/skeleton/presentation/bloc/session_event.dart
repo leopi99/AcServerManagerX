@@ -6,3 +6,5 @@ abstract class SessionEvent {}
 class SessionLoadEvent extends SessionEvent {}
 
 class SessionSaveEvent extends SessionEvent {}
+
+class SessionLoadTracksEvent extends SessionLoadEvent {}

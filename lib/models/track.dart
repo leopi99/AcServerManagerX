@@ -17,4 +17,13 @@ class Track {
     required this.path,
     required this.layouts,
   });
+
+  factory Track.fromData(List<String> data, String path) {
+    return Track(
+      path: path,
+      circuitName: '',
+      layouts: [Layout(name: '', path: '')],
+      name: '',
+    );
+  }
 }

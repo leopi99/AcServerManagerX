@@ -9,6 +9,7 @@ import 'package:acservermanager/presentation/settings/settings_page.dart';
 import 'package:acservermanager/presentation/skeleton/bloc/skeleton_bloc.dart';
 import 'package:acservermanager/presentation/skeleton/presentation/bloc/session_bloc.dart';
 import 'package:acservermanager/presentation/skeleton/presentation/widgets/server_selector_widget.dart';
+import 'package:acservermanager/presentation/track_selection_page/track_selection_page.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -48,6 +49,7 @@ class SkeletonPage extends StatelessWidget {
                 children: const [
                   ServerMainSettings(),
                   ServerAdvancedSettingsPage(),
+                  TrackSelectionPage(),
                   SettingsPage(),
                 ],
               ),
@@ -91,24 +93,7 @@ class SkeletonPage extends StatelessWidget {
                     ),
                     Button(
                       child: const Icon(FluentIcons.add),
-                      onPressed: () async {
-                        final Server server = Server(
-                            serverFilesPath:
-                                '${GetIt.I<SharedManager>().getString(SharedKey.acPath)}/server/preset'
-                                '/SERVER_${(GetIt.I<List<Server>>().length + 1).toString().length != 2 ? "0" + (GetIt.I<List<Server>>().length + 1).toString() : (GetIt.I<List<Server>>().length + 1).toString()}');
-                        if (GetIt.I<List<Server>>().length >= 4) {
-                          //TODO: Create the dir SERVER_NUMBER
-                          await Directory(server.serverFilesPath).create();
-                        }
-                        try {
-                          final file = File(server.cfgFilePath);
-                          await file
-                              .writeAsString(server.toStringList().join('\n'));
-                        } catch (e, stacktrace) {
-                          debugPrint('Error: $e\nStacktrace:\n$stacktrace');
-                          return;
-                        }
-                      },
+                      onPressed: () async => await _createServer(context),
                     ),
                   ],
                 ),
@@ -127,6 +112,10 @@ class SkeletonPage extends StatelessWidget {
                     icon: const Icon(FluentIcons.server_enviroment),
                     title: const Text('Server advanced settings'),
                   ),
+                  PaneItem(
+                    icon: const Icon(FluentIcons.exercise_tracker),
+                    title: const Text('Track selection'),
+                  ),
                 ],
               ),
             );
@@ -134,5 +123,51 @@ class SkeletonPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> _createServer(BuildContext context) async {
+    bool create = false;
+    await showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (context) => ContentDialog(
+        title: const Text('Create a new server?'),
+        content: const Text(''),
+        actions: [
+          FilledButton(
+            child: const Text('Ok'),
+            onPressed: () {
+              create = true;
+              Navigator.pop(context);
+            },
+          ),
+          Button(
+            child: const Text('No'),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+        ],
+      ),
+    );
+    if (!create) return;
+    String serverIndex =
+        (GetIt.I<List<Server>>().length + 1).toString().length != 2
+            ? "0" + (GetIt.I<List<Server>>().length + 1).toString()
+            : (GetIt.I<List<Server>>().length + 1).toString();
+    final Server server = Server(
+        serverFilesPath:
+            '${GetIt.I<SharedManager>().getString(SharedKey.acPath)}/server/preset/SERVER_$serverIndex');
+    if (GetIt.I<List<Server>>().length >= 4) {
+      //TODO: Create the dir SERVER_NUMBER
+      await Directory(server.serverFilesPath).create();
+    }
+    try {
+      final file = File(server.cfgFilePath);
+      await file.writeAsString(server.toStringList().join('\n'));
+    } catch (e, stacktrace) {
+      debugPrint('Error: $e\nStacktrace:\n$stacktrace');
+      return;
+    }
   }
 }
