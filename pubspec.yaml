@@ -9,7 +9,7 @@ environment:
 
 dependencies:
 
-  fluent_ui: 3.8.0
+  fluent_ui: ^3.9.0
 
   flutter_bloc: ^8.0.1
   rxdart: ^0.27.3
