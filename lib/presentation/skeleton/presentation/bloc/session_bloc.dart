@@ -12,7 +12,7 @@ part 'session_event.dart';
 part 'session_state.dart';
 
 class SessionBloc extends Bloc<SessionEvent, SessionState> {
-  Session _currentSession = Session();
+  Session _currentSession = const Session();
 
   Session get currentSession => _currentSession;
 
