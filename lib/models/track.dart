@@ -38,15 +38,27 @@ class Track {
         .listSync()
         .any((element) => element.path.split('/').last.contains('.json'));
     if (hasLayouts) {
-      layouts.add(const Layout(
-          name: 'Default',
-          path:
-              'D:/Giochi/Steam/steamapps/common/assettocorsa/content/tracks/ks_barcelona/ui/layout_gp'));
-      debugPrint('Found more layouts ${directory.path}');
+      await Future.forEach(
+        uiDir.listSync(),
+        (element) async {
+          element as FileSystemEntity;
+          if (element.path.contains('.dds')) return;
+          final Directory layoutDir =
+              Directory(element.path.replaceAll('//', '/'));
+          layouts.add(
+            Layout(
+                name: jsonDecode(
+                  await File(layoutDir.path + kTrackInfoFilePath)
+                      .readAsString(),
+                )['name'],
+                path: layoutDir.path.replaceAll('//', '/')),
+          );
+        },
+      );
     } else {
       //Has only one layout
-      debugPrint('Found only one layout ${directory.path}');
-      layouts.add(Layout(name: 'Default', path: uiDir.path));
+      layouts
+          .add(Layout(name: 'Default', path: uiDir.path.replaceAll('\\', '/')));
     }
     _TrackInfo? info = !hasLayouts
         ? _TrackInfo.fromJson(
@@ -55,7 +67,10 @@ class Track {
             ),
           )
         : null;
-    //TODO: Find the layouts
+    if (hasLayouts) {
+      debugPrint(
+          'More layouts on ${info?.name} -> ${directory.path} [${layouts.length}]');
+    }
     return Track(
       index: index,
       path: directory.path,
