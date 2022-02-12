@@ -9,7 +9,7 @@ import 'package:acservermanager/presentation/settings/settings_page.dart';
 import 'package:acservermanager/presentation/skeleton/bloc/skeleton_bloc.dart';
 import 'package:acservermanager/presentation/skeleton/presentation/bloc/session_bloc.dart';
 import 'package:acservermanager/presentation/skeleton/presentation/widgets/server_selector_widget.dart';
-import 'package:acservermanager/presentation/track_selection_page/track_selection_page.dart';
+import 'package:acservermanager/presentation/track_selection_page/presentation/track_selection_page.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';

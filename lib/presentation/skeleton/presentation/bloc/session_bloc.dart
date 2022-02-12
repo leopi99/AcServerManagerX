@@ -23,6 +23,10 @@ class SessionBloc extends Bloc<SessionEvent, SessionState> {
     on<SessionLoadTracksEvent>((event, emit) async {
       await _loadTracks(emit);
     });
+    on<SessionUnLoadTracksEvent>((event, emit) {
+      debugPrint('Unloaded the tracks');
+      emit(SessionInitial());
+    });
   }
 
   Future<void> _loadTracks(Emitter<SessionState> emit) async {
