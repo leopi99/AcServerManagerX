@@ -18,9 +18,6 @@ class SessionBloc extends Bloc<SessionEvent, SessionState> {
   Session get currentSession => _currentSession;
 
   SessionBloc() : super(SessionInitial()) {
-    on<SessionLoadEvent>((event, emit) {
-      emit(SessionLoadingState());
-    });
     on<SessionLoadTracksEvent>((event, emit) async {
       await _loadTracks(emit);
     });
