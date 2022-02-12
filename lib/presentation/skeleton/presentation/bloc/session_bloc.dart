@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:acservermanager/common/shared_manager.dart';
 import 'package:acservermanager/models/enums/shared_key.dart';
+import 'package:acservermanager/models/session.dart';
 import 'package:acservermanager/models/track.dart';
 import 'package:bloc/bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -11,6 +12,10 @@ part 'session_event.dart';
 part 'session_state.dart';
 
 class SessionBloc extends Bloc<SessionEvent, SessionState> {
+  Session _currentSession = Session();
+
+  Session get currentSession => _currentSession;
+
   SessionBloc() : super(SessionInitial()) {
     on<SessionLoadEvent>((event, emit) {
       emit(SessionLoadingState());

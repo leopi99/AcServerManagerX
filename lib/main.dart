@@ -72,7 +72,7 @@ class _MyAppState extends State<MyApp> {
                             child: const Text('Reset the app'),
                             onPressed: () async {
                               await GetIt.I<SharedManager>().reset();
-                              const MyApp();
+                              main();
                             },
                           ),
                         ],
@@ -90,7 +90,7 @@ class _MyAppState extends State<MyApp> {
                         color: _appearanceBloc.backgroundColor,
                       );
                     } else if (state is LoadingBlocLoadedState) {
-                      return SkeletonPage();
+                      return const SkeletonPage();
                     } else if (state is LoadingBlocShowOnboardingState) {
                       if (state.showAcPath) {
                         return SelectAcPathPage(

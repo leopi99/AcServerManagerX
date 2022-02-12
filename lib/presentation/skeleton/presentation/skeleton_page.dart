@@ -14,9 +14,14 @@ import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
-class SkeletonPage extends StatelessWidget {
-  SkeletonPage({Key? key}) : super(key: key);
+class SkeletonPage extends StatefulWidget {
+  const SkeletonPage({Key? key}) : super(key: key);
 
+  @override
+  State<SkeletonPage> createState() => _SkeletonPageState();
+}
+
+class _SkeletonPageState extends State<SkeletonPage> {
   final SkeletonBloc _bloc = SkeletonBloc();
 
   final SessionBloc _sessionBloc = SessionBloc();
