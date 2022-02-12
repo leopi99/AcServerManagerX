@@ -37,6 +37,7 @@ class Track {
           path:
               'D:/Giochi/Steam/steamapps/common/assettocorsa/content/tracks/ks_barcelona/ui/layout_gp'),
     ];
+    //TODO: Find the layouts
     return Track(
       index: index,
       path: directory.path,
@@ -45,8 +46,8 @@ class Track {
       name: '',
       // info: _TrackInfo.fromJson(
       //   jsonDecode(
-      //       await File(directory.path.replaceAll('\\', '/') + kUiTrackInfo)
-      //           .readAsString()),
+      //     await File(_getTrackInfoPath(directory.path)).readAsString(),
+      //   ),
       // ),
     );
   }
