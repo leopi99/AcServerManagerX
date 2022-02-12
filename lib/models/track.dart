@@ -39,7 +39,7 @@ class Track {
     return Track(
       index: index,
       path: directory.path,
-      circuitName: '',
+      circuitName: 'Test track$index',
       layouts: layouts,
       name: '',
       // info: _TrackInfo.fromJson(

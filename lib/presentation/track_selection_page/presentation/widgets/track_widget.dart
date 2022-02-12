@@ -27,8 +27,13 @@ class TrackWidget extends StatelessWidget {
             width: 2,
           ),
         ),
-        child: Image.file(
-          File(track.layouts.first.previewImagePath),
+        child: Column(
+          children: [
+            Image.file(
+              File(track.layouts.first.previewImagePath),
+            ),
+            Text(track.circuitName),
+          ],
         ),
       ),
     );
