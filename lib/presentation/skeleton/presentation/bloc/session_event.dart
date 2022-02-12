@@ -10,3 +10,8 @@ class SessionSaveEvent extends SessionEvent {}
 class SessionLoadTracksEvent extends SessionEvent {}
 
 class SessionUnLoadTracksEvent extends SessionEvent {}
+
+class SessionChangeSelectedTrack extends SessionEvent {
+  final Track track;
+  SessionChangeSelectedTrack(this.track);
+}

@@ -40,8 +40,8 @@ class _TrackSelectionPageState extends State<TrackSelectionPage> {
           return GridView.count(
             crossAxisCount: MediaQuery.of(context).size.width ~/ 128,
             children: List.generate(
-              state.tracks.length,
-              (index) => TrackWidget(track: state.tracks[index]),
+              _sessionBloc!.loadedTracks.length,
+              (index) => TrackWidget(track: _sessionBloc!.loadedTracks[index]),
             ),
           );
         }

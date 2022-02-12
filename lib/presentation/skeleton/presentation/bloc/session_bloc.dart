@@ -14,6 +14,7 @@ part 'session_state.dart';
 class SessionBloc extends Bloc<SessionEvent, SessionState> {
   static const String _kTracksPath = "/content/tracks";
   Session _currentSession = const Session();
+  List<Track> loadedTracks = [];
 
   Session get currentSession => _currentSession;
 
@@ -23,7 +24,11 @@ class SessionBloc extends Bloc<SessionEvent, SessionState> {
     });
     on<SessionUnLoadTracksEvent>((event, emit) {
       debugPrint('Removed the tracks');
+      loadedTracks = [];
       emit(SessionInitial());
+    });
+    on<SessionChangeSelectedTrack>((event, emit) {
+      _currentSession = _currentSession.copyWith(selectedTrack: event.track);
     });
   }
 
@@ -48,6 +53,7 @@ class SessionBloc extends Bloc<SessionEvent, SessionState> {
       emit(SessionErrorState(e.toString()));
       return;
     }
-    emit(SessionTracksLoadedState(tracks));
+    loadedTracks = tracks;
+    emit(SessionTracksLoadedState());
   }
 }
