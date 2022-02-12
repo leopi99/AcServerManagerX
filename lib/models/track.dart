@@ -2,11 +2,12 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:acservermanager/models/layout.dart';
+import 'package:flutter/foundation.dart';
 
 class Track {
   static const String kUiDirPath = "/ui";
   static const String kPreviewPath = '$kUiDirPath/preview.png';
-  static const String kTrackInfoFilePath = "ui_track.json";
+  static const String kTrackInfoFilePath = "/ui_track.json";
   static const String kUiTrackInfo = '$kUiDirPath/$kTrackInfoFilePath';
 
   final String name;
@@ -31,24 +32,37 @@ class Track {
   });
 
   static Future<Track> fromData(Directory directory, int index) async {
-    List<Layout> layouts = [
-      const Layout(
-          name: 'Test layout',
+    List<Layout> layouts = [];
+    final Directory uiDir = Directory(directory.path + kUiDirPath);
+    final bool hasLayouts = !uiDir
+        .listSync()
+        .any((element) => element.path.split('/').last.contains('.json'));
+    if (hasLayouts) {
+      layouts.add(const Layout(
+          name: 'Default',
           path:
-              'D:/Giochi/Steam/steamapps/common/assettocorsa/content/tracks/ks_barcelona/ui/layout_gp'),
-    ];
+              'D:/Giochi/Steam/steamapps/common/assettocorsa/content/tracks/ks_barcelona/ui/layout_gp'));
+      debugPrint('Found more layouts ${directory.path}');
+    } else {
+      //Has only one layout
+      debugPrint('Found only one layout ${directory.path}');
+      layouts.add(Layout(name: 'Default', path: uiDir.path));
+    }
+    _TrackInfo? info = !hasLayouts
+        ? _TrackInfo.fromJson(
+            jsonDecode(
+              await File(_getTrackInfoPath(directory.path)).readAsString(),
+            ),
+          )
+        : null;
     //TODO: Find the layouts
     return Track(
       index: index,
       path: directory.path,
-      circuitName: 'Test track$index',
+      circuitName: info?.name ?? 'NoName',
       layouts: layouts,
-      name: '',
-      // info: _TrackInfo.fromJson(
-      //   jsonDecode(
-      //     await File(_getTrackInfoPath(directory.path)).readAsString(),
-      //   ),
-      // ),
+      name: info?.description ?? '',
+      info: info,
     );
   }
 
@@ -68,6 +82,7 @@ class _TrackInfo {
   final String description;
   final String country;
   final String length;
+  final String name;
 
   ///1 is clockwise
   final int run;
@@ -79,6 +94,7 @@ class _TrackInfo {
     required this.length,
     required this.run,
     required this.pitBoxes,
+    required this.name,
   });
 
   factory _TrackInfo.fromJson(Map<String, dynamic> json) {
@@ -88,6 +104,7 @@ class _TrackInfo {
       length: json['length'],
       run: json['run'] == "clockwise" ? 1 : 0,
       pitBoxes: int.tryParse(json['pitboxes']) ?? 0,
+      name: json['name'],
     );
   }
 }
