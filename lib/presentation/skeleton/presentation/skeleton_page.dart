@@ -75,6 +75,7 @@ class SkeletonPage extends StatelessWidget {
                             context: context,
                             barrierDismissible: true,
                             builder: (context) => ContentDialog(
+                              title: const Text('Select the server to edit'),
                               content: ServerSelectorWidget(
                                 servers: GetIt.I<List<Server>>(),
                               ),
