@@ -29,6 +29,7 @@ class SessionBloc extends Bloc<SessionEvent, SessionState> {
     });
     on<SessionChangeSelectedTrack>((event, emit) {
       _currentSession = _currentSession.copyWith(selectedTrack: event.track);
+      emit(SessionTracksLoadedState());
     });
   }
 

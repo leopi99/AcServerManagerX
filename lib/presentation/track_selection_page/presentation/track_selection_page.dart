@@ -41,7 +41,14 @@ class _TrackSelectionPageState extends State<TrackSelectionPage> {
             crossAxisCount: MediaQuery.of(context).size.width ~/ 128,
             children: List.generate(
               _sessionBloc!.loadedTracks.length,
-              (index) => TrackWidget(track: _sessionBloc!.loadedTracks[index]),
+              (index) => TrackWidget(
+                track: _sessionBloc!.loadedTracks[index],
+                onSelect: (track) {
+                  _sessionBloc!.add(SessionChangeSelectedTrack(track));
+                },
+                isSelected: _sessionBloc!.currentSession.selectedTrack ==
+                    _sessionBloc!.loadedTracks[index],
+              ),
             ),
           );
         }
