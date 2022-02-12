@@ -51,9 +51,8 @@ class SessionBloc extends Bloc<SessionEvent, SessionState> {
       });
     } catch (e, stacktrace) {
       debugPrint('Error: $e\nStackTrace:\n$stacktrace');
-      //TODO: Uncomment when ready
-      // emit(SessionErrorState(e.toString()));
-      // return;
+      emit(SessionErrorState(e.toString()));
+      return;
     }
     loadedTracks = tracks;
     emit(SessionTracksLoadedState());

@@ -37,6 +37,7 @@ class Track {
     final bool hasLayouts = !uiDir
         .listSync()
         .any((element) => element.path.split('/').last.contains('.json'));
+    //If true, the track has more than one layout
     if (hasLayouts) {
       await Future.forEach(
         uiDir.listSync(),
@@ -45,25 +46,34 @@ class Track {
           if (element.path.contains('.dds')) return;
           final Directory layoutDir =
               Directory(element.path.replaceAll('//', '/'));
+          String? name;
+          try {
+            name = jsonDecode(
+              await File((layoutDir.path + kTrackInfoFilePath)
+                      .replaceAll('\\', '/'))
+                  .readAsString(),
+            )['name'];
+          } catch (e) {
+            debugPrint('Unable to find the layout name for $layoutDir');
+          }
           layouts.add(
             Layout(
-                name: jsonDecode(
-                  await File(layoutDir.path + kTrackInfoFilePath)
-                      .readAsString(),
-                )['name'],
-                path: layoutDir.path.replaceAll('//', '/')),
+              name: name ?? 'NoName',
+              path: layoutDir.path.replaceAll('//', '/'),
+            ),
           );
         },
       );
     } else {
-      //Has only one layout
       layouts
           .add(Layout(name: 'Default', path: uiDir.path.replaceAll('\\', '/')));
     }
     _TrackInfo? info = !hasLayouts
         ? _TrackInfo.fromJson(
             jsonDecode(
-              await File(_getTrackInfoPath(directory.path)).readAsString(),
+              await File(
+                      _getTrackInfoPath(directory.path.replaceAll('\\', '/')))
+                  .readAsString(),
             ),
           )
         : null;
