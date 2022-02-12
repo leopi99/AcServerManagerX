@@ -6,7 +6,8 @@ import 'package:acservermanager/models/layout.dart';
 class Track {
   static const String kUiDirPath = "/ui";
   static const String kPreviewPath = '$kUiDirPath/preview.png';
-  static const String kUiTrackInfo = '$kUiDirPath/ui_track.json';
+  static const String kTrackInfoFilePath = "ui_track.json";
+  static const String kUiTrackInfo = '$kUiDirPath/$kTrackInfoFilePath';
 
   final String name;
   final String circuitName;
@@ -48,6 +49,17 @@ class Track {
       //           .readAsString()),
       // ),
     );
+  }
+
+  static String _getTrackInfoPath(String path, {String? layoutName}) {
+    String layout = "";
+    if (layoutName != null) {
+      layout = "/$layoutName/";
+    }
+    return path.replaceAll('\\', '/') +
+        kUiDirPath +
+        layout +
+        kTrackInfoFilePath;
   }
 }
 
