@@ -46,6 +46,7 @@ class Track {
           if (element.path.contains('.dds')) return;
           final Directory layoutDir =
               Directory(element.path.replaceAll('//', '/'));
+          debugPrint('Found layout: ${layoutDir.path}');
           String? name;
           try {
             name = jsonDecode(
@@ -65,8 +66,9 @@ class Track {
         },
       );
     } else {
-      layouts
-          .add(Layout(name: 'Default', path: uiDir.path.replaceAll('\\', '/')));
+      layouts.add(
+        Layout(name: 'Default', path: uiDir.path.replaceAll('\\', '/')),
+      );
     }
     _TrackInfo? info = !hasLayouts
         ? _TrackInfo.fromJson(
@@ -77,10 +79,6 @@ class Track {
             ),
           )
         : null;
-    if (hasLayouts) {
-      debugPrint(
-          'More layouts on ${info?.name} -> ${directory.path} [${layouts.length}]');
-    }
     return Track(
       index: index,
       path: directory.path,
