@@ -5,8 +5,8 @@ import 'package:acservermanager/models/enums/shared_key.dart';
 import 'package:acservermanager/models/session.dart';
 import 'package:acservermanager/models/track.dart';
 import 'package:bloc/bloc.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
-import 'package:meta/meta.dart';
 
 part 'session_event.dart';
 part 'session_state.dart';
@@ -32,11 +32,17 @@ class SessionBloc extends Bloc<SessionEvent, SessionState> {
 
     List<Track> tracks = [];
 
-    await Future.forEach(trackDir.listSync(), (element) async {
-      element as FileSystemEntity;
-      final dir = Directory(element.path);
-      tracks.add(Track.fromData(dir));
-    });
+    try {
+      await Future.forEach(trackDir.listSync(), (element) async {
+        element as FileSystemEntity;
+        final dir = Directory(element.path);
+        tracks.add(await Track.fromData(dir));
+      });
+    } catch (e, stacktrace) {
+      debugPrint('Error: $e\nStackTrace:\n$stacktrace');
+      emit(SessionErrorState(e.toString()));
+      return;
+    }
     emit(SessionTracksLoadedState(tracks));
   }
 }

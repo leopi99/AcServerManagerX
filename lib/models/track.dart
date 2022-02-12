@@ -6,6 +6,7 @@ import 'package:acservermanager/models/layout.dart';
 class Track {
   static const String kUiDirPath = "/ui";
   static const String kPreviewPath = '$kUiDirPath/preview.png';
+  static const String kUiTrackInfo = '$kUiDirPath/ui_track.json';
 
   final String name;
   final String circuitName;
@@ -25,14 +26,21 @@ class Track {
     this.info,
   });
 
-  factory Track.fromData(Directory directory) {
+  static Future<Track> fromData(Directory directory) async {
+    List<Layout> layouts = [
+      const Layout(
+          name: 'Test layout',
+          path:
+              'D:/Giochi/Steam/steamapps/common/assettocorsa/content/tracks/ks_barcelona/ui/layout_gp'),
+    ];
     return Track(
       path: directory.path,
       circuitName: '',
-      layouts: [],
+      layouts: layouts,
       name: '',
       info: _TrackInfo.fromJson(
-        jsonDecode(File(directory.path + kPreviewPath).readAsStringSync()),
+        jsonDecode(await File(directory.path.replaceAll('\\', '/') + kUiDirPath)
+            .readAsString()),
       ),
     );
   }

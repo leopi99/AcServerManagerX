@@ -32,17 +32,32 @@ class _SkeletonPageState extends State<SkeletonPage> {
       create: (context) => _sessionBloc,
       child: BlocListener<SessionBloc, SessionState>(
         bloc: _sessionBloc,
-        listenWhen: (previous, current) => current is SessionLoadingState,
+        listenWhen: (previous, current) =>
+            current is SessionLoadingState || current is SessionErrorState,
         listener: (context, state) {
-          showDialog(
-            context: context,
-            barrierDismissible: false,
-            builder: (context) {
-              return const ContentDialog(
-                content: ProgressRing(),
-              );
-            },
-          );
+          if (state is SessionLoadingState) {
+            showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: (context) {
+                return const ContentDialog(
+                  content: ProgressRing(),
+                );
+              },
+            );
+          } else if (state is SessionErrorState) {
+            showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: (context) => ContentDialog(
+                title: Text(
+                  'Ops! Something went wrong',
+                  style: TextStyle(color: Colors.red),
+                ),
+                content: Text(state.error),
+              ),
+            );
+          }
         },
         child: StreamBuilder<int>(
           stream: _bloc.currentPage,

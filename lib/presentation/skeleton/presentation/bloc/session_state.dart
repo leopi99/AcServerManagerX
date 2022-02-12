@@ -12,3 +12,9 @@ class SessionTracksLoadedState extends SessionState {
 
   SessionTracksLoadedState(this.tracks);
 }
+
+class SessionErrorState extends SessionState {
+  final String error;
+
+  SessionErrorState(this.error);
+}
