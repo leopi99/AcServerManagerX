@@ -152,14 +152,26 @@ class SkeletonPage extends StatelessWidget {
       ),
     );
     if (!create) return;
-    String serverIndex =
-        (GetIt.I<List<Server>>().length + 1).toString().length != 2
-            ? "0" + (GetIt.I<List<Server>>().length + 1).toString()
-            : (GetIt.I<List<Server>>().length + 1).toString();
+
+    final List<int> _serverPaths = GetIt.I<List<Server>>()
+        .map(
+            (e) => int.parse(e.serverFilesPath.split('/').last.split('_').last))
+        .toList();
+    //Checks if the server index already exists
+    int currentIndex = 0;
+    for (var _ in _serverPaths) {
+      if (!_serverPaths.contains(currentIndex)) {
+        break;
+      }
+      currentIndex++;
+    }
+    String serverIndex = currentIndex.toString().length != 2
+        ? "0" + currentIndex.toString()
+        : currentIndex.toString();
     final Server server = Server(
         serverFilesPath:
             '${GetIt.I<SharedManager>().getString(SharedKey.acPath)}/server/preset/SERVER_$serverIndex');
-    if (GetIt.I<List<Server>>().length >= 4) {
+    if (currentIndex >= 4) {
       //TODO: Create the dir SERVER_NUMBER
       await Directory(server.serverFilesPath).create();
     }
