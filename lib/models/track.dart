@@ -18,15 +18,18 @@ class Track {
 
   final _TrackInfo? info;
 
+  final int index;
+
   const Track({
     required this.circuitName,
     required this.name,
     required this.path,
     required this.layouts,
+    required this.index,
     this.info,
   });
 
-  static Future<Track> fromData(Directory directory) async {
+  static Future<Track> fromData(Directory directory, int index) async {
     List<Layout> layouts = [
       const Layout(
           name: 'Test layout',
@@ -34,14 +37,16 @@ class Track {
               'D:/Giochi/Steam/steamapps/common/assettocorsa/content/tracks/ks_barcelona/ui/layout_gp'),
     ];
     return Track(
+      index: index,
       path: directory.path,
       circuitName: '',
       layouts: layouts,
       name: '',
-      info: _TrackInfo.fromJson(
-        jsonDecode(await File(directory.path.replaceAll('\\', '/') + kUiDirPath)
-            .readAsString()),
-      ),
+      // info: _TrackInfo.fromJson(
+      //   jsonDecode(
+      //       await File(directory.path.replaceAll('\\', '/') + kUiTrackInfo)
+      //           .readAsString()),
+      // ),
     );
   }
 }
@@ -49,7 +54,7 @@ class Track {
 class _TrackInfo {
   final String description;
   final String country;
-  final int length;
+  final String length;
 
   ///1 is clockwise
   final int run;

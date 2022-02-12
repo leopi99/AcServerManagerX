@@ -32,11 +32,14 @@ class SessionBloc extends Bloc<SessionEvent, SessionState> {
 
     List<Track> tracks = [];
 
+    int index = 0;
+
     try {
       await Future.forEach(trackDir.listSync(), (element) async {
         element as FileSystemEntity;
         final dir = Directory(element.path);
-        tracks.add(await Track.fromData(dir));
+        tracks.add(await Track.fromData(dir, index));
+        index++;
       });
     } catch (e, stacktrace) {
       debugPrint('Error: $e\nStackTrace:\n$stacktrace');
