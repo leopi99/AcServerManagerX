@@ -32,8 +32,13 @@ class _SkeletonPageState extends State<SkeletonPage> {
       create: (context) => _sessionBloc,
       child: BlocListener<SessionBloc, SessionState>(
         bloc: _sessionBloc,
-        listenWhen: (previous, current) => true,
+        listenWhen: (previous, current) =>
+            current is SessionLoadingState ||
+            current is SessionErrorState ||
+            (previous is SessionLoadingState &&
+                current is SessionTracksLoadedState),
         listener: (context, state) {
+          debugPrint('CurrentState: $state');
           if (state is SessionLoadingState) {
             showDialog(
               context: context,
@@ -56,8 +61,8 @@ class _SkeletonPageState extends State<SkeletonPage> {
                 content: Text(state.error),
               ),
             );
-          } else if (state is SessionLoadTracksEvent) {
-            print('Popping the navigator');
+          } else if (state is SessionTracksLoadedState) {
+            //Pops the loading dialog
             Navigator.pop(context);
           }
         },
