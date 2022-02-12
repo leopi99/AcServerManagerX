@@ -12,6 +12,7 @@ part 'session_event.dart';
 part 'session_state.dart';
 
 class SessionBloc extends Bloc<SessionEvent, SessionState> {
+  static const String _kTracksPath = "/content/tracks";
   Session _currentSession = const Session();
 
   Session get currentSession => _currentSession;
@@ -24,7 +25,7 @@ class SessionBloc extends Bloc<SessionEvent, SessionState> {
       await _loadTracks(emit);
     });
     on<SessionUnLoadTracksEvent>((event, emit) {
-      debugPrint('Unloaded the tracks');
+      debugPrint('Removed the tracks');
       emit(SessionInitial());
     });
   }
@@ -32,7 +33,7 @@ class SessionBloc extends Bloc<SessionEvent, SessionState> {
   Future<void> _loadTracks(Emitter<SessionState> emit) async {
     final trackDir = Directory(
         (await GetIt.I<SharedManager>().getString(SharedKey.acPath))! +
-            "/content/tracks");
+            _kTracksPath);
 
     List<Track> tracks = [];
 

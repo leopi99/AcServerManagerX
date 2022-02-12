@@ -12,6 +12,9 @@ part 'loading_bloc_event.dart';
 part 'loading_bloc_state.dart';
 
 class LoadingBlocBloc extends Bloc<LoadingBlocEvent, LoadingBlocState> {
+  static const String _kServerConfig = "/server_cfg.ini";
+  static const String _kPresetsPath = "/server/presets";
+
   LoadingBlocBloc() : super(LoadingBlocInitial()) {
     on<LoadingBlocLoadEvent>((event, emit) async {
       final darkMode =
@@ -39,8 +42,8 @@ class LoadingBlocBloc extends Bloc<LoadingBlocEvent, LoadingBlocState> {
     debugPrint('AcPath: $acPath');
     List<File> files = [];
     List<String> serverNames = [];
-    final String presetsPath = acPath + '/server/presets';
-    //Searched for already configured servers
+    final String presetsPath = acPath + _kPresetsPath;
+    //Searches for already configured servers
     try {
       Directory(presetsPath).listSync().forEach((element) {
         Directory dir = Directory(element.path);
@@ -48,8 +51,9 @@ class LoadingBlocBloc extends Bloc<LoadingBlocEvent, LoadingBlocState> {
           serverNames.add(dir.path.split('\\').last);
         }
       });
+      //Adds the config files of the servers that are already configured
       for (String name in serverNames) {
-        files.add(File('$presetsPath/$name/server_cfg.ini'));
+        files.add(File('$presetsPath/$name/$_kServerConfig'));
       }
       debugPrint('Servers: ${serverNames.toString()}');
     } catch (e, stacktrace) {
