@@ -11,3 +11,12 @@ This app is rewritten using the Flutter framework.
 ## Why using this app?
 
 The main concept of this app is not to recreate something that works, instead to create an app that "overrides" the stock one, with a much more modern ui and performance improvements.
+
+## What are the implemented features?
+
+- [x] Reads the previously created servers.
+- [x] Reads installed tracks (Not completely implemented, some errors in stock tracks with layouts).
+- [ ] Reads the installed cars.
+- [ ] Saves the changes.
+- [ ] Creates new servers (not quite there yet).
+- [ ] Selects the server that can be started from the .bat file.
