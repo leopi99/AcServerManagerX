@@ -40,6 +40,7 @@ class _TrackSelectionPageState extends State<TrackSelectionPage> {
           return GridView.builder(
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: MediaQuery.of(context).size.width ~/ 128,
+              mainAxisExtent: 190,
             ),
             itemBuilder: (context, index) => TrackWidget(
               track: _sessionBloc!.loadedTracks[index],

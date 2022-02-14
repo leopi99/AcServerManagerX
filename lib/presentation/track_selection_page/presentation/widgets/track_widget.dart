@@ -33,6 +33,11 @@ class TrackWidget extends StatelessWidget {
               File(track.layouts.first.previewImagePath),
             ),
             Text(track.circuitName),
+            if (track.info != null)
+              Text(
+                track.info!.description,
+                style: const TextStyle(color: Color.fromARGB(255, 126, 126, 126)),
+              ),
           ],
         ),
       ),
