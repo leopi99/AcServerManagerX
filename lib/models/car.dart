@@ -31,4 +31,7 @@ class Car {
           json.containsKey('specs') ? CarSpecs.fromJson(json['specs']) : null,
     );
   }
+
+  String get logoPath => filePath + "/logo.png";
+
 }
