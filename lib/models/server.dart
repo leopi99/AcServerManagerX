@@ -1,4 +1,5 @@
 import 'package:acservermanager/models/assists.dart';
+import 'package:acservermanager/models/car.dart';
 import 'package:acservermanager/models/realism.dart';
 import 'package:acservermanager/models/server/server_base_settings.dart';
 import 'package:acservermanager/models/server/server_file_names.dart';
@@ -21,6 +22,7 @@ class Server extends ServerBaseSettings implements Equatable {
   final int clientsAllowed;
   final String? managerDescription;
   final String serverFilesPath;
+  final List<Car> cars;
 
   Server({
     String adminPassword = "admin",
@@ -42,6 +44,7 @@ class Server extends ServerBaseSettings implements Equatable {
     this.votingBanning = const VotingBanning(),
     this.clientsAllowed = 12,
     this.managerDescription,
+    this.cars = const [],
     required this.serverFilesPath,
   })  : assert(clientsAllowed >= 2 && clientsAllowed <= 24),
         super(
@@ -131,6 +134,7 @@ class Server extends ServerBaseSettings implements Equatable {
     VotingBanning? votingBanning,
     String? managerDescription,
     String? serverFilesPath,
+    List<Car>? cars,
   }) =>
       Server(
         adminPassword: adminPassword ?? this.adminPassword,
@@ -154,6 +158,7 @@ class Server extends ServerBaseSettings implements Equatable {
         votingBanning: votingBanning ?? this.votingBanning,
         managerDescription: managerDescription ?? this.managerDescription,
         serverFilesPath: serverFilesPath ?? this.serverFilesPath,
+        cars: cars ?? this.cars,
       );
 
   ///TODO:
@@ -181,7 +186,8 @@ class Server extends ServerBaseSettings implements Equatable {
         showOnLobby,
         votingBanning,
         managerDescription,
-        serverFilesPath
+        serverFilesPath,
+        cars,
       ];
 
   @override
