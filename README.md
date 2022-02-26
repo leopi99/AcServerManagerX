@@ -4,7 +4,7 @@ This app is rewritten using the Flutter framework.
 Since this app uses Windows level apis is locked to the Windows platform.
 In the future (since Steam's proton makes assetto corsa work on Linux) will be tested and unlocked for Windows and Linux; for now is in development only the Windows version.
 
-## Why using this app?
+## Why use this app?
 
 The main concept of this app is not to recreate something that works, instead to create an app that "overrides" the stock one, with a much more modern ui and performance improvements.
 
@@ -14,10 +14,10 @@ The main concept of this app is not to recreate something that works, instead to
 - [x] Reads installed tracks (Not completely implemented, some errors in stock tracks with layouts).
 - [ ] Reads the installed cars.
 - [ ] Saves the changes.
-- [ ] Creates new servers (not quite there yet).
+- [-] Creates new servers.
 - [ ] Selects the server that can be started from the .bat file.
 
-## Run the app from the repo
+## Run the app from the repo's clone
 
 In order to run/compile the app from this repo you need the Flutter framework installed ([Flutter get started](https://docs.flutter.dev/get-started/install)).
 After the flutter install, you can run the app in debug mode by entering this command (inside the cloned folder, where the main.dart file is located) `flutter run -d windows`.
