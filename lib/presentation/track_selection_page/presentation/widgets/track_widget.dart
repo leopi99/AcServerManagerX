@@ -16,7 +16,7 @@ class TrackWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    final widget = GestureDetector(
       onTap: () {
         onSelect(track);
       },
@@ -36,11 +36,19 @@ class TrackWidget extends StatelessWidget {
             if (track.info != null)
               Text(
                 track.info!.description,
-                style: const TextStyle(color: Color.fromARGB(255, 126, 126, 126)),
+                textAlign: TextAlign.center,
+                style:
+                    const TextStyle(color: Color.fromARGB(255, 126, 126, 126)),
               ),
           ],
         ),
       ),
     );
+    return track.info != null
+        ? Tooltip(
+            message: track.info!.description,
+            child: widget,
+          )
+        : widget;
   }
 }

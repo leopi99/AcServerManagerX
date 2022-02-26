@@ -30,6 +30,11 @@ class _TrackSelectionPageState extends State<TrackSelectionPage> {
     super.dispose();
   }
 
+  bool isSelected(int index) {
+    return _sessionBloc!.currentSession.selectedTrack ==
+        _sessionBloc!.loadedTracks[index];
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<SessionBloc, SessionState>(
@@ -47,8 +52,7 @@ class _TrackSelectionPageState extends State<TrackSelectionPage> {
               onSelect: (track) {
                 _sessionBloc!.add(SessionChangeSelectedTrack(track));
               },
-              isSelected: _sessionBloc!.currentSession.selectedTrack ==
-                  _sessionBloc!.loadedTracks[index],
+              isSelected: isSelected(index),
             ),
             itemCount: _sessionBloc!.loadedTracks.length,
           );
