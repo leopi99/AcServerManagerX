@@ -1,3 +1,5 @@
+import 'package:acservermanager/models/car_specs.dart';
+
 class Car {
   final String name;
   final String brand;
@@ -5,6 +7,7 @@ class Car {
   final List<String> tags;
   final String carClass;
   final String filePath;
+  final CarSpecs? specs;
 
   const Car({
     required this.brand,
@@ -13,6 +16,7 @@ class Car {
     required this.tags,
     required this.carClass,
     required this.filePath,
+    this.specs,
   });
 
   factory Car.fromJson(Map<String, dynamic> json, String filePath) {
@@ -23,6 +27,8 @@ class Car {
       filePath: filePath,
       name: json['name'],
       tags: json['tags'],
+      specs:
+          json.containsKey('specs') ? CarSpecs.fromJson(json['specs']) : null,
     );
   }
 }
