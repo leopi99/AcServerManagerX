@@ -14,7 +14,7 @@ The main concept of this app is not to recreate something that works, instead to
 - [x] Reads installed tracks (Not completely implemented, some errors in stock tracks with layouts).
 - [ ] Reads the installed cars.
 - [ ] Saves the changes.
-- [-] Creates new servers.
+- [ ] Creates new servers.
 - [ ] Selects the server that can be started from the .bat file.
 
 ## Run the app from the repo's clone
