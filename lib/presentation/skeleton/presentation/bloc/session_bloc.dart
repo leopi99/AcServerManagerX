@@ -1,5 +1,4 @@
-import 'dart:io';
-
+import 'package:acservermanager/common/helpers/track_helper.dart';
 import 'package:acservermanager/common/shared_manager.dart';
 import 'package:acservermanager/models/enums/shared_key.dart';
 import 'package:acservermanager/models/session.dart';
@@ -12,7 +11,6 @@ part 'session_event.dart';
 part 'session_state.dart';
 
 class SessionBloc extends Bloc<SessionEvent, SessionState> {
-  static const String _kTracksPath = "/content/tracks";
   Session _currentSession = const Session();
   List<Track> loadedTracks = [];
 
@@ -34,26 +32,13 @@ class SessionBloc extends Bloc<SessionEvent, SessionState> {
   }
 
   Future<void> _loadTracks(Emitter<SessionState> emit) async {
-    final trackDir = Directory(
-        (await GetIt.I<SharedManager>().getString(SharedKey.acPath))! +
-            _kTracksPath);
-
-    List<Track> tracks = [];
-
-    int index = 0;
-
-    try {
-      await Future.forEach(trackDir.listSync(), (element) async {
-        element as FileSystemEntity;
-        final dir = Directory(element.path);
-        tracks.add(await Track.fromData(dir, index));
-        index++;
-      });
-    } catch (e, stacktrace) {
-      debugPrint('Error: $e\nStackTrace:\n$stacktrace');
-      emit(SessionErrorState(e.toString()));
-      return;
-    }
+    final tracks = await TrackHelper.loadTracks(
+      acPath: (await GetIt.I<SharedManager>().getString(SharedKey.acPath))!,
+      onError: (error) {
+        emit(SessionErrorState(error));
+        return;
+      },
+    );
     loadedTracks = tracks;
     emit(SessionTracksLoadedState());
   }
