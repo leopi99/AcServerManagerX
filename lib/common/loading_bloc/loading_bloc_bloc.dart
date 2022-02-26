@@ -6,6 +6,7 @@ import 'package:acservermanager/models/enums/shared_key.dart';
 import 'package:acservermanager/models/server.dart';
 import 'package:bloc/bloc.dart';
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 
 part 'loading_bloc_event.dart';
@@ -16,6 +17,11 @@ class LoadingBlocBloc extends Bloc<LoadingBlocEvent, LoadingBlocState> {
   static const String _kPresetsPath = "/server/presets";
 
   LoadingBlocBloc() : super(LoadingBlocInitial()) {
+    if (!Platform.isWindows) {
+      throw (PlatformException(
+          code: "platform_not_supported",
+          message: "${Platform.environment} is not supported."));
+    }
     on<LoadingBlocLoadEvent>((event, emit) async {
       final darkMode =
           GetIt.instance<SharedManager>().getBool(SharedKey.appearance);
