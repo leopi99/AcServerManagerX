@@ -14,11 +14,17 @@ class _CarSelectionPageState extends State<CarSelectionPage> {
 
   @override
   void initState() {
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
       _sessionBloc = BlocProvider.of<SessionBloc>(context);
       _sessionBloc!.add(SessionLoadCarsEvent());
     });
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    _sessionBloc ??= BlocProvider.of<SessionBloc>(context);
+    super.didChangeDependencies();
   }
 
   @override
@@ -30,6 +36,22 @@ class _CarSelectionPageState extends State<CarSelectionPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return BlocConsumer<SessionBloc, SessionState>(
+      bloc: _sessionBloc,
+      listener: (context, state) {},
+      builder: (context, state) {
+        if (state is SessionCarsLoadedState) {
+          return GridView.builder(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: MediaQuery.of(context).size.width ~/ 128,
+              mainAxisExtent: 190,
+            ),
+            itemBuilder: (context, index) => Container(),
+            itemCount: _sessionBloc!.loadedCars.length,
+          );
+        }
+        return Container();
+      },
+    );
   }
 }

@@ -69,7 +69,8 @@ class SessionBloc extends Bloc<SessionEvent, SessionState> {
       },
     );
     loadedCars = cars;
-    emit(SessionTracksLoadedState());
+    debugPrint("Cars loaded");
+    emit(SessionCarsLoadedState());
   }
 
   void _selectCar(Emitter<SessionState> emit, SessionSelectCarEvent event) {

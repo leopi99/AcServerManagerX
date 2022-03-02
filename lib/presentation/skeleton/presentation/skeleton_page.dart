@@ -46,6 +46,7 @@ class _SkeletonPageState extends State<SkeletonPage> {
               barrierDismissible: false,
               builder: (context) {
                 return const ContentDialog(
+                  backgroundDismiss: false,
                   content: ProgressRing(),
                 );
               },
@@ -55,6 +56,7 @@ class _SkeletonPageState extends State<SkeletonPage> {
               context: context,
               barrierDismissible: false,
               builder: (context) => ContentDialog(
+                backgroundDismiss: false,
                 title: Text(
                   'Ops! Something went wrong',
                   style: TextStyle(color: Colors.red),
