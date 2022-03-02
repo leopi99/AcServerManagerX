@@ -4,6 +4,7 @@ import 'package:acservermanager/common/shared_manager.dart';
 import 'package:acservermanager/models/enums/shared_key.dart';
 import 'package:acservermanager/models/server.dart';
 import 'package:acservermanager/presentation/advanced_server_settings/presentation/server_advanced_settings.dart';
+import 'package:acservermanager/presentation/car_selection_page/presentation/car_selection_page.dart';
 import 'package:acservermanager/presentation/server_main_settings_page/server_main_settings_page.dart';
 import 'package:acservermanager/presentation/settings/settings_page.dart';
 import 'package:acservermanager/presentation/skeleton/bloc/skeleton_bloc.dart';
@@ -77,6 +78,7 @@ class _SkeletonPageState extends State<SkeletonPage> {
                   ServerMainSettings(),
                   ServerAdvancedSettingsPage(),
                   TrackSelectionPage(),
+                  CarSelectionPage(),
                   SettingsPage(),
                 ],
               ),
@@ -143,6 +145,10 @@ class _SkeletonPageState extends State<SkeletonPage> {
                   PaneItem(
                     icon: const Icon(FluentIcons.exercise_tracker),
                     title: const Text('Track selection'),
+                  ),
+                  PaneItem(
+                    icon: const Icon(FluentIcons.car),
+                    title: const Text('Car selection'),
                   ),
                 ],
               ),

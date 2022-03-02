@@ -5,7 +5,7 @@ import 'package:acservermanager/models/car.dart';
 import 'package:flutter/foundation.dart';
 
 class CarHelper {
-  static const _kCarsPath = "content/cars/";
+  static const _kCarsPath = "/content/cars/";
   static const _kCarJson = "/ui_car.json";
 
   static Future<List<Car>> loadCars(
