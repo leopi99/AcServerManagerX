@@ -69,7 +69,6 @@ class SessionBloc extends Bloc<SessionEvent, SessionState> {
       },
     );
     loadedCars = cars;
-    debugPrint("Cars loaded");
     emit(SessionCarsLoadedState());
   }
 
