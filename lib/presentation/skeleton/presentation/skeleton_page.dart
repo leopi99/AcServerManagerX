@@ -64,10 +64,6 @@ class _SkeletonPageState extends State<SkeletonPage> {
                 content: Text(state.error),
               ),
             );
-          } else if (state is SessionTracksLoadedState ||
-              state is SessionCarsLoadedState) {
-            //Pops the loading dialog
-            Navigator.pop(context);
           }
         },
         child: StreamBuilder<int>(
