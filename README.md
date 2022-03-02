@@ -23,3 +23,7 @@ In order to run/compile the app from this repo you need the Flutter framework in
 After the flutter install, you can run the app in debug mode by entering this command (inside the cloned folder, where the main.dart file is located) `flutter run -d windows`.
 To compile the app use this command `flutter build windows`.
 For more informations on Flutter Desktop see [Flutter desktop](https://flutter.dev/multi-platform/desktop).
+
+## Localizations
+
+If you have updated the localizations in the repo, run this command: `flutter pub run easy_localization:generate -S assets/translations -O lib/generated-translations`

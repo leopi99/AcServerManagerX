@@ -1,0 +1,18 @@
+{
+    "ops_error": "Ops! Something went wrong",
+    "app_title": "Assetto Corsa Server Manager X",
+    "app_reset": "Reset the app",
+    "splash_loading": "Loading...",
+    "select_server": "Select server",
+    "select_server_edit": "Select the server to edit",
+    "ok": "Ok",
+    "dark_mode": "Dark Mode",
+    "light_mode": "Light Mode",
+    "close_dialog_server_change": "Close the dialog when the selected server is changed",
+    "server_name": "Server name",
+    "password": "Password",
+    "admin": "Admin",
+    "select_ac_path": "Select the installation path of AC",
+    "open_dir_picker": "Open directory picker",
+    "set_path": "Set path"
+}

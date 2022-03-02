@@ -1,4 +1,5 @@
 import 'package:acservermanager/common/appearance_bloc/appearance_bloc.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:get_it/get_it.dart';
 
@@ -44,13 +45,13 @@ class _SelectAppThemePageState extends State<SelectAppThemePage> {
                       },
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          Icon(
+                        children: [
+                          const Icon(
                             FluentIcons.user_window,
                             color: Color.fromARGB(255, 49, 49, 49),
                             size: 128,
                           ),
-                          Text('Dark Mode'),
+                          Text('dark_mode'.tr()),
                         ],
                       ),
                     ),
@@ -60,13 +61,13 @@ class _SelectAppThemePageState extends State<SelectAppThemePage> {
                       },
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          Icon(
+                        children: [
+                          const Icon(
                             FluentIcons.user_window,
                             color: Color.fromARGB(255, 223, 223, 223),
                             size: 128,
                           ),
-                          Text('Light Mode'),
+                          Text('light_mode'.tr()),
                         ],
                       ),
                     ),

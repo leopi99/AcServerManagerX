@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 
 class SplashScreen extends StatelessWidget {
@@ -10,10 +11,10 @@ class SplashScreen extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.center,
-        children: const [
-          ProgressRing(activeColor: Colors.white),
-          SizedBox(height: 32),
-          Text('Loading...'),
+        children: [
+          const ProgressRing(activeColor: Colors.white),
+          const SizedBox(height: 32),
+          Text('splash_loading'.tr()),
         ],
       ),
     );

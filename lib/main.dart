@@ -3,19 +3,32 @@ import 'package:acservermanager/common/inherited_widgets/selected_server_inherit
 import 'package:acservermanager/common/loading_bloc/loading_bloc_bloc.dart';
 import 'package:acservermanager/common/shared_manager.dart';
 import 'package:acservermanager/common/singletons.dart';
+import 'package:acservermanager/generated-translations/codegen_loader.g.dart';
 import 'package:acservermanager/models/server.dart';
 import 'package:acservermanager/presentation/onboarding_page/presentation/select_ac_path_page.dart';
 import 'package:acservermanager/presentation/onboarding_page/presentation/select_app_theme_page.dart';
 import 'package:acservermanager/presentation/skeleton/presentation/skeleton_page.dart';
 import 'package:acservermanager/presentation/splash_screen/presentation/splash_screen.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:rxdart/rxdart.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
   await Singletons.initSingletons();
-  runApp(const MyApp());
+  runApp(
+    EasyLocalization(
+      child: const MyApp(),
+      supportedLocales: const [Locale('it'), Locale('en')],
+      fallbackLocale: const Locale('en'),
+      useOnlyLangCode: true,
+      assetLoader: const CodegenLoader(),
+      path: 'assets/translations',
+    ),
+  );
 }
 
 class MyApp extends StatefulWidget {
@@ -52,7 +65,10 @@ class _MyAppState extends State<MyApp> {
           initialData: true,
           builder: (context, snapshot) {
             return FluentApp(
-              title: 'Assetto Corsa Server Manager X',
+              localizationsDelegates: context.localizationDelegates,
+              supportedLocales: context.supportedLocales,
+              locale: context.locale,
+              title: 'app_title'.tr(),
               theme: snapshot.data! ? ThemeData.dark() : ThemeData.light(),
               home: BlocListener<LoadingBlocBloc, LoadingBlocState>(
                 bloc: _bloc,
@@ -63,13 +79,13 @@ class _MyAppState extends State<MyApp> {
                       barrierDismissible: false,
                       builder: (context) => ContentDialog(
                         title: Text(
-                          'Ops! Something went wrong',
+                          'ops_error'.tr(),
                           style: TextStyle(color: Colors.red),
                         ),
                         content: Text(state.error),
                         actions: [
                           FilledButton(
-                            child: const Text('Reset the app'),
+                            child: Text('app_reset'.tr()),
                             onPressed: () async {
                               await GetIt.I<SharedManager>().reset();
                               main();

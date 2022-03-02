@@ -1,6 +1,7 @@
 import 'package:acservermanager/common/appearance_bloc/appearance_bloc.dart';
 import 'package:acservermanager/common/shared_manager.dart';
 import 'package:acservermanager/models/enums/shared_key.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:get_it/get_it.dart';
 
@@ -32,7 +33,7 @@ class _SettingsPageState extends State<SettingsPage> {
               initialData: true,
               builder: (context, snapshot) {
                 return ToggleSwitch(
-                  content: const Text('Dark Mode'),
+                  content: Text('dark_mode'.tr()),
                   checked: snapshot.data!,
                   onChanged: (value) {
                     _bloc.setDarkMode(value: value);
@@ -40,8 +41,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 );
               }),
           ToggleSwitch(
-            content: const Text(
-                'Close the dialog when the selected server is changed'),
+            content: Text('close_dialog_server_change'.tr()),
             checked: GetIt.I<SharedManager>().getBool(SharedKey.closeDialog) ??
                 false,
             onChanged: (value) {

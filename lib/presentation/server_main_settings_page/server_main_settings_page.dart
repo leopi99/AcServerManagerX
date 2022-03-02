@@ -4,6 +4,7 @@ import 'package:acservermanager/common/appearance_bloc/appearance_bloc.dart';
 import 'package:acservermanager/common/inherited_widgets/selected_server_inherited.dart';
 import 'package:acservermanager/models/server.dart';
 import 'package:acservermanager/presentation/advanced_server_settings/widgets/textbox_entry_widget.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:get_it/get_it.dart';
 
@@ -60,10 +61,13 @@ class _ServerMainSettingsState extends State<ServerMainSettings> {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        TextBoxEntryWidget(controller: _nameController, label: 'Server Name'),
-        TextBoxEntryWidget(controller: _passwordController, label: 'Password'),
         TextBoxEntryWidget(
-            controller: _adminPasswordController, label: 'Admin Password'),
+            controller: _nameController, label: 'server_name'.tr()),
+        TextBoxEntryWidget(
+            controller: _passwordController, label: 'password'.tr()),
+        TextBoxEntryWidget(
+            controller: _adminPasswordController,
+            label: "admin".tr() + " " + "password".tr()),
       ],
     );
   }

@@ -40,6 +40,7 @@ class _CarSelectionPageState extends State<CarSelectionPage> {
       bloc: _sessionBloc,
       listener: (context, state) {},
       builder: (context, state) {
+        debugPrint("CarSelectionPage: ${state.toString()}");
         if (state is SessionCarsLoadedState) {
           return GridView.builder(
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(

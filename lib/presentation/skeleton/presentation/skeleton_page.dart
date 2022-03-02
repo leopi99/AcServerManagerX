@@ -11,6 +11,7 @@ import 'package:acservermanager/presentation/skeleton/bloc/skeleton_bloc.dart';
 import 'package:acservermanager/presentation/skeleton/presentation/bloc/session_bloc.dart';
 import 'package:acservermanager/presentation/skeleton/presentation/widgets/server_selector_widget.dart';
 import 'package:acservermanager/presentation/track_selection_page/presentation/track_selection_page.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -39,7 +40,6 @@ class _SkeletonPageState extends State<SkeletonPage> {
             (previous is SessionLoadingState &&
                 current is SessionTracksLoadedState),
         listener: (context, state) {
-          debugPrint('CurrentState: $state');
           if (state is SessionLoadingState) {
             showDialog(
               context: context,
@@ -58,13 +58,14 @@ class _SkeletonPageState extends State<SkeletonPage> {
               builder: (context) => ContentDialog(
                 backgroundDismiss: false,
                 title: Text(
-                  'Ops! Something went wrong',
+                  'ops_error'.tr(),
                   style: TextStyle(color: Colors.red),
                 ),
                 content: Text(state.error),
               ),
             );
-          } else if (state is SessionTracksLoadedState) {
+          } else if (state is SessionTracksLoadedState ||
+              state is SessionCarsLoadedState) {
             //Pops the loading dialog
             Navigator.pop(context);
           }
@@ -97,22 +98,22 @@ class _SkeletonPageState extends State<SkeletonPage> {
                     SizedBox(
                       height: 24,
                       child: Button(
-                        child: const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 8),
-                          child: Text('Select server'),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          child: Text('select_server'.tr()),
                         ),
                         onPressed: () {
                           showDialog(
                             context: context,
                             barrierDismissible: true,
                             builder: (context) => ContentDialog(
-                              title: const Text('Select the server to edit'),
+                              title: Text('select_server_edit'.tr()),
                               content: ServerSelectorWidget(
                                 servers: GetIt.I<List<Server>>(),
                               ),
                               actions: [
                                 FilledButton(
-                                  child: const Text('Ok'),
+                                  child: Text('ok'.tr()),
                                   onPressed: () {
                                     Navigator.pop(context);
                                   },
