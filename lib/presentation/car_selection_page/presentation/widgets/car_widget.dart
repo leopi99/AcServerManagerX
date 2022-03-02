@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:acservermanager/models/car.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 
@@ -10,6 +12,11 @@ class CarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(car.name);
+    return Column(
+      children: [
+        Image.file(File(car.defaultPreview)),
+        Text(car.name),
+      ],
+    );
   }
 }
