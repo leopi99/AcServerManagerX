@@ -5,7 +5,7 @@ class CarSpecs {
   final String topSpeed;
   final String accelleration;
   final String pwRatio;
-  final String range;
+  final int range;
 
   const CarSpecs({
     required this.accelleration,
@@ -19,10 +19,10 @@ class CarSpecs {
 
   factory CarSpecs.fromJson(Map<String, dynamic> json) {
     return CarSpecs(
-      accelleration: json['accelleration'],
+      accelleration: json['accelleration'] ?? "",
       bhp: json['bhp'],
       pwRatio: json['pwratio'],
-      range: json['range'],
+      range: json['range'] ?? 0,
       topSpeed: json['topspeed'],
       torque: json['torque'],
       weight: json['weight'],

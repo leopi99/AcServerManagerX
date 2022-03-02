@@ -6,7 +6,7 @@ import 'package:flutter/foundation.dart';
 
 class CarHelper {
   static const _kCarsPath = "/content/cars/";
-  static const _kCarJson = "/ui_car.json";
+  static const _kCarJson = "/ui/ui_car.json";
 
   static Future<List<Car>> loadCars(
       {required String acPath, required Function(String) onError}) async {
@@ -17,9 +17,15 @@ class CarHelper {
       await Future.forEach(carsDir.listSync(), (element) async {
         element as FileSystemEntity;
         final file = File(element.path + _kCarJson);
-        cars.add(
-          Car.fromJson(jsonDecode(await file.readAsString()), element.path),
-        );
+        //Adds the car only if the file exists
+        if (file.existsSync()) {
+          cars.add(
+            Car.fromJson(
+                jsonDecode((await file.readAsString())
+                    .replaceAll(RegExp(r"\s+"), ' ')),
+                element.path),
+          );
+        }
       });
     } catch (e, stacktrace) {
       debugPrint('Error: $e\nStackTrace:\n$stacktrace');

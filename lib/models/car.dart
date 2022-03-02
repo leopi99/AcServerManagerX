@@ -26,12 +26,11 @@ class Car {
       description: json['description'],
       filePath: filePath,
       name: json['name'],
-      tags: json['tags'],
+      tags: (json['tags'] as List).map((e) => "$e").toList(),
       specs:
           json.containsKey('specs') ? CarSpecs.fromJson(json['specs']) : null,
     );
   }
 
   String get logoPath => filePath + "/logo.png";
-
 }
