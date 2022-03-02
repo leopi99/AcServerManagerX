@@ -23,34 +23,36 @@ class _SettingsPageState extends State<SettingsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: _bloc.backgroundColor,
-      child: ListView(
-        padding: const EdgeInsets.all(32),
-        children: [
-          StreamBuilder<bool>(
-              stream: _bloc.darkMode,
-              initialData: true,
-              builder: (context, snapshot) {
-                return ToggleSwitch(
+    return StreamBuilder<bool>(
+        stream: _bloc.darkMode,
+        initialData: true,
+        builder: (context, darkModeSnapshot) {
+          return Container(
+            color: _bloc.backgroundColor,
+            child: ListView(
+              padding: const EdgeInsets.all(32),
+              children: [
+                ToggleSwitch(
                   content: Text('dark_mode'.tr()),
-                  checked: snapshot.data!,
+                  checked: darkModeSnapshot.data!,
                   onChanged: (value) {
                     _bloc.setDarkMode(value: value);
                   },
-                );
-              }),
-          ToggleSwitch(
-            content: Text('close_dialog_server_change'.tr()),
-            checked: GetIt.I<SharedManager>().getBool(SharedKey.closeDialog) ??
-                false,
-            onChanged: (value) {
-              GetIt.I<SharedManager>().setBool(SharedKey.closeDialog, value);
-              setState(() {});
-            },
-          ),
-        ],
-      ),
-    );
+                ),
+                ToggleSwitch(
+                  content: Text('close_dialog_server_change'.tr()),
+                  checked:
+                      GetIt.I<SharedManager>().getBool(SharedKey.closeDialog) ??
+                          false,
+                  onChanged: (value) {
+                    GetIt.I<SharedManager>()
+                        .setBool(SharedKey.closeDialog, value);
+                    setState(() {});
+                  },
+                ),
+              ],
+            ),
+          );
+        });
   }
 }
