@@ -15,3 +15,17 @@ class SessionChangeSelectedTrack extends SessionEvent {
   final Track track;
   SessionChangeSelectedTrack(this.track);
 }
+
+class SessionLoadCarsEvent extends SessionEvent {}
+
+class SessionUnloadCarsEvent extends SessionEvent {}
+
+class SessionSelectCarEvent extends SessionEvent {
+  final Car selectedCar;
+  final BuildContext context;
+
+  SessionSelectCarEvent({
+    required this.selectedCar,
+    required this.context,
+  });
+}
