@@ -29,9 +29,10 @@ class CarWidget extends StatelessWidget {
                   ),
                   onPressed: () {
                     debugPrint('Skins found: (${car.skins.length}):');
-                    car.skins.forEach((element) {
-                      debugPrint('Skin name: ${element.details?.name} -> ${element.liveryPath}');
-                    });
+                    for (var element in car.skins) {
+                      debugPrint(
+                          'Skin name: ${element.details?.name} -> ${element.liveryPath}');
+                    }
                   },
                 ),
               ),
