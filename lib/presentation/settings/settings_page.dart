@@ -51,13 +51,15 @@ class _SettingsPageState extends State<SettingsPage> {
                 },
               ),
               const SizedBox(height: 16),
-              Text('app_language'.tr()),
-              const SizedBox(height: 8),
               Row(
                 children: [
+                  Text(
+                    'app_language'.tr(),
+                    style: const TextStyle(fontWeight: FontWeight.w600),
+                  ),
+                  const SizedBox(width: 8),
                   DropDownButton(
                     title: Text(context.locale.languageCode),
-                    // leading: const Icon(FluentIcons.locale_language),
                     items: context.supportedLocales
                         .map(
                           (e) => DropDownButtonItem(
