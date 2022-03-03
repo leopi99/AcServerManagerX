@@ -25,6 +25,7 @@ void main() async {
       supportedLocales: const [Locale('it'), Locale('en')],
       fallbackLocale: const Locale('en'),
       useOnlyLangCode: true,
+      saveLocale: true,
       assetLoader: const CodegenLoader(),
       path: 'assets/translations',
     ),

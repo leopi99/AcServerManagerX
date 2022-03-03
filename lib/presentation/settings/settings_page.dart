@@ -24,35 +24,58 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<bool>(
-        stream: _bloc.darkMode,
-        initialData: true,
-        builder: (context, darkModeSnapshot) {
-          return Container(
-            color: _bloc.backgroundColor,
-            child: ListView(
-              padding: const EdgeInsets.all(32),
-              children: [
-                ToggleSwitch(
-                  content: Text('dark_mode'.tr()),
-                  checked: darkModeSnapshot.data!,
-                  onChanged: (value) {
-                    _bloc.setDarkMode(value: value);
-                  },
-                ),
-                ToggleSwitch(
-                  content: Text('close_dialog_server_change'.tr()),
-                  checked:
-                      GetIt.I<SharedManager>().getBool(SharedKey.closeDialog) ??
-                          false,
-                  onChanged: (value) {
-                    GetIt.I<SharedManager>()
-                        .setBool(SharedKey.closeDialog, value);
-                    setState(() {});
-                  },
-                ),
-              ],
-            ),
-          );
-        });
+      stream: _bloc.darkMode,
+      initialData: true,
+      builder: (context, darkModeSnapshot) {
+        return Container(
+          color: _bloc.backgroundColor,
+          child: ListView(
+            padding: const EdgeInsets.all(32),
+            children: [
+              ToggleSwitch(
+                content: Text('dark_mode'.tr()),
+                checked: darkModeSnapshot.data!,
+                onChanged: (value) {
+                  _bloc.setDarkMode(value: value);
+                },
+              ),
+              ToggleSwitch(
+                content: Text('close_dialog_server_change'.tr()),
+                checked:
+                    GetIt.I<SharedManager>().getBool(SharedKey.closeDialog) ??
+                        false,
+                onChanged: (value) {
+                  GetIt.I<SharedManager>()
+                      .setBool(SharedKey.closeDialog, value);
+                  setState(() {});
+                },
+              ),
+              const SizedBox(height: 16),
+              Text('app_language'.tr()),
+              const SizedBox(height: 8),
+              Row(
+                children: [
+                  DropDownButton(
+                    title: Text(context.locale.languageCode),
+                    // leading: const Icon(FluentIcons.locale_language),
+                    items: context.supportedLocales
+                        .map(
+                          (e) => DropDownButtonItem(
+                            leading: const Icon(FluentIcons.locale_language),
+                            onTap: () {
+                              context.setLocale(e);
+                            },
+                            title: Text(e.languageCode),
+                          ),
+                        )
+                        .toList(),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 }

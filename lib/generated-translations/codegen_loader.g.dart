@@ -30,7 +30,8 @@ class CodegenLoader extends AssetLoader{
   "admin": "Admin",
   "select_ac_path": "Select the installation path of AC",
   "open_dir_picker": "Open directory picker",
-  "set_path": "Set path"
+  "set_path": "Set path",
+  "app_language": "App language"
 };
 static const Map<String,dynamic> it = {
   "ops_error": "Ops! Qualcosa e andato storto",
@@ -48,7 +49,8 @@ static const Map<String,dynamic> it = {
   "admin": "Admin",
   "select_ac_path": "Seleziona la cartella di installazione di AC",
   "open_dir_picker": "Apri il selettore della cartella",
-  "set_path": "Imposta la cartella"
+  "set_path": "Imposta la cartella",
+  "app_language": "Lingua applicazione"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en": en, "it": it};
 }
