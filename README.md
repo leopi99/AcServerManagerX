@@ -26,4 +26,9 @@ For more informations on Flutter Desktop see [Flutter desktop](https://flutter.d
 
 ## Localizations
 
-If you have updated the localizations in the repo, run this command: `flutter pub run easy_localization:generate -S assets/translations -O lib/generated-translations`
+The app supports localizations, currently for the following languages:
+
+- English
+- Italian
+
+Want to add your language? Clone the repository, create the file yourCountryCode.json inside the directory assets/translations, copy the content of another file and translate it; then run this command: `flutter pub run easy_localization:generate -S assets/translations -O lib/generated-translations`
