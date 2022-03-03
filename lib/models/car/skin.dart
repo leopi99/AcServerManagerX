@@ -21,9 +21,14 @@ class CarSkin {
     if (File(dir.path + _kSkinDetails).existsSync()) {
       try {
         details = SkinDetails.fromJson(
-            json.decode(await File(dir.path + _kSkinDetails).readAsString()));
-      } catch (e) {
-        debugPrint('Error retrieving skin details: $e');
+          json.decode(
+            (await File(dir.path + _kSkinDetails).readAsString())
+                .replaceAll(RegExp(r"\s+"), ' '),
+          ),
+        );
+      } catch (e, stacktrace) {
+        debugPrint("For car ${dir.path}");
+        debugPrint('Error retrieving skin details: $e\nStacktrace: $stacktrace');
       }
     }
     return CarSkin(
@@ -33,5 +38,6 @@ class CarSkin {
   }
 
   String get previewPath => '$path$_kCarSkin';
+
   String get liveryPath => '$path$_kCarLivery';
 }

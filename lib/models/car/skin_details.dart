@@ -3,7 +3,7 @@ class SkinDetails {
   final String driverName;
   final String country;
   final String team;
-  final int number;
+  final String number;
   final int priority;
 
   SkinDetails({
@@ -17,13 +17,11 @@ class SkinDetails {
 
   factory SkinDetails.fromJson(Map<String, dynamic> json) {
     return SkinDetails(
-      name: json['skinname'],
-      driverName: json['drivername'],
-      country: json['country'],
-      team: json['team'],
-      number: json['number'] is String
-          ? (int.tryParse(json['number']) ?? 0)
-          : json['number'],
+      name: json['skinname'] ?? '',
+      driverName: json['drivername'] ?? '',
+      country: json['country'] ?? '',
+      team: json['team'] ?? '',
+      number: "${json['number'] ?? 0}",
       priority: json['priority'] ?? 0,
     );
   }
