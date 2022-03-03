@@ -20,7 +20,7 @@ class CarHelper {
         //Adds the car only if the file exists
         if (file.existsSync()) {
           cars.add(
-            Car.fromJson(
+            await Car.fromJson(
                 jsonDecode((await file.readAsString())
                     .replaceAll(RegExp(r"\s+"), ' ')),
                 element.path),

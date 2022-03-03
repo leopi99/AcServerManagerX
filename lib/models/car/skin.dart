@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:acservermanager/models/car/skin_details.dart';
+import 'package:flutter/foundation.dart';
 
 class CarSkin {
   static const String _kCarSkin = '/preview.jpg';
@@ -15,11 +16,15 @@ class CarSkin {
     required this.details,
   });
 
-  factory CarSkin.fromDir(Directory dir) {
+  static Future<CarSkin> fromDir(Directory dir) async {
     SkinDetails? details;
     if (File(dir.path + _kSkinDetails).existsSync()) {
-      details = SkinDetails.fromJson(
-          json.decode(File(dir.path + _kSkinDetails).readAsStringSync()));
+      try {
+        details = SkinDetails.fromJson(
+            json.decode(await File(dir.path + _kSkinDetails).readAsString()));
+      } catch (e) {
+        debugPrint('Error retrieving skin details: $e');
+      }
     }
     return CarSkin(
       path: dir.path,
