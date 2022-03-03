@@ -19,7 +19,7 @@ The main concept of this app is not to recreate something that works, instead to
 
 ## Run the app from the repo's clone
 
-In order to run/compile the app from this repo you need the Flutter framework installed ([Flutter get started](https://docs.flutter.dev/get-started/install)).
+In order to run/compile the app from this repo you need the Flutter framework installed [Flutter get started](https://docs.flutter.dev/get-started/install).
 After the flutter install, you can run the app in debug mode by entering this command (inside the cloned folder, where the main.dart file is located) `flutter run -d windows`.
 To compile the app use this command `flutter build windows`.
 For more informations on Flutter Desktop see [Flutter desktop](https://flutter.dev/multi-platform/desktop).
