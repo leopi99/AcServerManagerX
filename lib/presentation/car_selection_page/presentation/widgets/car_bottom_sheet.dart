@@ -47,7 +47,6 @@ class _CarBottomSheetWidgetState extends State<CarBottomSheetWidget> {
       showDivider: false,
       showHandle: false,
       description: Text(widget.car.name),
-      maxChildSize: .9,
       children: [
         Padding(
           padding: const EdgeInsets.all(8.0),
@@ -87,39 +86,71 @@ class _CarBottomSheetWidgetState extends State<CarBottomSheetWidget> {
                 Checkbox(
                   checked: _addedSkins.contains(skin),
                   onChanged: (value) {
-                    List<Car> cars = [];
-                    cars.addAll(SelectedServerInherited.of(context)
-                        .selectedServer
-                        .cars);
-                    //Adds the skin to the car
-                    if (cars.contains(widget.car)) {
-                      List<CarSkin> skins = [];
-                      skins.addAll(cars
-                          .firstWhere((element) => element == widget.car)
-                          .skins);
-                      skins.add(skin);
-                      cars
-                          .firstWhere((element) => element == widget.car)
-                          .copyWith(skins: skins);
+                    if (value!) {
+                      debugPrint('Added skin');
+                      _addSkinToServer(skin);
                     } else {
-                      cars.add(widget.car.copyWith(skins: [skin]));
+                      debugPrint('Removed skin');
+                      _removeSkinFromServer(skin);
                     }
-                    //Updates the server with the skin
-                    SelectedServerInherited.of(context).changeServer(
-                        SelectedServerInherited.of(context)
-                            .selectedServer
-                            .copyWith(cars: cars));
-                    setState(() {
-                      _addedSkins.add(skin);
-                    });
                   },
                 ),
-                Text(skin.details?.name ?? "No Name"),
+                Text(skin.details?.cuteName ?? "No Name"),
               ],
             ),
           );
         }).toList(),
       ),
     );
+  }
+
+  void _addSkinToServer(CarSkin skin) {
+    List<Car> cars = [];
+    cars.addAll(SelectedServerInherited.of(context).selectedServer.cars);
+    //Adds the skin to the car
+    if (cars.contains(widget.car)) {
+      List<CarSkin> skins = [];
+      skins.addAll(cars.firstWhere((element) => element == widget.car).skins);
+      skins.add(skin);
+      cars
+          .firstWhere((element) => element == widget.car)
+          .copyWith(skins: skins);
+    } else {
+      cars.add(widget.car.copyWith(skins: [skin]));
+    }
+    //Updates the server with the skin
+    SelectedServerInherited.of(context).changeServer(
+        SelectedServerInherited.of(context)
+            .selectedServer
+            .copyWith(cars: cars));
+    debugPrint(
+        'Server: ${SelectedServerInherited.of(context).selectedServer.cars.first.skins}');
+    setState(() {
+      _addedSkins.add(skin);
+    });
+  }
+
+  void _removeSkinFromServer(CarSkin skin) {
+    List<Car> cars = [];
+    cars.addAll(SelectedServerInherited.of(context).selectedServer.cars);
+
+    List<CarSkin> skins = [];
+    skins.addAll(cars.firstWhere((element) => element == widget.car).skins);
+    skins.remove(skin);
+    if (skins.isEmpty) {
+      cars.remove(widget.car);
+    } else {
+      cars
+          .firstWhere((element) => element == widget.car)
+          .copyWith(skins: skins);
+    }
+    //Updates the server with the skin
+    SelectedServerInherited.of(context).changeServer(
+        SelectedServerInherited.of(context)
+            .selectedServer
+            .copyWith(cars: cars));
+    setState(() {
+      _addedSkins.remove(skin);
+    });
   }
 }

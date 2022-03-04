@@ -1,5 +1,5 @@
 class SkinDetails {
-  final String name;
+  final String? name;
   final String driverName;
   final String country;
   final String team;
@@ -17,7 +17,7 @@ class SkinDetails {
 
   factory SkinDetails.fromJson(Map<String, dynamic> json) {
     return SkinDetails(
-      name: json['skinname'] ?? '',
+      name: json['skinname'],
       driverName: json['drivername'] ?? '',
       country: json['country'] ?? '',
       team: json['team'] ?? '',
@@ -27,5 +27,5 @@ class SkinDetails {
   }
 
   ///Returns the name of the skin with the "_" replaced with a space
-  String get cuteName => name.replaceAll('_', ' ');
+  String? get cuteName => name?.replaceAll('_', ' ');
 }

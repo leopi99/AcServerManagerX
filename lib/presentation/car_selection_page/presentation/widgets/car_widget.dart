@@ -22,31 +22,8 @@ class CarWidget extends StatelessWidget {
         },
         child: Column(
           children: [
-            Stack(
-              children: [
-                Image.file(File(car.defaultPreview),
-                    filterQuality: FilterQuality.medium),
-                Align(
-                  alignment: Alignment.topRight,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 8, right: 8),
-                    child: IconButton(
-                      icon: const Icon(
-                        FluentIcons.copy,
-                        color: Colors.white,
-                      ),
-                      onPressed: () {
-                        debugPrint('Skins found: (${car.skins.length}):');
-                        for (var element in car.skins) {
-                          debugPrint(
-                              'Skin name: ${element.details?.name} -> ${element.liveryPath}');
-                        }
-                      },
-                    ),
-                  ),
-                ),
-              ],
-            ),
+            Image.file(File(car.defaultPreview),
+                filterQuality: FilterQuality.medium),
             Text(car.name),
           ],
         ),
