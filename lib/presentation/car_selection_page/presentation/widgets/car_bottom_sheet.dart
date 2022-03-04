@@ -106,6 +106,7 @@ class _CarBottomSheetWidgetState extends State<CarBottomSheetWidget> {
     );
   }
 
+  //Adds the skin (if the car is not already present, adds that too) to the selected cars in the server
   void _addSkinToServer(CarSkin skin) {
     List<Car> cars = [];
     cars.addAll(SelectedServerInherited.of(context).selectedServer.cars);
@@ -126,12 +127,13 @@ class _CarBottomSheetWidgetState extends State<CarBottomSheetWidget> {
             .selectedServer
             .copyWith(cars: cars));
     debugPrint(
-        'Server: ${SelectedServerInherited.of(context).selectedServer.cars.first.skins}');
+        'To ${SelectedServerInherited.of(context).selectedServer.cars.first.skins}');
     setState(() {
       _addedSkins.add(skin);
     });
   }
 
+  //Removes the skin (and the car if it has no more skins) from the selected cars in the server
   void _removeSkinFromServer(CarSkin skin) {
     List<Car> cars = [];
     cars.addAll(SelectedServerInherited.of(context).selectedServer.cars);

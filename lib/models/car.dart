@@ -27,9 +27,11 @@ class Car extends Equatable {
 
   static Future<Car> fromJson(Map<String, dynamic> json, String path) async {
     List<CarSkin> skins = [];
+    int index = 0;
     await Future.forEach<FileSystemEntity>(
         Directory(path + "/skins").listSync(), (e) async {
-      skins.add(await CarSkin.fromDir(Directory(e.path)));
+      skins.add(await CarSkin.fromDir(Directory(e.path), index));
+      index++;
     });
     return Car(
       brand: json['brand'],

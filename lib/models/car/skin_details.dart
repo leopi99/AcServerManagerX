@@ -1,12 +1,14 @@
-class SkinDetails {
-  final String? name;
+import 'package:equatable/equatable.dart';
+
+class SkinDetails extends Equatable {
+  final String name;
   final String driverName;
   final String country;
   final String team;
   final String number;
   final int priority;
 
-  SkinDetails({
+  const SkinDetails({
     required this.name,
     required this.driverName,
     required this.country,
@@ -15,9 +17,11 @@ class SkinDetails {
     required this.priority,
   });
 
-  factory SkinDetails.fromJson(Map<String, dynamic> json) {
+  factory SkinDetails.fromJson(Map<String, dynamic> json, int index) {
     return SkinDetails(
-      name: (json['skinname'] as String).isEmpty ? null : json['skinname'],
+      name: (json['skinname'] as String).isEmpty
+          ? "Default $index"
+          : json['skinname'],
       driverName: json['drivername'] ?? '',
       country: json['country'] ?? '',
       team: json['team'] ?? '',
@@ -27,5 +31,9 @@ class SkinDetails {
   }
 
   ///Returns the name of the skin with the "_" replaced with a space
-  String? get cuteName => name?.replaceAll('_', ' ');
+  String get cuteName => name.replaceAll('_', ' ');
+
+  @override
+  List<Object?> get props =>
+      [name, driverName, country, team, number, priority];
 }
