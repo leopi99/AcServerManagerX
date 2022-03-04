@@ -17,6 +17,7 @@ class CarBottomSheetWidget extends StatefulWidget {
 }
 
 class _CarBottomSheetWidgetState extends State<CarBottomSheetWidget> {
+  static const double _kImageWidthDiv = 2;
   late CarSkin _selectedSkin;
 
   List<CarSkin> _addedSkins = [];
@@ -27,28 +28,30 @@ class _CarBottomSheetWidgetState extends State<CarBottomSheetWidget> {
   @override
   void initState() {
     _selectedSkin = widget.car.skins.first;
-    //Creates the list of list of skins
-    for (int i = 0; i < widget.car.skins.length; i += 9) {
-      if (i + 9 > widget.car.skins.length) {
-        skins.add(widget.car.skins.sublist(i));
-        break;
-      } else {
-        skins.add(widget.car.skins.sublist(i, i + 9));
-      }
-    }
+
     WidgetsBinding.instance!.addPostFrameCallback((_) {
       int index = SelectedServerInherited.of(context)
           .selectedServer
           .cars
           .indexOf(widget.car);
+      final int skinDiff = (MediaQuery.of(context).size.height ~/ 3) ~/ 24;
+      //Creates the list of list of skins
+      for (int i = 0; i < widget.car.skins.length; i += skinDiff) {
+        if (i + skinDiff > widget.car.skins.length) {
+          skins.add(widget.car.skins.sublist(i));
+          break;
+        } else {
+          skins.add(widget.car.skins.sublist(i, i + skinDiff));
+        }
+      }
       if (index != -1) {
         _addedSkins = SelectedServerInherited.of(context)
             .selectedServer
             .cars
             .elementAt(index)
             .skins;
-        setState(() {});
       }
+      setState(() {});
     });
     super.initState();
   }
@@ -61,8 +64,9 @@ class _CarBottomSheetWidgetState extends State<CarBottomSheetWidget> {
       description: Text(widget.car.name),
       children: [
         Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.only(left: 8),
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _buildSelectedSkin(),
               _buildSkins(),
@@ -76,8 +80,8 @@ class _CarBottomSheetWidgetState extends State<CarBottomSheetWidget> {
   Widget _buildSelectedSkin() {
     return Image.file(
       File(_selectedSkin.previewPath),
-      height: MediaQuery.of(context).size.height / 3,
-      width: MediaQuery.of(context).size.height / 3,
+      height: MediaQuery.of(context).size.height / _kImageWidthDiv,
+      width: MediaQuery.of(context).size.height / _kImageWidthDiv,
     );
   }
 
@@ -87,7 +91,7 @@ class _CarBottomSheetWidgetState extends State<CarBottomSheetWidget> {
       child: LimitedBox(
         maxWidth: MediaQuery.of(context).size.width -
             32 -
-            MediaQuery.of(context).size.height / 3,
+            MediaQuery.of(context).size.height / _kImageWidthDiv,
         maxHeight: MediaQuery.of(context).size.height / 2.7,
         child: ListView(
           scrollDirection: Axis.horizontal,
@@ -164,9 +168,8 @@ class _CarBottomSheetWidgetState extends State<CarBottomSheetWidget> {
     if (skins.isEmpty) {
       cars.remove(widget.car);
     } else {
-      cars
-          .firstWhere((element) => element == widget.car)
-          .copyWith(skins: skins);
+      int carIndex = cars.indexWhere((element) => element == widget.car);
+      cars[carIndex] = cars[carIndex].copyWith(skins: skins);
     }
     //Updates the server with the skin
     SelectedServerInherited.of(context).changeServer(

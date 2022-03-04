@@ -18,9 +18,7 @@ class CarWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: GestureDetector(
-        onTap: () {
-          _openSidePanel(context);
-        },
+        onTap: () => _openSidePanel(context),
         child: Column(
           children: [
             Stack(
@@ -38,13 +36,16 @@ class CarWidget extends StatelessWidget {
                         child: Align(
                           alignment: Alignment.topLeft,
                           child: InfoBadge(
-                              source: Text(SelectedServerInherited.of(context)
+                            source: Text(
+                              SelectedServerInherited.of(context)
                                   .selectedServer
                                   .cars
                                   .firstWhere((element) => element == car)
                                   .skins
                                   .length
-                                  .toString())),
+                                  .toString(),
+                            ),
+                          ),
                         ),
                       ),
                     ],

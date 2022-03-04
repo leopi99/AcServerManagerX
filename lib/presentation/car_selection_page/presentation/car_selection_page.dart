@@ -1,3 +1,5 @@
+import 'package:acservermanager/common/inherited_widgets/selected_server_inherited.dart';
+import 'package:acservermanager/models/server.dart';
 import 'package:acservermanager/presentation/car_selection_page/presentation/widgets/car_widget.dart';
 import 'package:acservermanager/presentation/skeleton/presentation/bloc/session_bloc.dart';
 import 'package:fluent_ui/fluent_ui.dart';
@@ -46,15 +48,19 @@ class _CarSelectionPageState extends State<CarSelectionPage> {
       },
       builder: (context, state) {
         if (state is SessionCarsLoadedState) {
-          return GridView.builder(
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: MediaQuery.of(context).size.width ~/ 128,
-            ),
-            padding: const EdgeInsets.all(16).copyWith(bottom: 64),
-            itemBuilder: (context, index) =>
-                CarWidget(car: _sessionBloc!.loadedCars[index]),
-            itemCount: _sessionBloc!.loadedCars.length,
-          );
+          return StreamBuilder<Server>(
+              stream: SelectedServerInherited.of(context).selectedServerStream,
+              builder: (context, _) {
+                return GridView.builder(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: MediaQuery.of(context).size.width ~/ 128,
+                  ),
+                  padding: const EdgeInsets.all(16).copyWith(bottom: 64),
+                  itemBuilder: (context, index) =>
+                      CarWidget(car: _sessionBloc!.loadedCars[index]),
+                  itemCount: _sessionBloc!.loadedCars.length,
+                );
+              });
         }
         return Container();
       },
