@@ -31,4 +31,4 @@ The app supports localizations, currently for the following languages:
 - English
 - Italian
 
-Want to add your language? Clone the repository, create the file yourCountryCode.json inside the directory assets/translations, copy the content of another file and translate it; then run this command: `flutter pub run easy_localization:generate -S assets/translations -O lib/generated-translations`
+Want to add your language? Clone the repository, create the file yourCountryCode.json inside the directory assets/translations, copy the content of another file and translate it; then run this command: `flutter pub run easy_localization:generate -S assets/translations -O lib/generated-translations`, copy the fluent_localizations_delegate_it.dart (inside the lib/common/custom_delegates folder) and translate it  (remember to change the supported locale).
