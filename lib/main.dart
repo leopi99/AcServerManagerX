@@ -1,4 +1,5 @@
 import 'package:acservermanager/common/appearance_bloc/appearance_bloc.dart';
+import 'package:acservermanager/common/custom_delegates/fluent_localizations_delegate_it.dart';
 import 'package:acservermanager/common/inherited_widgets/selected_server_inherited.dart';
 import 'package:acservermanager/common/loading_bloc/loading_bloc_bloc.dart';
 import 'package:acservermanager/common/shared_manager.dart';
@@ -67,7 +68,11 @@ class _MyAppState extends State<MyApp> {
           initialData: true,
           builder: (context, snapshot) {
             return FluentApp(
-              localizationsDelegates: context.localizationDelegates,
+              localizationsDelegates: [
+                ...context.localizationDelegates,
+                DefaultFluentLocalizations.delegate,
+                ITFluentLocalizations.delegate,
+              ],
               supportedLocales: context.supportedLocales,
               locale: context.locale,
               title: 'app_title'.tr(),
