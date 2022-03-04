@@ -15,5 +15,9 @@
     "select_ac_path": "Select the installation path of AC",
     "open_dir_picker": "Open directory picker",
     "set_path": "Set path",
-    "app_language": "App language"
+    "app_language": "App language",
+    "udp_port": "UDP port",
+    "tcp_port": "TCP port",
+    "http_port": "HTTP port",
+    "packet_hz": "Packet Hz"
 }

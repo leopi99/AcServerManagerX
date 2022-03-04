@@ -31,7 +31,11 @@ class CodegenLoader extends AssetLoader{
   "select_ac_path": "Select the installation path of AC",
   "open_dir_picker": "Open directory picker",
   "set_path": "Set path",
-  "app_language": "App language"
+  "app_language": "App language",
+  "udp_port": "UDP port",
+  "tcp_port": "TCP port",
+  "http_port": "HTTP port",
+  "packet_hz": "Packet Hz"
 };
 static const Map<String,dynamic> it = {
   "ops_error": "Ops! Qualcosa e andato storto",
@@ -50,7 +54,11 @@ static const Map<String,dynamic> it = {
   "select_ac_path": "Seleziona la cartella di installazione di AC",
   "open_dir_picker": "Apri il selettore della cartella",
   "set_path": "Imposta la cartella",
-  "app_language": "Lingua applicazione"
+  "app_language": "Lingua applicazione",
+  "udp_port": "Porta UDP",
+  "tcp_port": "Porta TCP",
+  "http_port": "Porta HTTP",
+  "packet_hz": "Hz pacchetti"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en": en, "it": it};
 }

@@ -4,6 +4,7 @@ import 'package:acservermanager/common/appearance_bloc/appearance_bloc.dart';
 import 'package:acservermanager/common/inherited_widgets/selected_server_inherited.dart';
 import 'package:acservermanager/models/server.dart';
 import 'package:acservermanager/presentation/advanced_server_settings/widgets/textbox_entry_widget.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:get_it/get_it.dart';
 
@@ -56,19 +57,19 @@ class _ServerAdvancedSettingsPageState
         children: [
           TextBoxEntryWidget(
               controller: _udpPortController,
-              label: 'Udp port',
+              label: 'udp_port'.tr(),
               placeHolder: '9600'),
           TextBoxEntryWidget(
               controller: _tcpPortController,
-              label: 'Tcp port',
+              label: 'tcp_port'.tr(),
               placeHolder: '9600'),
           TextBoxEntryWidget(
               controller: _httpPortController,
-              label: 'Http port',
+              label: 'http_port'.tr(),
               placeHolder: '9600'),
           TextBoxEntryWidget(
               controller: _packetHzController,
-              label: 'Packet Hz',
+              label: 'packet_hz'.tr(),
               placeHolder: '9600'),
         ],
       ),

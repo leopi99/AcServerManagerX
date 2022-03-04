@@ -15,5 +15,9 @@
     "select_ac_path": "Seleziona la cartella di installazione di AC",
     "open_dir_picker": "Apri il selettore della cartella",
     "set_path": "Imposta la cartella",
-    "app_language": "Lingua applicazione"
+    "app_language": "Lingua applicazione",
+    "udp_port": "Porta UDP",
+    "tcp_port": "Porta TCP",
+    "http_port": "Porta HTTP",
+    "packet_hz": "Hz pacchetti"
 }
