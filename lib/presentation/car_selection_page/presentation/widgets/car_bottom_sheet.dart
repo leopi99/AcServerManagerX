@@ -34,26 +34,34 @@ class _CarBottomSheetWidgetState extends State<CarBottomSheetWidget> {
           .selectedServer
           .cars
           .indexOf(widget.car);
-      final int skinDiff = (MediaQuery.of(context).size.height ~/ 3) ~/ 24;
-      //Creates the list of list of skins
-      for (int i = 0; i < widget.car.skins.length; i += skinDiff) {
-        if (i + skinDiff > widget.car.skins.length) {
-          skins.add(widget.car.skins.sublist(i));
-          break;
-        } else {
-          skins.add(widget.car.skins.sublist(i, i + skinDiff));
-        }
-      }
+
       if (index != -1) {
         _addedSkins = SelectedServerInherited.of(context)
             .selectedServer
             .cars
             .elementAt(index)
             .skins;
+        setState(() {});
       }
-      setState(() {});
     });
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    skins = [];
+    final int skinDiff = (MediaQuery.of(context).size.height ~/ 3) ~/ 26;
+    //Creates the list of list of skins
+    for (int i = 0; i < widget.car.skins.length; i += skinDiff) {
+      if (i + skinDiff > widget.car.skins.length) {
+        skins.add(widget.car.skins.sublist(i));
+        break;
+      } else {
+        skins.add(widget.car.skins.sublist(i, i + skinDiff));
+      }
+    }
+    setState(() {});
+    super.didChangeDependencies();
   }
 
   @override
