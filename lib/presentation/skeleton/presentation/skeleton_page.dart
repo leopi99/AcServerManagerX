@@ -164,18 +164,17 @@ class _SkeletonPageState extends State<SkeletonPage> {
       context: context,
       barrierDismissible: true,
       builder: (context) => ContentDialog(
-        title: const Text('Create a new server?'),
-        content: const Text(''),
+        title: Text('create_server'.tr()),
         actions: [
           FilledButton(
-            child: const Text('Ok'),
+            child: Text('yes'.tr()),
             onPressed: () {
               create = true;
               Navigator.pop(context);
             },
           ),
           Button(
-            child: const Text('No'),
+            child: Text('no'.tr()),
             onPressed: () {
               Navigator.pop(context);
             },

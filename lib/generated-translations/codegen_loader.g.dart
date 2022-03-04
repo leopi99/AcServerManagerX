@@ -22,6 +22,8 @@ class CodegenLoader extends AssetLoader{
   "select_server": "Select server",
   "select_server_edit": "Select the server to edit",
   "ok": "Ok",
+  "no": "No",
+  "yes": "Yes",
   "dark_mode": "Dark Mode",
   "light_mode": "Light Mode",
   "close_dialog_server_change": "Close the dialog when the selected server is changed",
@@ -40,7 +42,8 @@ class CodegenLoader extends AssetLoader{
   "server_main_settings": "Server main settings",
   "server_advanced_settings": "Server advanced settings",
   "track_selection": "Track selection",
-  "car_selection": "Car selection"
+  "car_selection": "Car selection",
+  "create_server": "Create a new server?"
 };
 static const Map<String,dynamic> it = {
   "ops_error": "Ops! Qualcosa e andato storto",
@@ -50,6 +53,8 @@ static const Map<String,dynamic> it = {
   "select_server": "Seleziona il server",
   "select_server_edit": "Seleziona il server da modificare",
   "ok": "Ok",
+  "no": "No",
+  "yes": "Si",
   "dark_mode": "Dark Mode",
   "light_mode": "Light Mode",
   "close_dialog_server_change": "Chiudi il dialog quando il server selezionato cambia",
@@ -68,7 +73,8 @@ static const Map<String,dynamic> it = {
   "server_main_settings": "Impostazioni principali",
   "server_advanced_settings": "Impostazioni avanzate",
   "track_selection": "Selezione tracciato",
-  "car_selection": "Selezione macchine"
+  "car_selection": "Selezione macchine",
+  "create_server": "Creare un nuovo server?"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en": en, "it": it};
 }
