@@ -56,7 +56,28 @@ class Car extends Equatable {
         tags,
         carClass,
         path,
-        skins,
         specs,
       ];
+
+  Car copyWith({
+    String? name,
+    String? brand,
+    String? description,
+    List<String>? tags,
+    String? carClass,
+    String? path,
+    CarSpecs? specs,
+    List<CarSkin>? skins,
+  }) {
+    return Car(
+      name: name ?? this.name,
+      brand: brand ?? this.brand,
+      description: description ?? this.description,
+      tags: tags ?? this.tags,
+      carClass: carClass ?? this.carClass,
+      path: path ?? this.path,
+      specs: specs ?? this.specs,
+      skins: skins ?? this.skins,
+    );
+  }
 }
