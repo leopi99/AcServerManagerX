@@ -129,25 +129,25 @@ class _SkeletonPageState extends State<SkeletonPage> {
                 footerItems: [
                   PaneItem(
                     icon: const Icon(FluentIcons.settings),
-                    title: const Text('Settings'),
+                    title: Text('settings'.tr()),
                   ),
                 ],
                 items: [
                   PaneItem(
                     icon: const Icon(FluentIcons.server_enviroment),
-                    title: const Text('Server main settings'),
+                    title: Text('server_main_settings'.tr()),
                   ),
                   PaneItem(
                     icon: const Icon(FluentIcons.server_enviroment),
-                    title: const Text('Server advanced settings'),
+                    title: Text('server_advanced_settings'.tr()),
                   ),
                   PaneItem(
                     icon: const Icon(FluentIcons.exercise_tracker),
-                    title: const Text('Track selection'),
+                    title: Text('track_selection'.tr()),
                   ),
                   PaneItem(
                     icon: const Icon(FluentIcons.car),
-                    title: const Text('Car selection'),
+                    title: Text('car_selection'.tr()),
                   ),
                 ],
               ),

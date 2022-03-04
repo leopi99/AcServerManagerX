@@ -19,5 +19,10 @@
     "udp_port": "Porta UDP",
     "tcp_port": "Porta TCP",
     "http_port": "Porta HTTP",
-    "packet_hz": "Hz pacchetti"
+    "packet_hz": "Hz pacchetti",
+    "settings": "Impostazioni",
+    "server_main_settings": "Impostazioni principali",
+    "server_advanced_settings": "Impostazioni avanzate",
+    "track_selection": "Selezione tracciato",
+    "car_selection": "Selezione macchine"
 }

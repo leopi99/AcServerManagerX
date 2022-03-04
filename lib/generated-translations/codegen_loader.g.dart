@@ -35,7 +35,12 @@ class CodegenLoader extends AssetLoader{
   "udp_port": "UDP port",
   "tcp_port": "TCP port",
   "http_port": "HTTP port",
-  "packet_hz": "Packet Hz"
+  "packet_hz": "Packet Hz",
+  "settings": "Settings",
+  "server_main_settings": "Server main settings",
+  "server_advanced_settings": "Server advanced settings",
+  "track_selection": "Track selection",
+  "car_selection": "Car selection"
 };
 static const Map<String,dynamic> it = {
   "ops_error": "Ops! Qualcosa e andato storto",
@@ -58,7 +63,12 @@ static const Map<String,dynamic> it = {
   "udp_port": "Porta UDP",
   "tcp_port": "Porta TCP",
   "http_port": "Porta HTTP",
-  "packet_hz": "Hz pacchetti"
+  "packet_hz": "Hz pacchetti",
+  "settings": "Impostazioni",
+  "server_main_settings": "Impostazioni principali",
+  "server_advanced_settings": "Impostazioni avanzate",
+  "track_selection": "Selezione tracciato",
+  "car_selection": "Selezione macchine"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en": en, "it": it};
 }
