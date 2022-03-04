@@ -59,8 +59,8 @@ class _SettingsPageState extends State<SettingsPage> {
                       .map(
                         (e) => DropDownButtonItem(
                           leading: const Icon(FluentIcons.locale_language),
-                          onTap: () {
-                            context.setLocale(e);
+                          onTap: () async {
+                            await context.setLocale(e);
                           },
                           title: Text(e.languageCode),
                         ),

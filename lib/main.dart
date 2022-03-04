@@ -22,11 +22,12 @@ void main() async {
   runApp(
     EasyLocalization(
       child: const MyApp(),
-      supportedLocales: const [Locale('it'), Locale('en')],
-      fallbackLocale: const Locale('en'),
+      supportedLocales: const [Locale('it', ''), Locale('en', '')],
+      fallbackLocale: const Locale('en', ''),
       useOnlyLangCode: true,
-      saveLocale: true,
+      saveLocale: false,
       assetLoader: const CodegenLoader(),
+      useFallbackTranslations: true,
       path: 'assets/translations',
     ),
   );

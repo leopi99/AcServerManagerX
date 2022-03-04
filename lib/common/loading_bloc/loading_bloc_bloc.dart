@@ -45,7 +45,6 @@ class LoadingBlocBloc extends Bloc<LoadingBlocEvent, LoadingBlocState> {
     emit(LoadingBlocLoadingState());
     final String acPath =
         (await GetIt.instance<SharedManager>().getString(SharedKey.acPath))!;
-    debugPrint('AcPath: $acPath');
     List<File> files = [];
     List<String> serverNames = [];
     final String presetsPath = acPath + _kPresetsPath;
