@@ -22,11 +22,12 @@ class CarSkin extends Equatable {
     if (File(dir.path + _kSkinDetails).existsSync()) {
       try {
         details = SkinDetails.fromJson(
-            json.decode(
-              (await File(dir.path + _kSkinDetails).readAsString())
-                  .replaceAll(RegExp(r"\s+"), ' '),
-            ),
-            index);
+          json.decode(
+            (await File(dir.path + _kSkinDetails).readAsString())
+                .replaceAll(RegExp(r"\s+"), ' '),
+          ),
+          name: dir.path.replaceAll('\\', '/').split('/').last,
+        );
       } catch (e, stacktrace) {
         debugPrint("For car ${dir.path}");
         debugPrint(

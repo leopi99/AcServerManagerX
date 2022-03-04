@@ -17,10 +17,10 @@ class SkinDetails extends Equatable {
     required this.priority,
   });
 
-  factory SkinDetails.fromJson(Map<String, dynamic> json, int index) {
+  factory SkinDetails.fromJson(Map<String, dynamic> json, {required String name}) {
     return SkinDetails(
       name: (json['skinname'] as String).isEmpty
-          ? "Default $index"
+          ? name
           : json['skinname'],
       driverName: json['drivername'] ?? '',
       country: json['country'] ?? '',

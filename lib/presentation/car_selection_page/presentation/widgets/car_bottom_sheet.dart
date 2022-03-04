@@ -21,9 +21,21 @@ class _CarBottomSheetWidgetState extends State<CarBottomSheetWidget> {
 
   List<CarSkin> _addedSkins = [];
 
+  ///Skins that are available to the car
+  List<List<CarSkin>> skins = [];
+
   @override
   void initState() {
     _selectedSkin = widget.car.skins.first;
+    //Creates the list of list of skins
+    for (int i = 0; i < widget.car.skins.length; i += 9) {
+      if (i + 9 > widget.car.skins.length) {
+        skins.add(widget.car.skins.sublist(i));
+        break;
+      } else {
+        skins.add(widget.car.skins.sublist(i, i + 9));
+      }
+    }
     WidgetsBinding.instance!.addPostFrameCallback((_) {
       int index = SelectedServerInherited.of(context)
           .selectedServer
@@ -70,38 +82,49 @@ class _CarBottomSheetWidgetState extends State<CarBottomSheetWidget> {
   }
 
   Widget _buildSkins() {
-    int index = 0;
     return Padding(
       padding: const EdgeInsets.only(left: 16, top: 16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: widget.car.skins.map((skin) {
-          index++;
-          return Row(
-            children: [
-              Checkbox(
-                checked: _addedSkins.contains(skin),
-                onChanged: (value) {
-                  if (value!) {
-                    debugPrint('Added skin');
-                    _addSkinToServer(skin);
-                  } else {
-                    debugPrint('Removed skin');
-                    _removeSkinFromServer(skin);
-                  }
-                },
+      child: LimitedBox(
+        maxWidth: MediaQuery.of(context).size.width -
+            32 -
+            MediaQuery.of(context).size.height / 3,
+        maxHeight: MediaQuery.of(context).size.height / 2.7,
+        child: ListView(
+          scrollDirection: Axis.horizontal,
+          children: skins.map<Widget>((e) {
+            return Padding(
+              padding: const EdgeInsets.only(right: 8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: e.map<Widget>((skin) {
+                  return Row(
+                    children: [
+                      Checkbox(
+                        checked: _addedSkins.contains(skin),
+                        onChanged: (value) {
+                          if (value!) {
+                            _addSkinToServer(skin);
+                          } else {
+                            _removeSkinFromServer(skin);
+                          }
+                        },
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            _selectedSkin = skin;
+                          });
+                        },
+                        child: Text(skin.details!.cuteName),
+                      )
+                    ],
+                  );
+                }).toList(),
               ),
-              GestureDetector(
-                onTap: () {
-                  setState(() {
-                    _selectedSkin = skin;
-                  });
-                },
-                child: Text(skin.details?.cuteName ?? "Default $index"),
-              )
-            ],
-          );
-        }).toList(),
+            );
+          }).toList(),
+        ),
       ),
     );
   }
@@ -125,8 +148,6 @@ class _CarBottomSheetWidgetState extends State<CarBottomSheetWidget> {
         SelectedServerInherited.of(context)
             .selectedServer
             .copyWith(cars: cars));
-    debugPrint(
-        'Skin length: ${SelectedServerInherited.of(context).selectedServer.cars.firstWhere((element) => element == widget.car).skins.length}');
     setState(() {
       _addedSkins.add(skin);
     });
