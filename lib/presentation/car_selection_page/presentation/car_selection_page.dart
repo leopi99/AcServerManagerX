@@ -50,7 +50,7 @@ class _CarSelectionPageState extends State<CarSelectionPage> {
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: MediaQuery.of(context).size.width ~/ 128,
             ),
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(16).copyWith(bottom: 64),
             itemBuilder: (context, index) =>
                 CarWidget(car: _sessionBloc!.loadedCars[index]),
             itemCount: _sessionBloc!.loadedCars.length,

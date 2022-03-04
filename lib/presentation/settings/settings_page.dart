@@ -51,28 +51,22 @@ class _SettingsPageState extends State<SettingsPage> {
                 },
               ),
               const SizedBox(height: 16),
-              Row(
-                children: [
-                  Text(
-                    'app_language'.tr(),
-                    style: const TextStyle(fontWeight: FontWeight.w600),
-                  ),
-                  const SizedBox(width: 8),
-                  DropDownButton(
-                    title: Text(context.locale.languageCode),
-                    items: context.supportedLocales
-                        .map(
-                          (e) => DropDownButtonItem(
-                            leading: const Icon(FluentIcons.locale_language),
-                            onTap: () {
-                              context.setLocale(e);
-                            },
-                            title: Text(e.languageCode),
-                          ),
-                        )
-                        .toList(),
-                  ),
-                ],
+              InfoLabel(
+                label: 'app_language'.tr(),
+                child: DropDownButton(
+                  title: Text(context.locale.languageCode),
+                  items: context.supportedLocales
+                      .map(
+                        (e) => DropDownButtonItem(
+                          leading: const Icon(FluentIcons.locale_language),
+                          onTap: () {
+                            context.setLocale(e);
+                          },
+                          title: Text(e.languageCode),
+                        ),
+                      )
+                      .toList(),
+                ),
               ),
             ],
           ),
