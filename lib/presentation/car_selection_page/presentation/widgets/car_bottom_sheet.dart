@@ -115,9 +115,8 @@ class _CarBottomSheetWidgetState extends State<CarBottomSheetWidget> {
       List<CarSkin> skins = [];
       skins.addAll(cars.firstWhere((element) => element == widget.car).skins);
       skins.add(skin);
-      cars
-          .firstWhere((element) => element == widget.car)
-          .copyWith(skins: skins);
+      int carIndex = cars.indexWhere((element) => element == widget.car);
+      cars[carIndex] = cars[carIndex].copyWith(skins: skins);
     } else {
       cars.add(widget.car.copyWith(skins: [skin]));
     }
@@ -127,7 +126,7 @@ class _CarBottomSheetWidgetState extends State<CarBottomSheetWidget> {
             .selectedServer
             .copyWith(cars: cars));
     debugPrint(
-        'To ${SelectedServerInherited.of(context).selectedServer.cars.first.skins}');
+        'Skin length: ${SelectedServerInherited.of(context).selectedServer.cars.firstWhere((element) => element == widget.car).skins.length}');
     setState(() {
       _addedSkins.add(skin);
     });
