@@ -52,11 +52,11 @@ class Car extends Equatable {
   List<Object?> get props => [
         name,
         brand,
-        description,
-        tags,
-        carClass,
+        // description,
+        // tags,
+        // carClass,
         path,
-        specs,
+        // specs,
       ];
 
   Car copyWith({

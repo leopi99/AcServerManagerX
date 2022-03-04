@@ -70,34 +70,36 @@ class _CarBottomSheetWidgetState extends State<CarBottomSheetWidget> {
   }
 
   Widget _buildSkins() {
+    int index = 0;
     return Padding(
       padding: const EdgeInsets.only(left: 16, top: 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: widget.car.skins.map((skin) {
-          return GestureDetector(
-            onTap: () {
-              setState(() {
-                _selectedSkin = skin;
-              });
-            },
-            child: Row(
-              children: [
-                Checkbox(
-                  checked: _addedSkins.contains(skin),
-                  onChanged: (value) {
-                    if (value!) {
-                      debugPrint('Added skin');
-                      _addSkinToServer(skin);
-                    } else {
-                      debugPrint('Removed skin');
-                      _removeSkinFromServer(skin);
-                    }
-                  },
-                ),
-                Text(skin.details?.cuteName ?? "No Name"),
-              ],
-            ),
+          index++;
+          return Row(
+            children: [
+              Checkbox(
+                checked: _addedSkins.contains(skin),
+                onChanged: (value) {
+                  if (value!) {
+                    debugPrint('Added skin');
+                    _addSkinToServer(skin);
+                  } else {
+                    debugPrint('Removed skin');
+                    _removeSkinFromServer(skin);
+                  }
+                },
+              ),
+              GestureDetector(
+                onTap: () {
+                  setState(() {
+                    _selectedSkin = skin;
+                  });
+                },
+                child: Text(skin.details?.cuteName ?? "Default $index"),
+              )
+            ],
           );
         }).toList(),
       ),

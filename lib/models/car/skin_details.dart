@@ -17,7 +17,7 @@ class SkinDetails {
 
   factory SkinDetails.fromJson(Map<String, dynamic> json) {
     return SkinDetails(
-      name: json['skinname'],
+      name: (json['skinname'] as String).isEmpty ? null : json['skinname'],
       driverName: json['drivername'] ?? '',
       country: json['country'] ?? '',
       team: json['team'] ?? '',
