@@ -162,6 +162,8 @@ class Server extends ServerBaseSettings implements Equatable {
       );
 
   ///TODO:
+  ///
+  ///Returns the List<String> of this [Server] to be written to a file.
   List<String> toStringList() {
     return [];
   }

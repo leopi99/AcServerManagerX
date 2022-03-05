@@ -62,10 +62,10 @@ class ITFluentLocalizations implements FluentLocalizations {
   String get closeTabLabel => 'Chiudi il tab (Ctrl+F4)';
 
   @override
-  String get scrollTabBackwardLabel => 'Scroll tab list backward'; //TODO:
+  String get scrollTabBackwardLabel => 'Scrolla al tab precedente';
 
   @override
-  String get scrollTabForwardLabel => 'Scroll tab list forward'; //TODO:
+  String get scrollTabForwardLabel => 'Scrolla al tab successivo';
 
   @override
   String get noResultsFoundLabel => 'Nessun risultato trovato';
