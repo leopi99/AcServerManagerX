@@ -64,6 +64,9 @@ class _TrackSelectionPageState extends State<TrackSelectionPage> {
                   stream: availableTracks,
                   initialData: const [],
                   builder: (context, trackSnapshot) {
+                    if (trackSnapshot.data!.isEmpty) {
+                      return Center(child: Text("no_track_found".tr()));
+                    }
                     return GridView.builder(
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount:

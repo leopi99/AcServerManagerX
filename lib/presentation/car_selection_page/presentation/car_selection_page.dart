@@ -63,22 +63,25 @@ class _CarSelectionPageState extends State<CarSelectionPage> {
                     SelectedServerInherited.of(context).selectedServerStream,
                 builder: (context, _) {
                   return StreamBuilder<List<Car>>(
-                      stream: availableCars,
-                      initialData: const [],
-                      builder: (context, carSnapshot) {
-                        return GridView.builder(
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount:
-                                MediaQuery.of(context).size.width ~/ 128,
-                          ),
-                          padding: const EdgeInsets.all(16)
-                              .copyWith(bottom: 64, top: 64),
-                          itemBuilder: (context, index) =>
-                              CarWidget(car: carSnapshot.data![index]),
-                          itemCount: carSnapshot.data!.length,
-                        );
-                      });
+                    stream: availableCars,
+                    initialData: const [],
+                    builder: (context, carSnapshot) {
+                      if (carSnapshot.data!.isEmpty) {
+                        return Center(child: Text("no_car_found".tr()));
+                      }
+                      return GridView.builder(
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount:
+                              MediaQuery.of(context).size.width ~/ 128,
+                        ),
+                        padding: const EdgeInsets.all(16)
+                            .copyWith(bottom: 64, top: 64),
+                        itemBuilder: (context, index) =>
+                            CarWidget(car: carSnapshot.data![index]),
+                        itemCount: carSnapshot.data!.length,
+                      );
+                    },
+                  );
                 },
               ),
               SearchBar<Car>(

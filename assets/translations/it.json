@@ -30,5 +30,7 @@
     "create_server": "Creare un nuovo server?",
     "search": "Cerca",
     "search_car": "Cerca una macchina",
-    "search_track":"Cerca un tracciato"
+    "search_track":"Cerca un tracciato",
+    "no_track_found":"Nessun tracciato trovato",
+    "no_car_found":"Nessuna macchina trovata"
 }

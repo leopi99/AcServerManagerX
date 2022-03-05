@@ -30,5 +30,7 @@
     "create_server": "Create a new server?",
     "search": "Search",
     "search_car": "Search for a car",
-    "search_track":"Search for a track"
+    "search_track":"Search for a track",
+    "no_track_found":"No track found",
+    "no_car_found":"No car found"
 }

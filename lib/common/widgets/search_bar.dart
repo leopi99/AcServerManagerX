@@ -19,6 +19,7 @@ class SearchBar<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    onSearch(searchList as List<T>);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 32).copyWith(top: 16),
       height: 52,
@@ -33,7 +34,7 @@ class SearchBar<T> extends StatelessWidget {
           child: Icon(FluentIcons.search),
         ),
         inputFormatters: [
-          FilteringTextInputFormatter.allow(RegExp(r'[a-z0-9]')),
+          FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9]')),
         ],
         onChanged: (term) {
           if (term.isEmpty) {
