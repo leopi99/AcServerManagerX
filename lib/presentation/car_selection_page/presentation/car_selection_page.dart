@@ -49,11 +49,7 @@ class _CarSelectionPageState extends State<CarSelectionPage> {
   Widget build(BuildContext context) {
     return BlocConsumer<SessionBloc, SessionState>(
       bloc: _sessionBloc,
-      listener: (context, state) {
-        if (state is SessionCarsLoadedState) {
-          Navigator.pop(context);
-        }
-      },
+      listener: (context, state) {},
       builder: (context, state) {
         if (state is SessionCarsLoadedState) {
           return Stack(

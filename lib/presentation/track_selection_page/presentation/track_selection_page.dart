@@ -51,11 +51,7 @@ class _TrackSelectionPageState extends State<TrackSelectionPage> {
   Widget build(BuildContext context) {
     return BlocConsumer<SessionBloc, SessionState>(
       bloc: _sessionBloc,
-      listener: (context, state) {
-        if (state is SessionTracksLoadedState) {
-          Navigator.pop(context);
-        }
-      },
+      listener: (context, state) {},
       builder: (context, state) {
         if (state is SessionTracksLoadedState) {
           return Stack(

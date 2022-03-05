@@ -38,7 +38,8 @@ class _SkeletonPageState extends State<SkeletonPage> {
             current is SessionLoadingState ||
             current is SessionErrorState ||
             (previous is SessionLoadingState &&
-                current is SessionTracksLoadedState),
+                (current is SessionTracksLoadedState ||
+                    current is SessionCarsLoadedState)),
         listener: (context, state) {
           if (state is SessionLoadingState) {
             showDialog(
@@ -64,6 +65,9 @@ class _SkeletonPageState extends State<SkeletonPage> {
                 content: Text(state.error),
               ),
             );
+          } else if (state is SessionTracksLoadedState ||
+              state is SessionCarsLoadedState) {
+            Navigator.pop(context);
           }
         },
         child: StreamBuilder<int>(
