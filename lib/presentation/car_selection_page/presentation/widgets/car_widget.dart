@@ -61,7 +61,8 @@ class CarWidget extends StatelessWidget {
 
   void _openSidePanel(BuildContext context) {
     showBottomSheet(
-      context: context,
+      context: context,enableDrag: false,
+      shape: const ContinuousRectangleBorder(),
       builder: (context) {
         return CarBottomSheetWidget(
           car: car,

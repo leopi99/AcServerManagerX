@@ -69,7 +69,10 @@ class _CarBottomSheetWidgetState extends State<CarBottomSheetWidget> {
     return BottomSheet(
       showDivider: false,
       showHandle: false,
-      description: Text(widget.car.name),
+      description: Text(
+        widget.car.name,
+        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+      ),
       children: [
         Padding(
           padding: const EdgeInsets.only(left: 8),
