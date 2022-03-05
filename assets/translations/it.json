@@ -27,5 +27,7 @@
     "server_advanced_settings": "Impostazioni avanzate",
     "track_selection": "Selezione tracciato",
     "car_selection": "Selezione macchine",
-    "create_server": "Creare un nuovo server?"
+    "create_server": "Creare un nuovo server?",
+    "search": "Cerca",
+    "search_car": "Cerca una macchina"
 }
