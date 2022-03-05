@@ -29,5 +29,6 @@
     "car_selection": "Car selection",
     "create_server": "Create a new server?",
     "search": "Search",
-    "search_car": "Search for a car"
+    "search_car": "Search for a car",
+    "search_track":"Search for a track"
 }

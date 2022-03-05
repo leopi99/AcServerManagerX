@@ -29,5 +29,6 @@
     "car_selection": "Selezione macchine",
     "create_server": "Creare un nuovo server?",
     "search": "Cerca",
-    "search_car": "Cerca una macchina"
+    "search_car": "Cerca una macchina",
+    "search_track":"Cerca un tracciato"
 }

@@ -45,7 +45,8 @@ class CodegenLoader extends AssetLoader{
   "car_selection": "Car selection",
   "create_server": "Create a new server?",
   "search": "Search",
-  "search_car": "Search for a car"
+  "search_car": "Search for a car",
+  "search_track": "Search for a track"
 };
 static const Map<String,dynamic> it = {
   "ops_error": "Ops! Qualcosa e andato storto",
@@ -78,7 +79,8 @@ static const Map<String,dynamic> it = {
   "car_selection": "Selezione macchine",
   "create_server": "Creare un nuovo server?",
   "search": "Cerca",
-  "search_car": "Cerca una macchina"
+  "search_car": "Cerca una macchina",
+  "search_track": "Cerca un tracciato"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en": en, "it": it};
 }
