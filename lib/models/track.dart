@@ -2,9 +2,11 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:acservermanager/models/layout.dart';
+import 'package:acservermanager/models/searcheable_element.dart';
+import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 
-class Track {
+class Track extends SearcheableElement implements Equatable {
   static const String kUiDirPath = "/ui";
   static const String kPreviewPath = '$kUiDirPath/preview.png';
   static const String kTrackInfoFilePath = "/ui_track.json";
@@ -29,7 +31,7 @@ class Track {
     required this.layouts,
     required this.index,
     this.info,
-  });
+  }) : super(name);
 
   static Future<Track> fromData(Directory directory, int index) async {
     List<Layout> layouts = [];
@@ -99,6 +101,22 @@ class Track {
         layout +
         kTrackInfoFilePath;
   }
+
+  @override
+  String get searchTerm => name;
+
+  @override
+  List<Object?> get props => [
+        name,
+        circuitName,
+        path,
+        layouts,
+        index,
+        info,
+      ];
+
+  @override
+  bool? get stringify => true;
 }
 
 class _TrackInfo {

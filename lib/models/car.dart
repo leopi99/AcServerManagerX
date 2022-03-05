@@ -2,9 +2,10 @@ import 'dart:io';
 
 import 'package:acservermanager/models/car/skin.dart';
 import 'package:acservermanager/models/car_specs.dart';
+import 'package:acservermanager/models/searcheable_element.dart';
 import 'package:equatable/equatable.dart';
 
-class Car extends Equatable {
+class Car extends SearcheableElement  implements Equatable {
   final String name;
   final String brand;
   final String description;
@@ -23,7 +24,7 @@ class Car extends Equatable {
     required this.path,
     this.skins = const [],
     this.specs,
-  });
+  }) : super(name);
 
   static Future<Car> fromJson(Map<String, dynamic> json, String path) async {
     List<CarSkin> skins = [];
@@ -82,4 +83,10 @@ class Car extends Equatable {
       skins: skins ?? this.skins,
     );
   }
+
+  @override
+  String get searchTerm => name;
+
+  @override
+  bool? get stringify => true;
 }
