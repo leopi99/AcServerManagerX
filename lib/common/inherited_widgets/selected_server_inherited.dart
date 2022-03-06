@@ -20,5 +20,11 @@ class SelectedServerInherited extends InheritedWidget {
   static SelectedServerInherited of(BuildContext context) =>
       context.dependOnInheritedWidgetOfExactType<SelectedServerInherited>()!;
 
-  void changeServer(Server server) => _selectedServerSubject.add(server);
+  void changeServer(Server server) {
+    if (server.session.selectedTrack != null) {
+      debugPrint("Track: ${server.session.selectedTrack!.name}");
+      debugPrint("Layout: ${server.session.selectedTrack!.layouts.first.name}");
+    }
+    _selectedServerSubject.add(server);
+  }
 }

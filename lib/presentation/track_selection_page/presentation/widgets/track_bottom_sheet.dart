@@ -30,8 +30,10 @@ class _TrackBottomSheetWidgetState extends State<TrackBottomSheetWidget> {
   @override
   void initState() {
     _selectedLayout = widget.track.layouts.first;
-    if (widget.bloc.currentSession.selectedTrack == widget.track) {
-      _addedLayout = widget.bloc.currentSession.selectedTrack?.layouts.first;
+    debugPrint(widget.bloc.currentSession.selectedTrack?.name);
+    debugPrint(widget.bloc.currentSession.selectedTrack?.layouts.first.name);
+    if (widget.bloc.currentSession.selectedTrack?.path == widget.track.path) {
+      _addedLayout = widget.bloc.currentSession.selectedTrack!.layouts.first;
     }
     super.initState();
   }
