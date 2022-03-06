@@ -36,9 +36,17 @@ class Track extends SearcheableElement implements Equatable {
   static Future<Track> fromDir(Directory directory, int index) async {
     List<Layout> layouts = [];
     final Directory uiDir = Directory(directory.path + kUiDirPath);
-    final bool hasLayouts = !uiDir
-        .listSync()
+    final bool hasLayouts = !await (uiDir.list())
         .any((element) => element.path.split('/').last.contains('.json'));
+    _TrackInfo? info = !hasLayouts
+        ? _TrackInfo.fromJson(
+            jsonDecode(
+              await File(
+                      _getTrackInfoPath(directory.path.replaceAll('\\', '/')))
+                  .readAsString(),
+            ),
+          )
+        : null;
     //If true, the track has more than one layout
     if (hasLayouts) {
       await Future.forEach(
@@ -67,22 +75,21 @@ class Track extends SearcheableElement implements Equatable {
       );
     } else {
       layouts.add(
-        Layout(name: 'Default', path: uiDir.path.replaceAll('\\', '/')),
+        Layout(
+            name: info?.name ?? 'Default',
+            path: uiDir.path.replaceAll('\\', '/')),
       );
     }
-    _TrackInfo? info = !hasLayouts
-        ? _TrackInfo.fromJson(
-            jsonDecode(
-              await File(
-                      _getTrackInfoPath(directory.path.replaceAll('\\', '/')))
-                  .readAsString(),
-            ),
-          )
-        : null;
+
     return Track(
       index: index,
       path: directory.path,
-      circuitName: info?.name ?? 'NoName',
+      circuitName: info?.name ??
+          directory.path
+              .replaceAll('\\', '/')
+              .split('/')
+              .last
+              .replaceAll("_", " "),
       layouts: layouts,
       name: info?.description ?? '',
       info: info,
