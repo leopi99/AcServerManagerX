@@ -19,10 +19,11 @@ class CarSkin extends Equatable {
 
   static Future<CarSkin> fromDir(Directory dir, int index) async {
     SkinDetails? details;
-    if (File(dir.path + _kSkinDetails).existsSync()) {
+    final File file = File(dir.path + _kSkinDetails);
+    if (file.existsSync()) {
       try {
-        final String fileContent = String.fromCharCodes(
-            await File(dir.path + _kSkinDetails).readAsBytes());
+        final String fileContent =
+            String.fromCharCodes(await file.readAsBytes());
         details = SkinDetails.fromJson(
           json.decode(fileContent),
           name: dir.path.replaceAll('\\', '/').split('/').last,
