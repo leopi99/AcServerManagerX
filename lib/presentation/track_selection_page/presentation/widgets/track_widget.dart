@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:acservermanager/models/track.dart';
+import 'package:acservermanager/presentation/track_selection_page/presentation/widgets/track_bottom_sheet.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 
 class TrackWidget extends StatelessWidget {
@@ -18,7 +19,14 @@ class TrackWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final widget = GestureDetector(
       onTap: () {
-        onSelect(track);
+        if (track.layouts.length == 1) {
+          onSelect(track);
+        } else {
+          showBottomSheet(
+            context: context,
+            builder: (context) => TrackBottomSheetWidget(track: track),
+          );
+        }
       },
       child: Container(
         decoration: BoxDecoration(
