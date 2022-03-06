@@ -5,7 +5,7 @@ class CarSpecs {
   final String topSpeed;
   final String accelleration;
   final String pwRatio;
-  final int range;
+  final String range;
 
   const CarSpecs({
     required this.accelleration,
@@ -22,7 +22,7 @@ class CarSpecs {
       accelleration: json['accelleration'] ?? "",
       bhp: json['bhp'],
       pwRatio: json['pwratio'],
-      range: json.containsKey('range') ? json['range'] ?? 0 : 0,
+      range: json.containsKey('range') ? json['range'].toString() : "0",
       topSpeed: json['topspeed'],
       torque: json['torque'],
       weight: json['weight'],

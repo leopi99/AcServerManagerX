@@ -21,7 +21,7 @@ class CarHelper {
         if (file.existsSync()) {
           cars.add(
             await Car.fromJson(
-                jsonDecode(String.fromCharCodes(await file.readAsBytes())
+                jsonDecode((await file.readAsString())
                     .replaceAll(RegExp(r"\s+"), ' ')),
                 element.path),
           );
@@ -29,7 +29,7 @@ class CarHelper {
       });
     } catch (e, stacktrace) {
       debugPrint('Error: $e\nStackTrace:\n$stacktrace');
-      onError(e.toString());
+      onError("${e.toString()} Stacktrace:\n$stacktrace");
       return [];
     }
     return cars;

@@ -23,7 +23,7 @@ class TrackHelper {
       });
     } catch (e, stacktrace) {
       debugPrint('Error: $e\nStackTrace:\n$stacktrace');
-      onError(e.toString());
+      onError("${e.toString()} Stacktrace:\n$stacktrace");
       return [];
     }
     return tracks;
