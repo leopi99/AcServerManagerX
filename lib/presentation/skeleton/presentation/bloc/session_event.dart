@@ -13,7 +13,14 @@ class SessionUnLoadTracksEvent extends SessionEvent {}
 
 class SessionChangeSelectedTrack extends SessionEvent {
   final Track track;
-  SessionChangeSelectedTrack(this.track);
+  final BuildContext context;
+  SessionChangeSelectedTrack(this.track, {required this.context});
+}
+
+class SessionUnselectTrackEvent extends SessionEvent {
+  final BuildContext context;
+
+  SessionUnselectTrackEvent(this.context);
 }
 
 class SessionLoadCarsEvent extends SessionEvent {}

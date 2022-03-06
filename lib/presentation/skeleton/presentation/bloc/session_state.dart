@@ -13,6 +13,8 @@ class SessionCarsLoadedState extends SessionState {}
 
 class SessionErrorState extends SessionState {
   final String error;
+  final bool isCritic;
+  final String? message;
 
-  SessionErrorState(this.error);
+  SessionErrorState(this.error, {this.isCritic = true, this.message});
 }

@@ -55,11 +55,11 @@ class _SkeletonPageState extends State<SkeletonPage> {
           } else if (state is SessionErrorState) {
             showDialog(
               context: context,
-              barrierDismissible: false,
+              barrierDismissible: !state.isCritic,
               builder: (context) => ContentDialog(
-                backgroundDismiss: false,
+                backgroundDismiss: !state.isCritic,
                 title: Text(
-                  'ops_error'.tr(),
+                  state.message ?? 'ops_error'.tr(),
                   style: TextStyle(color: Colors.red),
                 ),
                 content: Text(state.error),

@@ -18,7 +18,7 @@ class CarWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: GestureDetector(
-        onTap: () => _openSidePanel(context),
+        onTap: () => _openBottomSheet(context),
         child: Column(
           children: [
             Stack(
@@ -59,9 +59,10 @@ class CarWidget extends StatelessWidget {
     );
   }
 
-  void _openSidePanel(BuildContext context) {
+  void _openBottomSheet(BuildContext context) {
     showBottomSheet(
-      context: context,enableDrag: false,
+      context: context,
+      enableDrag: false,
       shape: const ContinuousRectangleBorder(),
       builder: (context) {
         return CarBottomSheetWidget(

@@ -122,6 +122,24 @@ class Track extends SearcheableElement implements Equatable {
 
   @override
   bool? get stringify => true;
+
+  Track copyWith({
+    String? name,
+    String? circuitName,
+    String? path,
+    List<Layout>? layouts,
+    int? index,
+    _TrackInfo? info,
+  }) {
+    return Track(
+      name: name ?? this.name,
+      circuitName: circuitName ?? this.circuitName,
+      path: path ?? this.path,
+      layouts: layouts ?? this.layouts,
+      index: index ?? this.index,
+      info: info ?? this.info,
+    );
+  }
 }
 
 class _TrackInfo {

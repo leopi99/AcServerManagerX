@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:acservermanager/models/track.dart';
+import 'package:acservermanager/presentation/skeleton/presentation/bloc/session_bloc.dart';
 import 'package:acservermanager/presentation/track_selection_page/presentation/widgets/track_bottom_sheet.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 
@@ -8,10 +9,13 @@ class TrackWidget extends StatelessWidget {
   final Track track;
   final Function(Track) onSelect;
   final bool isSelected;
+  final SessionBloc bloc;
+
   const TrackWidget({
     Key? key,
     required this.track,
     required this.onSelect,
+    required this.bloc,
     this.isSelected = false,
   }) : super(key: key);
 
@@ -23,8 +27,11 @@ class TrackWidget extends StatelessWidget {
           onSelect(track);
         } else {
           showBottomSheet(
+            enableDrag: false,
+            shape: const ContinuousRectangleBorder(),
             context: context,
-            builder: (context) => TrackBottomSheetWidget(track: track),
+            builder: (context) => TrackBottomSheetWidget(
+                track: track, onSelect: onSelect, bloc: bloc),
           );
         }
       },

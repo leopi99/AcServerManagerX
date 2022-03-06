@@ -1,15 +1,19 @@
 import 'dart:io';
 
-import 'package:acservermanager/common/inherited_widgets/selected_server_inherited.dart';
 import 'package:acservermanager/models/layout.dart';
 import 'package:acservermanager/models/track.dart';
+import 'package:acservermanager/presentation/skeleton/presentation/bloc/session_bloc.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 
 class TrackBottomSheetWidget extends StatefulWidget {
   final Track track;
+  final Function(Track) onSelect;
+  final SessionBloc bloc;
   const TrackBottomSheetWidget({
     Key? key,
     required this.track,
+    required this.onSelect,
+    required this.bloc,
   }) : super(key: key);
 
   @override
@@ -26,21 +30,23 @@ class _TrackBottomSheetWidgetState extends State<TrackBottomSheetWidget> {
   @override
   void initState() {
     _selectedLayout = widget.track.layouts.first;
-
+    if (widget.bloc.currentSession.selectedTrack == widget.track) {
+      _addedLayout = widget.bloc.currentSession.selectedTrack?.layouts.first;
+    }
     super.initState();
   }
 
   @override
   void didChangeDependencies() {
     _layouts = [];
-    final int skinDiff = (MediaQuery.of(context).size.height ~/ 3) ~/ 26;
+    final int layoutDiff = (MediaQuery.of(context).size.height ~/ 3) ~/ 26;
     //Creates the list of list of skins
-    for (int i = 0; i < widget.track.layouts.length; i += skinDiff) {
-      if (i + skinDiff > widget.track.layouts.length) {
+    for (int i = 0; i < widget.track.layouts.length; i += layoutDiff) {
+      if (i + layoutDiff > widget.track.layouts.length) {
         _layouts.add(widget.track.layouts.sublist(i));
         break;
       } else {
-        _layouts.add(widget.track.layouts.sublist(i, i + skinDiff));
+        _layouts.add(widget.track.layouts.sublist(i, i + layoutDiff));
       }
     }
     setState(() {});
@@ -122,9 +128,9 @@ class _TrackBottomSheetWidgetState extends State<TrackBottomSheetWidget> {
                             checked: _addedLayout == layout,
                             onChanged: (value) {
                               if (value) {
-                                _addSkinToServer(layout);
+                                _changeSelectedLayout(layout);
                               } else {
-                                _removeSkinFromServer(layout);
+                                _removeSelectedLayout(layout);
                               }
                             },
                           ),
@@ -150,14 +156,16 @@ class _TrackBottomSheetWidgetState extends State<TrackBottomSheetWidget> {
   }
 
   //Adds the skin (if the car is not already present, adds that too) to the selected cars in the server
-  void _addSkinToServer(Layout layout) {
+  void _changeSelectedLayout(Layout layout) {
+    widget.onSelect(widget.track.copyWith(layouts: [layout]));
     setState(() {
       _addedLayout = layout;
     });
   }
 
   //Removes the skin (and the car if it has no more skins) from the selected cars in the server
-  void _removeSkinFromServer(Layout layout) {
+  void _removeSelectedLayout(Layout layout) {
+    widget.bloc.add(SessionUnselectTrackEvent(context));
     setState(() {
       _addedLayout = null;
     });

@@ -72,9 +72,11 @@ class _TrackSelectionPageState extends State<TrackSelectionPage> {
                       itemBuilder: (context, index) => TrackWidget(
                         track: trackSnapshot.data![index],
                         onSelect: (track) {
-                          _sessionBloc!.add(SessionChangeSelectedTrack(track));
+                          _sessionBloc!.add(SessionChangeSelectedTrack(track,
+                              context: context));
                         },
                         isSelected: isSelected(index),
+                        bloc: _sessionBloc!,
                       ),
                       itemCount: trackSnapshot.data!.length,
                     );

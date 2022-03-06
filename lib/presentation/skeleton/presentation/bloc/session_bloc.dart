@@ -31,6 +31,11 @@ class SessionBloc extends Bloc<SessionEvent, SessionState> {
     });
     on<SessionChangeSelectedTrack>((event, emit) {
       _currentSession = _currentSession.copyWith(selectedTrack: event.track);
+      SelectedServerInherited.of(event.context).changeServer(
+        SelectedServerInherited.of(event.context)
+            .selectedServer
+            .copyWith(session: _currentSession),
+      );
       emit(SessionTracksLoadedState());
     });
     on<SessionLoadCarsEvent>((event, emit) async {
@@ -43,6 +48,15 @@ class SessionBloc extends Bloc<SessionEvent, SessionState> {
     });
     on<SessionSelectCarEvent>((event, emit) {
       _selectCar(emit, event);
+    });
+    on<SessionUnselectTrackEvent>((event, emit) {
+      _currentSession = _currentSession.copyWith(selectedTrack: null);
+      SelectedServerInherited.of(event.context).changeServer(
+        SelectedServerInherited.of(event.context)
+            .selectedServer
+            .copyWith(session: _currentSession),
+      );
+      emit(SessionTracksLoadedState());
     });
   }
 
