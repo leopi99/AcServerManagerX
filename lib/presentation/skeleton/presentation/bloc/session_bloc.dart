@@ -21,45 +21,17 @@ class SessionBloc extends Bloc<SessionEvent, SessionState> {
   Session get currentSession => _currentSession;
 
   SessionBloc() : super(SessionInitial()) {
-    on<SessionLoadTracksEvent>((event, emit) async {
-      await _loadTracks(emit);
-    });
-    on<SessionUnLoadTracksEvent>((event, emit) {
-      loadedTracks.clear();
-      debugPrint('Removed the tracks');
-      emit(SessionInitial());
-    });
-    on<SessionChangeSelectedTrack>((event, emit) {
-      _currentSession = _currentSession.copyWith(selectedTrack: event.track);
-      SelectedServerInherited.of(event.context).changeServer(
-        SelectedServerInherited.of(event.context)
-            .selectedServer
-            .copyWith(session: _currentSession),
-      );
-      emit(SessionTracksLoadedState());
-    });
-    on<SessionLoadCarsEvent>((event, emit) async {
-      await _loadCars(emit);
-    });
-    on<SessionUnloadCarsEvent>((event, emit) {
-      loadedCars.clear();
-      debugPrint('Removed the cars');
-      emit(SessionInitial());
-    });
-    on<SessionSelectCarEvent>((event, emit) {
-      _selectCar(emit, event);
-    });
-    on<SessionUnselectTrackEvent>((event, emit) {
-      _currentSession = _currentSession.copyWith(selectedTrack: null);
-      SelectedServerInherited.of(event.context).changeServer(
-        SelectedServerInherited.of(event.context)
-            .selectedServer
-            .copyWith(session: _currentSession),
-      );
-      emit(SessionTracksLoadedState());
-    });
+    on<SessionLoadTracksEvent>((event, emit) async => await _loadTracks(emit));
+    on<SessionUnLoadTracksEvent>((event, emit) => _unloadTracks(emit));
+    on<SessionChangeSelectedTrack>(
+        (event, emit) => _changeSelectedTrack(emit, event));
+    on<SessionLoadCarsEvent>((event, emit) async => await _loadCars(emit));
+    on<SessionUnloadCarsEvent>((event, emit) => _unloadCars(emit));
+    on<SessionSelectCarEvent>((event, emit) => _selectCar(emit, event));
+    on<SessionUnselectTrackEvent>((event, emit) => _unselectTrack(emit, event));
   }
 
+  ///Loads all the tracks available
   Future<void> _loadTracks(Emitter<SessionState> emit) async {
     emit(SessionLoadingState());
     final tracks = await TrackHelper.loadTracks(
@@ -73,6 +45,7 @@ class SessionBloc extends Bloc<SessionEvent, SessionState> {
     emit(SessionTracksLoadedState());
   }
 
+  ///Loads all the cars available
   Future<void> _loadCars(Emitter<SessionState> emit) async {
     emit(SessionLoadingState());
     final cars = await CarHelper.loadCars(
@@ -86,13 +59,49 @@ class SessionBloc extends Bloc<SessionEvent, SessionState> {
     emit(SessionCarsLoadedState());
   }
 
+  ///Adds a car to the current session
   void _selectCar(Emitter<SessionState> emit, SessionSelectCarEvent event) {
     final serverInherited = SelectedServerInherited.of(event.context);
     List<Car> cars = serverInherited.selectedServer.cars;
     cars.add(event.selectedCar);
-    //Updates the server
     serverInherited.changeServer(
       serverInherited.selectedServer.copyWith(cars: cars),
     );
+  }
+
+  ///Unloads the loaded cars
+  void _unloadCars(Emitter<SessionState> emit) {
+    loadedCars.clear();
+    emit(SessionInitial());
+  }
+
+  ///Unloads the loaded tracks
+  void _unloadTracks(Emitter<SessionState> emit) {
+    loadedTracks.clear();
+    emit(SessionInitial());
+  }
+
+  ///Changes the selected track
+  void _changeSelectedTrack(
+      Emitter<SessionState> emit, SessionChangeSelectedTrack event) {
+    _currentSession = _currentSession.copyWith(selectedTrack: event.track);
+    SelectedServerInherited.of(event.context).changeServer(
+      SelectedServerInherited.of(event.context)
+          .selectedServer
+          .copyWith(session: _currentSession),
+    );
+    emit(SessionTracksLoadedState());
+  }
+
+  ///Unselects the previously selected track
+  void _unselectTrack(
+      Emitter<SessionState> emit, SessionUnselectTrackEvent event) {
+    _currentSession = _currentSession.copyWith(selectedTrack: null);
+    SelectedServerInherited.of(event.context).changeServer(
+      SelectedServerInherited.of(event.context)
+          .selectedServer
+          .copyWith(session: _currentSession),
+    );
+    emit(SessionTracksLoadedState());
   }
 }
