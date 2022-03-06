@@ -90,7 +90,7 @@ class _CarBottomSheetWidgetState extends State<CarBottomSheetWidget> {
 
   Widget _buildSelectedSkin() {
     final double imageWidth =
-        MediaQuery.of(context).size.width / _kImageWidthDiv;
+        MediaQuery.of(context).size.width / _kImageWidthDiv / 2;
     return Image.file(
       File(_selectedSkin.previewPath),
       height: imageWidth,
