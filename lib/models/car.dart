@@ -5,7 +5,7 @@ import 'package:acservermanager/models/car_specs.dart';
 import 'package:acservermanager/models/searcheable_element.dart';
 import 'package:equatable/equatable.dart';
 
-class Car extends SearcheableElement  implements Equatable {
+class Car extends SearcheableElement implements Equatable {
   final String name;
   final String brand;
   final String description;
@@ -36,11 +36,13 @@ class Car extends SearcheableElement  implements Equatable {
     });
     return Car(
       brand: json['brand'],
-      carClass: json['class'],
+      carClass: json.containsKey('class') ? json['class'] : '',
       description: json['description'],
       path: path,
       name: json['name'],
-      tags: (json['tags'] as List).map((e) => "$e").toList(),
+      tags: json.containsKey('tags')
+          ? (json['tags'] as List).map((e) => "$e").toList()
+          : [],
       specs:
           json.containsKey('specs') ? CarSpecs.fromJson(json['specs']) : null,
       skins: skins,

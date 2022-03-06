@@ -22,7 +22,7 @@ class CarSpecs {
       accelleration: json['accelleration'] ?? "",
       bhp: json['bhp'],
       pwRatio: json['pwratio'],
-      range: json['range'] ?? 0,
+      range: json.containsKey('range') ? json['range'] ?? 0 : 0,
       topSpeed: json['topspeed'],
       torque: json['torque'],
       weight: json['weight'],

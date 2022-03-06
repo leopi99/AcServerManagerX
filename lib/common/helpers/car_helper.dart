@@ -21,7 +21,7 @@ class CarHelper {
         if (file.existsSync()) {
           cars.add(
             await Car.fromJson(
-                jsonDecode((await file.readAsString())
+                jsonDecode(String.fromCharCodes(await file.readAsBytes())
                     .replaceAll(RegExp(r"\s+"), ' ')),
                 element.path),
           );
