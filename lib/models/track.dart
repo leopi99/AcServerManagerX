@@ -48,7 +48,6 @@ class Track extends SearcheableElement implements Equatable {
           if (element.path.contains('.dds')) return;
           final Directory layoutDir =
               Directory(element.path.replaceAll('//', '/'));
-          debugPrint('Found layout: ${layoutDir.path}');
           String? name;
           try {
             final String fileContent = String.fromCharCodes((await File(

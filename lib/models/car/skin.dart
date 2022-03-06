@@ -21,11 +21,10 @@ class CarSkin extends Equatable {
     SkinDetails? details;
     if (File(dir.path + _kSkinDetails).existsSync()) {
       try {
+        final String fileContent = String.fromCharCodes(
+            await File(dir.path + _kSkinDetails).readAsBytes());
         details = SkinDetails.fromJson(
-          json.decode(
-            (await File(dir.path + _kSkinDetails).readAsString())
-                .replaceAll(RegExp(r"\s+"), ' '),
-          ),
+          json.decode(fileContent),
           name: dir.path.replaceAll('\\', '/').split('/').last,
         );
       } catch (e, stacktrace) {
