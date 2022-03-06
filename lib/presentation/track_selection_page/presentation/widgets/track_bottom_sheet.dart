@@ -78,6 +78,8 @@ class _TrackBottomSheetWidgetState extends State<TrackBottomSheetWidget> {
   }
 
   Widget _buildSelectedLayout() {
+    final double imageSize =
+        MediaQuery.of(context).size.height / _kImageWidthDiv;
     return Stack(
       alignment: Alignment.topCenter,
       children: [
@@ -85,16 +87,16 @@ class _TrackBottomSheetWidgetState extends State<TrackBottomSheetWidget> {
           opacity: .3,
           child: Image.file(
             File(_selectedLayout.previewImagePath),
-            height: MediaQuery.of(context).size.height / _kImageWidthDiv,
-            width: MediaQuery.of(context).size.height / _kImageWidthDiv,
+            height: imageSize,
+            width: imageSize,
           ),
         ),
         Align(
           alignment: Alignment.center,
           child: Image.file(
             File(_selectedLayout.outlineImagePath),
-            height: MediaQuery.of(context).size.height / _kImageWidthDiv,
-            width: MediaQuery.of(context).size.height / _kImageWidthDiv,
+            height: imageSize,
+            width: imageSize,
           ),
         )
       ],
@@ -129,9 +131,9 @@ class _TrackBottomSheetWidgetState extends State<TrackBottomSheetWidget> {
                             onChanged: (value) {
                               if (value) {
                                 _changeSelectedLayout(layout);
-                              } else {
-                                _removeSelectedLayout(layout);
+                                return;
                               }
+                              _removeSelectedLayout(layout);
                             },
                           ),
                         ),

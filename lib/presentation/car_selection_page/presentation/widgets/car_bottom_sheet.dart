@@ -89,10 +89,12 @@ class _CarBottomSheetWidgetState extends State<CarBottomSheetWidget> {
   }
 
   Widget _buildSelectedSkin() {
+    final double imageWidth =
+        MediaQuery.of(context).size.width / _kImageWidthDiv;
     return Image.file(
       File(_selectedSkin.previewPath),
-      height: MediaQuery.of(context).size.height / _kImageWidthDiv,
-      width: MediaQuery.of(context).size.height / _kImageWidthDiv,
+      height: imageWidth,
+      width: imageWidth,
     );
   }
 
@@ -120,9 +122,9 @@ class _CarBottomSheetWidgetState extends State<CarBottomSheetWidget> {
                         onChanged: (value) {
                           if (value!) {
                             _addSkinToServer(skin);
-                          } else {
-                            _removeSkinFromServer(skin);
+                            return;
                           }
+                          _removeSkinFromServer(skin);
                         },
                       ),
                       GestureDetector(
