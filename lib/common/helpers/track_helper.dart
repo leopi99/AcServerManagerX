@@ -18,7 +18,7 @@ class TrackHelper {
       await Future.forEach(trackDir.listSync(), (element) async {
         element as FileSystemEntity;
         final dir = Directory(element.path);
-        tracks.add(await Track.fromData(dir, index));
+        tracks.add(await Track.fromDir(dir, index));
         index++;
       });
     } catch (e, stacktrace) {

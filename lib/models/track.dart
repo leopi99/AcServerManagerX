@@ -33,7 +33,7 @@ class Track extends SearcheableElement implements Equatable {
     this.info,
   }) : super(name);
 
-  static Future<Track> fromData(Directory directory, int index) async {
+  static Future<Track> fromDir(Directory directory, int index) async {
     List<Layout> layouts = [];
     final Directory uiDir = Directory(directory.path + kUiDirPath);
     final bool hasLayouts = !uiDir
@@ -51,13 +51,12 @@ class Track extends SearcheableElement implements Equatable {
           debugPrint('Found layout: ${layoutDir.path}');
           String? name;
           try {
-            name = jsonDecode(
-              await File((layoutDir.path + kTrackInfoFilePath)
-                      .replaceAll('\\', '/'))
-                  .readAsString(),
-            )['name'];
-          } catch (e) {
-            debugPrint('Unable to find the layout name for $layoutDir');
+            final String fileContent = String.fromCharCodes((await File(
+                    (layoutDir.path + kTrackInfoFilePath).replaceAll('\\', '/'))
+                .readAsBytes()));
+            name = jsonDecode(fileContent)['name'];
+          } catch (e, stacktrace) {
+            debugPrint("Error: $e, stacktrace:\n$stacktrace");
           }
           layouts.add(
             Layout(
