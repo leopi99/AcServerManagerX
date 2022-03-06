@@ -24,7 +24,9 @@ class TrackWidget extends StatelessWidget {
     final widget = GestureDetector(
       onTap: () {
         if (track.layouts.length == 1) {
-          onSelect(track);
+          if (!isSelected) {
+            onSelect(track);
+          }
         } else {
           showBottomSheet(
             enableDrag: false,
