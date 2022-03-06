@@ -62,8 +62,8 @@ class _TrackBottomSheetWidgetState extends State<TrackBottomSheetWidget> {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildSelectedSkin(),
-              _buildSkins(),
+              _buildSelectedLayout(),
+              _buildLayouts(),
             ],
           ),
         ),
@@ -71,15 +71,31 @@ class _TrackBottomSheetWidgetState extends State<TrackBottomSheetWidget> {
     );
   }
 
-  Widget _buildSelectedSkin() {
-    return Image.file(
-      File(_selectedLayout.previewImagePath),
-      height: MediaQuery.of(context).size.height / _kImageWidthDiv,
-      width: MediaQuery.of(context).size.height / _kImageWidthDiv,
+  Widget _buildSelectedLayout() {
+    return Stack(
+      alignment: Alignment.topCenter,
+      children: [
+        Opacity(
+          opacity: .3,
+          child: Image.file(
+            File(_selectedLayout.previewImagePath),
+            height: MediaQuery.of(context).size.height / _kImageWidthDiv,
+            width: MediaQuery.of(context).size.height / _kImageWidthDiv,
+          ),
+        ),
+        Align(
+          alignment: Alignment.center,
+          child: Image.file(
+            File(_selectedLayout.outlineImagePath),
+            height: MediaQuery.of(context).size.height / _kImageWidthDiv,
+            width: MediaQuery.of(context).size.height / _kImageWidthDiv,
+          ),
+        )
+      ],
     );
   }
 
-  Widget _buildSkins() {
+  Widget _buildLayouts() {
     return Padding(
       padding: const EdgeInsets.only(left: 16, top: 16),
       child: LimitedBox(
@@ -96,27 +112,33 @@ class _TrackBottomSheetWidgetState extends State<TrackBottomSheetWidget> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: e.map<Widget>((layout) {
-                  return Row(
-                    children: [
-                      Checkbox(
-                        checked: _addedLayout == layout,
-                        onChanged: (value) {
-                          if (value!) {
-                            _addSkinToServer(layout);
-                          } else {
-                            _removeSkinFromServer(layout);
-                          }
-                        },
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            _selectedLayout = layout;
-                          });
-                        },
-                        child: Text(layout.name),
-                      )
-                    ],
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(right: 8.0),
+                          child: RadioButton(
+                            checked: _addedLayout == layout,
+                            onChanged: (value) {
+                              if (value) {
+                                _addSkinToServer(layout);
+                              } else {
+                                _removeSkinFromServer(layout);
+                              }
+                            },
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _selectedLayout = layout;
+                            });
+                          },
+                          child: Text(layout.name),
+                        )
+                      ],
+                    ),
                   );
                 }).toList(),
               ),
