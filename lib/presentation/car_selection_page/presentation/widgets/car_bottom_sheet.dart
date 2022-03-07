@@ -133,7 +133,7 @@ class _CarBottomSheetWidgetState extends State<CarBottomSheetWidget> {
                             _selectedSkin = skin;
                           });
                         },
-                        child: Text(skin.details!.cuteName),
+                        child: Text(skin.details?.cuteName ?? 'NoName found'),
                       )
                     ],
                   );

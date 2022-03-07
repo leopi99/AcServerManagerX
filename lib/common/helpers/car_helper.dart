@@ -19,12 +19,21 @@ class CarHelper {
         final file = File(element.path + _kCarJson);
         //Adds the car only if the file exists
         if (file.existsSync()) {
-          cars.add(
-            await Car.fromJson(
-                jsonDecode((await file.readAsString())
-                    .replaceAll(RegExp(r"\s+"), ' ')),
-                element.path),
-          );
+          try {
+            cars.add(
+              await Car.fromJson(
+                  jsonDecode((await file.readAsString())
+                      .replaceAll(RegExp(r"\s+"), ' ')),
+                  element.path),
+            );
+          } catch (e) {
+            cars.add(
+              await Car.fromJson(
+                  jsonDecode(String.fromCharCodes((await file.readAsBytes()))
+                      .replaceAll(RegExp(r"\s+"), ' ')),
+                  element.path),
+            );
+          }
         }
       });
     } catch (e, stacktrace) {
