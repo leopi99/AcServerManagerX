@@ -21,10 +21,6 @@ class SelectedServerInherited extends InheritedWidget {
       context.dependOnInheritedWidgetOfExactType<SelectedServerInherited>()!;
 
   void changeServer(Server server) {
-    if (server.session.selectedTrack != null) {
-      debugPrint("Track: ${server.session.selectedTrack!.name}");
-      debugPrint("Layout: ${server.session.selectedTrack!.layouts.first.name}");
-    }
     _selectedServerSubject.add(server);
   }
 }
