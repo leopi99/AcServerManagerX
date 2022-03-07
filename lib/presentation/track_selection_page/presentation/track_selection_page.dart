@@ -43,8 +43,8 @@ class _TrackSelectionPageState extends State<TrackSelectionPage> {
   }
 
   bool isSelected(int index) {
-    return _sessionBloc!.currentSession.selectedTrack ==
-        availableTracks.value[index];
+    return _sessionBloc!.currentSession.selectedTrack?.path ==
+        availableTracks.value[index].path;
   }
 
   @override

@@ -26,6 +26,7 @@ class _SearchBarState<T> extends State<SearchBar<T>> {
 
   @override
   void initState() {
+    widget.onSearch(widget.searchList as List<T>);
     _textController.addListener(() {
       if (_textController.text.isEmpty) {
         setState(() {});
@@ -44,7 +45,6 @@ class _SearchBarState<T> extends State<SearchBar<T>> {
 
   @override
   Widget build(BuildContext context) {
-    widget.onSearch(widget.searchList as List<T>);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 32).copyWith(top: 16),
       height: 52,
