@@ -36,7 +36,6 @@ class _TrackSelectionPageState extends State<TrackSelectionPage> {
 
   @override
   void dispose() {
-    debugPrint('Disposing tracks');
     _sessionBloc!.add(SessionUnLoadTracksEvent());
     availableTracks.close();
     super.dispose();
