@@ -89,7 +89,9 @@ class Track extends SearcheableElement implements Equatable {
               .replaceAll('\\', '/')
               .split('/')
               .last
-              .replaceAll("_", " "),
+              .replaceAll("_", " ")
+              .replaceFirst('ks', '')
+              .trim(),
       layouts: layouts,
       name: info?.description ?? '',
       info: info,
