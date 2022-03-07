@@ -39,7 +39,6 @@ class _CarSelectionPageState extends State<CarSelectionPage> {
 
   @override
   void dispose() {
-    debugPrint('Disposing cars');
     availableCars.close();
     _sessionBloc!.add(SessionUnloadCarsEvent());
     super.dispose();

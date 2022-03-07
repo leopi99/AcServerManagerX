@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:acservermanager/common/helpers/car_helper.dart';
 import 'package:acservermanager/common/helpers/track_helper.dart';
 import 'package:acservermanager/common/inherited_widgets/selected_server_inherited.dart';
@@ -15,9 +17,11 @@ part 'session_state.dart';
 
 class SessionBloc extends Bloc<SessionEvent, SessionState> {
   Session _currentSession = const Session();
-  List<Track> loadedTracks = [];
-  List<Car> loadedCars = [];
-
+  List<Track> _loadedTracks = [];
+  List<Car> _loadedCars = [];
+  UnmodifiableListView<Track> get loadedTracks =>
+      UnmodifiableListView(_loadedTracks);
+  UnmodifiableListView<Car> get loadedCars => UnmodifiableListView(_loadedCars);
   Session get currentSession => _currentSession;
 
   SessionBloc() : super(SessionInitial()) {
@@ -41,7 +45,7 @@ class SessionBloc extends Bloc<SessionEvent, SessionState> {
         return;
       },
     );
-    loadedTracks = tracks;
+    _loadedTracks = tracks;
     emit(SessionTracksLoadedState());
   }
 
@@ -55,7 +59,7 @@ class SessionBloc extends Bloc<SessionEvent, SessionState> {
         return;
       },
     );
-    loadedCars = cars;
+    _loadedCars = cars;
     emit(SessionCarsLoadedState());
   }
 
@@ -71,13 +75,13 @@ class SessionBloc extends Bloc<SessionEvent, SessionState> {
 
   ///Unloads the loaded cars
   void _unloadCars(Emitter<SessionState> emit) {
-    loadedCars.clear();
+    _loadedCars.clear();
     emit(SessionInitial());
   }
 
   ///Unloads the loaded tracks
   void _unloadTracks(Emitter<SessionState> emit) {
-    loadedTracks.clear();
+    _loadedTracks.clear();
     emit(SessionInitial());
   }
 
