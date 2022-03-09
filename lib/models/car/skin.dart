@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:acservermanager/common/logger.dart';
 import 'package:acservermanager/models/car/skin_details.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/foundation.dart';
 
 class CarSkin extends Equatable {
   static const String _kCarSkin = '/preview.jpg';

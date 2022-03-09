@@ -7,7 +7,6 @@ import 'package:acservermanager/models/server/server_file_names.dart';
 import 'package:acservermanager/models/session.dart';
 import 'package:acservermanager/models/voting_banning.dart';
 import 'package:equatable/equatable.dart';
-import 'package:fluent_ui/fluent_ui.dart';
 
 class Server extends ServerBaseSettings implements Equatable {
   final Session session;

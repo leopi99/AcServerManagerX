@@ -5,7 +5,6 @@ import 'package:acservermanager/common/logger.dart';
 import 'package:acservermanager/models/layout.dart';
 import 'package:acservermanager/models/searcheable_element.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/foundation.dart';
 
 class Track extends SearcheableElement implements Equatable {
   static const String kUiDirPath = "/ui";
