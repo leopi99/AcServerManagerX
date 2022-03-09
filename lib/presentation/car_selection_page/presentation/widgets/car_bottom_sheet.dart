@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:acservermanager/common/inherited_widgets/selected_server_inherited.dart';
+import 'package:acservermanager/common/logger.dart';
 import 'package:acservermanager/models/car.dart';
 import 'package:acservermanager/models/car/skin.dart';
 import 'package:fluent_ui/fluent_ui.dart';
@@ -36,6 +37,7 @@ class _CarBottomSheetWidgetState extends State<CarBottomSheetWidget> {
           .indexOf(widget.car);
 
       if (index != -1) {
+        Logger().log("car found");
         _addedSkins = SelectedServerInherited.of(context)
             .selectedServer
             .cars
@@ -164,9 +166,8 @@ class _CarBottomSheetWidgetState extends State<CarBottomSheetWidget> {
     }
     //Updates the server with the skin
     SelectedServerInherited.of(context).changeServer(
-        SelectedServerInherited.of(context)
-            .selectedServer
-            .copyWith(cars: cars));
+      SelectedServerInherited.of(context).selectedServer.copyWith(cars: cars),
+    );
     setState(() {
       _addedSkins.add(skin);
     });

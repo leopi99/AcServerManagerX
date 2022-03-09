@@ -1,4 +1,5 @@
 import 'package:acservermanager/common/appearance_bloc/appearance_bloc.dart';
+import 'package:acservermanager/common/logger.dart';
 import 'package:acservermanager/common/shared_manager.dart';
 import 'package:acservermanager/models/enums/shared_key.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -32,7 +33,7 @@ class _SelectAcPathPageState extends State<SelectAcPathPage> {
             controller: _controller,
             onSubmitted: (value) async {
               if (value.isEmpty) return;
-              debugPrint('Selected directory: $value');
+              Logger().log('Selected directory: $value');
               await GetIt.I<SharedManager>()
                   .setString(SharedKey.acPath, _controller.text);
               Navigator.pop(context);
@@ -48,7 +49,7 @@ class _SelectAcPathPageState extends State<SelectAcPathPage> {
                   if (dir != null) {
                     dir = dir.replaceAll('\\', "/");
                     _controller.text = dir;
-                    debugPrint('Selected directory: $dir');
+                    Logger().log('Selected directory: $dir');
                     await GetIt.I<SharedManager>()
                         .setString(SharedKey.acPath, _controller.text);
                     Navigator.pop(context);

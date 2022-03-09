@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:acservermanager/common/logger.dart';
 import 'package:acservermanager/models/layout.dart';
 import 'package:acservermanager/models/searcheable_element.dart';
 import 'package:equatable/equatable.dart';
@@ -63,7 +64,7 @@ class Track extends SearcheableElement implements Equatable {
                 .readAsBytes()));
             name = jsonDecode(fileContent)['name'];
           } catch (e, stacktrace) {
-            debugPrint("Error: $e, stacktrace:\n$stacktrace");
+            Logger().log("Error: $e, stacktrace:\n$stacktrace");
           }
           layouts.add(
             Layout(

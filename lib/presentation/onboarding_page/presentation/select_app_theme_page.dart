@@ -1,4 +1,5 @@
 import 'package:acservermanager/common/appearance_bloc/appearance_bloc.dart';
+import 'package:acservermanager/common/logger.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:get_it/get_it.dart';
@@ -19,7 +20,7 @@ class _SelectAppThemePageState extends State<SelectAppThemePage> {
 
   @override
   void initState() {
-    debugPrint('SelectAppThemePage initState');
+    Logger().log('SelectAppThemePage initState');
     _bloc = GetIt.instance<AppearanceBloc>();
     super.initState();
   }

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:acservermanager/common/logger.dart';
 import 'package:acservermanager/models/car/skin_details.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
@@ -29,8 +30,8 @@ class CarSkin extends Equatable {
           name: dir.path.replaceAll('\\', '/').split('/').last,
         );
       } catch (e, stacktrace) {
-        debugPrint("For car ${dir.path}");
-        debugPrint(
+        Logger().log("For car ${dir.path}");
+        Logger().log(
             'Error retrieving skin details: $e\nStacktrace: $stacktrace');
       }
     }

@@ -55,13 +55,7 @@ class Car extends SearcheableElement implements Equatable {
 
   @override
   List<Object?> get props => [
-        name,
-        brand,
-        // description,
-        // tags,
-        // carClass,
         path,
-        // specs,
       ];
 
   Car copyWith({

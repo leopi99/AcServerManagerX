@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:acservermanager/common/logger.dart';
 import 'package:acservermanager/models/car.dart';
 import 'package:flutter/foundation.dart';
 
@@ -37,7 +38,7 @@ class CarHelper {
         }
       });
     } catch (e, stacktrace) {
-      debugPrint('Error: $e\nStackTrace:\n$stacktrace');
+      Logger().log('Error: $e\nStackTrace:\n$stacktrace');
       onError("${e.toString()} Stacktrace:\n$stacktrace");
       return [];
     }

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:acservermanager/common/logger.dart';
 import 'package:acservermanager/common/shared_manager.dart';
 import 'package:acservermanager/models/enums/shared_key.dart';
 import 'package:acservermanager/models/server.dart';
@@ -213,7 +214,7 @@ class _SkeletonPageState extends State<SkeletonPage> {
       final file = File(server.cfgFilePath);
       await file.writeAsString(server.toStringList().join('\n'));
     } catch (e, stacktrace) {
-      debugPrint('Error: $e\nStacktrace:\n$stacktrace');
+      Logger().log('Error: $e\nStacktrace:\n$stacktrace');
       return;
     }
   }

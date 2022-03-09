@@ -1,3 +1,4 @@
+import 'package:acservermanager/common/logger.dart';
 import 'package:acservermanager/models/searcheable_element.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fluent_ui/fluent_ui.dart';
@@ -85,8 +86,8 @@ class _SearchBarState<T> extends State<SearchBar<T>> {
                     item.searchTerm.toLowerCase().contains(term.toLowerCase()))
                 .toList();
           } catch (e, stacktrace) {
-            debugPrint("Error: $e\nStacktrace:\n$stacktrace");
-            debugPrint('SearchTerm: $term');
+            Logger().log("Error: $e\nStacktrace:\n$stacktrace");
+            Logger().log('SearchTerm: $term');
           }
           widget.onSearch(filtered as List<T>);
         },

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:acservermanager/common/helpers/track_helper.dart';
 import 'package:acservermanager/common/inherited_widgets/selected_server_inherited.dart';
+import 'package:acservermanager/common/logger.dart';
 import 'package:acservermanager/common/shared_manager.dart';
 import 'package:acservermanager/models/enums/shared_key.dart';
 import 'package:acservermanager/models/server.dart';
@@ -62,9 +63,9 @@ class LoadingBlocBloc extends Bloc<LoadingBlocEvent, LoadingBlocState> {
       for (String name in serverNames) {
         files.add(File('$presetsPath/$name/$_kServerConfig'));
       }
-      debugPrint('Servers: ${serverNames.toString()}');
+      Logger().log('Servers: ${serverNames.toString()}');
     } catch (e, stacktrace) {
-      debugPrint("Error: $e\nStacktrace:\n$stacktrace");
+      Logger().log("Error: $e\nStacktrace:\n$stacktrace");
       emit(LoadingBlocErrorState("An error accoured, please try again.\n$e"));
       return;
     }
@@ -106,7 +107,7 @@ class LoadingBlocBloc extends Bloc<LoadingBlocEvent, LoadingBlocState> {
     SelectedServerInherited.of(context).changeServer(servers.first);
     emit(LoadingBlocLoadedState(servers));
     await close();
-    debugPrint('LoadingBloc disposed');
+    Logger().log('LoadingBloc disposed');
   }
 
   ///Assignes to the servers the selected [Track] from the [trackNames] list.

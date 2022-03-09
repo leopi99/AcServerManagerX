@@ -1,3 +1,4 @@
+import 'package:acservermanager/common/logger.dart';
 import 'package:acservermanager/models/assists.dart';
 import 'package:acservermanager/models/car.dart';
 import 'package:acservermanager/models/realism.dart';
@@ -105,7 +106,7 @@ class Server extends ServerBaseSettings implements Equatable {
         .last);
     if (result == null) {
       result = defaultValue;
-      debugPrint('Using defaultValue for $key -> $defaultValue');
+      Logger().log('Using defaultValue for $key -> $defaultValue');
     }
     return result;
   }
