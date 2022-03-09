@@ -151,11 +151,13 @@ class _CarBottomSheetWidgetState extends State<CarBottomSheetWidget> {
     List<Car> cars = [];
     cars.addAll(SelectedServerInherited.of(context).selectedServer.cars);
     //Adds the skin to the car
-    if (cars.contains(widget.car)) {
+    if (cars.any((element) => element.path == widget.car.path)) {
       List<CarSkin> skins = [];
-      skins.addAll(cars.firstWhere((element) => element == widget.car).skins);
+      skins.addAll(
+          cars.firstWhere((element) => element.path == widget.car.path).skins);
       skins.add(skin);
-      int carIndex = cars.indexWhere((element) => element == widget.car);
+      int carIndex =
+          cars.indexWhere((element) => element.path == widget.car.path);
       cars[carIndex] = cars[carIndex].copyWith(skins: skins);
     } else {
       cars.add(widget.car.copyWith(skins: [skin]));

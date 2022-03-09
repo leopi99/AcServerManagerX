@@ -1,9 +1,11 @@
 import 'dart:io';
 
+import 'package:acservermanager/common/helpers/track_helper.dart';
 import 'package:acservermanager/common/inherited_widgets/selected_server_inherited.dart';
 import 'package:acservermanager/common/shared_manager.dart';
 import 'package:acservermanager/models/enums/shared_key.dart';
 import 'package:acservermanager/models/server.dart';
+import 'package:acservermanager/models/session.dart';
 import 'package:bloc/bloc.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter/services.dart';
@@ -78,14 +80,73 @@ class LoadingBlocBloc extends Bloc<LoadingBlocEvent, LoadingBlocState> {
         servers.add(Server(serverFilesPath: '$presetsPath/SERVER_00'));
       }
     } catch (e, stacktrace) {
-      debugPrint("Error: $e\nStacktrace:\n$stacktrace");
+      Logger().log("Error: $e\nStacktrace:\n$stacktrace");
       emit(LoadingBlocErrorState("An error accoured, please try again.\n$e"));
       return;
     }
+    await _getTracksSetTrack(
+      acPath: acPath,
+      servers: servers,
+      trackNames: [
+        {
+          "name": "bahrain",
+          "layout": "",
+        },
+        {
+          "name": "barcelona",
+          "layout": "layout_gp",
+        }
+      ],
+      onError: (e) {
+        emit(LoadingBlocErrorState("An error accoured, please try again.\n$e"));
+      },
+    );
+    Logger().log(servers.first.session.selectedTrack?.name ?? "none");
     GetIt.instance.registerSingleton(servers);
     SelectedServerInherited.of(context).changeServer(servers.first);
     emit(LoadingBlocLoadedState(servers));
     await close();
     debugPrint('LoadingBloc disposed');
+  }
+
+  ///Assignes to the servers the selected [Track] from the [trackNames] list.
+  ///
+  ///The [trackNames] list is the list of the names of the tracks inside the server config file.
+  ///
+  ///The [trackNames] must be the same length as the [servers] list and in the correct order.
+  Future<void> _getTracksSetTrack({
+    required List<Server> servers,
+    required Function(String) onError,
+    required String acPath,
+    required List<Map<String, String>> trackNames,
+  }) async {
+    assert(servers.length == trackNames.length);
+    final tracks =
+        await TrackHelper.loadTracks(acPath: acPath, onError: onError);
+    for (int i = 0; i < servers.length; i++) {
+      Logger().log(
+          "Searching track ${trackNames[i]} for server ${servers[i].name}");
+      if (tracks.any((element) => element.name
+          .toLowerCase()
+          .contains(trackNames[i]['name']!.toLowerCase()))) {
+        Logger().log("found track");
+        final track = tracks.firstWhere((element) => trackNames[i]['name']!
+            .toLowerCase()
+            .contains(element.name.toLowerCase()));
+        servers[i] = servers[i].copyWith(
+          session: Session(
+            selectedTrack: track.copyWith(
+              layouts: track.layouts.length > 1
+                  ? [
+                      track.layouts.firstWhere((element) => element.name
+                          .toLowerCase()
+                          .contains(trackNames[i]['layout']!.toLowerCase()))
+                    ]
+                  : track.layouts,
+            ),
+          ),
+        );
+      }
+    }
   }
 }
