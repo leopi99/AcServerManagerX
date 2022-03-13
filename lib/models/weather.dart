@@ -59,4 +59,16 @@ class Weather {
       timeOfDayMultiplier: timeOfDayMultiplier ?? this.timeOfDayMultiplier,
     );
   }
+
+  List<String> toStringList() => [
+        'GRAPHICS=3_clear', //TODO:
+        'BASE_TEMPERATURE_AMBIENT=$baseAmbientTemp',
+        'BASE_TEMPERATURE_ROAD=$baseRoadTemp',
+        'VARIATION_AMBIENT=$ambientVariation',
+        'VARIATION_ROAD=$roadVariation',
+        'WIND_BASE_SPEED_MIN=$baseWindMinSpeed',
+        'WIND_BASE_SPEED_MAX=$baseWindMaxSpeed',
+        'WIND_BASE_DIRECTION=$baseWindDirection',
+        'WIND_VARIATION_DIRECTION=$windDirectionVar',
+      ];
 }

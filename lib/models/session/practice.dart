@@ -27,4 +27,10 @@ class Practice extends SessionBase {
         time,
         canJoin,
       ];
+
+  List<String> toStringList() => [
+        'NAME=Practice',
+        'TIME=$time',
+        'IS_OPEN=$canJoin',
+      ];
 }
