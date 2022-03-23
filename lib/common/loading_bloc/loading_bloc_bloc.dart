@@ -70,12 +70,20 @@ class LoadingBlocBloc extends Bloc<LoadingBlocEvent, LoadingBlocState> {
       return;
     }
     List<Server> servers = [];
+    List<Map<String, String>> _trackNames = [];
     //Loads the servers found in the previous step
     try {
       servers = List.generate(
         files.length,
-        (index) => Server.fromFileData(files[index].readAsLinesSync(),
-            '$presetsPath/${serverNames[index]}'),
+        (index) {
+          final List<String> fileData = files[index].readAsLinesSync();
+          _trackNames.add({
+            "name": Server.getStringFromData(fileData, "TRACK"),
+            "layout": Server.getStringFromData(fileData, "CONFIG_TRACK"),
+          });
+          return Server.fromFileData(
+              fileData, '$presetsPath/${serverNames[index]}');
+        },
       );
       if (servers.isEmpty) {
         servers.add(Server(serverFilesPath: '$presetsPath/SERVER_00'));
@@ -88,16 +96,7 @@ class LoadingBlocBloc extends Bloc<LoadingBlocEvent, LoadingBlocState> {
     await _getTracksSetTrack(
       acPath: acPath,
       servers: servers,
-      trackNames: [
-        {
-          "name": "bahrain",
-          "layout": "",
-        },
-        {
-          "name": "barcelona",
-          "layout": "layout_gp",
-        }
-      ],
+      trackNames: _trackNames,
       onError: (e) {
         emit(LoadingBlocErrorState("An error accoured, please try again.\n$e"));
       },
@@ -107,7 +106,6 @@ class LoadingBlocBloc extends Bloc<LoadingBlocEvent, LoadingBlocState> {
     SelectedServerInherited.of(context).changeServer(servers.first);
     emit(LoadingBlocLoadedState(servers));
     await close();
-    Logger().log('LoadingBloc disposed');
   }
 
   ///Assignes to the servers the selected [Track] from the [trackNames] list.
@@ -127,19 +125,21 @@ class LoadingBlocBloc extends Bloc<LoadingBlocEvent, LoadingBlocState> {
     for (int i = 0; i < servers.length; i++) {
       Logger().log(
           "Searching track ${trackNames[i]} for server ${servers[i].name}");
-      if (tracks.any((element) => element.name
+      if (tracks.any((element) => element.path
           .toLowerCase()
           .contains(trackNames[i]['name']!.toLowerCase()))) {
-        Logger().log("found track");
-        final track = tracks.firstWhere((element) => trackNames[i]['name']!
+        final track = tracks.firstWhere((element) => element.path
             .toLowerCase()
-            .contains(element.name.toLowerCase()));
+            .contains(trackNames[i]['name']!.toLowerCase()));
+        Logger().log(
+            "found track name:\"${track.name}\" path: ${track.path} for track ${trackNames[i]["name"]}");
         servers[i] = servers[i].copyWith(
           session: Session(
             selectedTrack: track.copyWith(
               layouts: track.layouts.length > 1
                   ? [
-                      track.layouts.firstWhere((element) => element.name
+                      track.layouts.firstWhere((element) => element.path
+                          .trim()
                           .toLowerCase()
                           .contains(trackNames[i]['layout']!.toLowerCase()))
                     ]

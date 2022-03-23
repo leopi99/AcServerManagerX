@@ -61,14 +61,14 @@ class Server extends ServerBaseSettings implements Equatable {
   factory Server.fromFileData(List<String> data, String path) {
     //The file is read as List<String>, every item is a line in the file.
     return Server(
-      name: _getStringFromData(data, ServerFileNames.serverName),
-      adminPassword: _getStringFromData(data, ServerFileNames.adminPassword),
-      httpPort: _getStringFromData(data, ServerFileNames.httpPort),
-      udpPort: _getStringFromData(data, ServerFileNames.udpPort),
-      tcpPort: _getStringFromData(data, ServerFileNames.tcpPort),
+      name: getStringFromData(data, ServerFileNames.serverName),
+      adminPassword: getStringFromData(data, ServerFileNames.adminPassword),
+      httpPort: getStringFromData(data, ServerFileNames.httpPort),
+      udpPort: getStringFromData(data, ServerFileNames.udpPort),
+      tcpPort: getStringFromData(data, ServerFileNames.tcpPort),
       packetHz: _getIntFromData(data, ServerFileNames.packetHz, 18),
       loopMode: _getBoolFromData(data, ServerFileNames.loopMode),
-      password: _getStringFromData(data, ServerFileNames.password),
+      password: getStringFromData(data, ServerFileNames.password),
       pickupMode: _getBoolFromData(data, ServerFileNames.pickupModeEnabled),
       pickupLockedEntryList:
           _getBoolFromData(data, ServerFileNames.lockedEntryList),
@@ -79,7 +79,7 @@ class Server extends ServerBaseSettings implements Equatable {
   }
 
   ///Returns the [String] value of the [key] in the [data] list.
-  static String _getStringFromData(List<String> data, String key) {
+  static String getStringFromData(List<String> data, String key) {
     return data
         .firstWhere((element) => element.split('=').first == key)
         .split('=')
