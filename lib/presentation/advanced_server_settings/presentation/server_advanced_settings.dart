@@ -140,7 +140,8 @@ class _ServerAdvancedSettingsPageState
         DropDownButton(
           placement: FlyoutPlacement.left,
           title: Text(
-              "${SelectedServerInherited.of(context).selectedServer.threads} Threads"),
+              "${SelectedServerInherited.of(context).selectedServer.threads} " +
+                  "threads".tr()),
           items: List.generate(
             7,
             (index) => DropDownButtonItem(
@@ -151,7 +152,7 @@ class _ServerAdvancedSettingsPageState
                         .copyWith(threads: index + 2));
                 setState(() {});
               },
-              title: Text("Thread${index > 1 ? "s" : ""}"),
+              title: Text("threads".tr()),
               leading: Text("${index + 2}"),
             ),
           ),

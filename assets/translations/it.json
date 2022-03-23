@@ -7,7 +7,7 @@
     "select_server_edit": "Seleziona il server da modificare",
     "ok": "Ok",
     "no": "No",
-    "yes":"Si",
+    "yes": "Si",
     "dark_mode": "Dark Mode",
     "light_mode": "Light Mode",
     "close_dialog_server_change": "Chiudi il dialog quando il server selezionato cambia",
@@ -30,7 +30,8 @@
     "create_server": "Creare un nuovo server?",
     "search": "Cerca",
     "search_car": "Cerca una macchina",
-    "search_track":"Cerca un tracciato",
-    "no_track_found":"Nessun tracciato trovato",
-    "no_car_found":"Nessuna macchina trovata"
+    "search_track": "Cerca un tracciato",
+    "no_track_found": "Nessun tracciato trovato",
+    "no_car_found": "Nessuna macchina trovata",
+    "threads": "Threads"
 }
