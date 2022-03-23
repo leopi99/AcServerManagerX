@@ -40,7 +40,6 @@ class _ServerAdvancedSettingsPageState
 
   @override
   void dispose() {
-    Logger().log('ServerAdvancedSettingsPage.dispose');
     sub.cancel();
     _udpPortController.dispose();
     _tcpPortController.dispose();
