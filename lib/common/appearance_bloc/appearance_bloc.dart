@@ -8,6 +8,8 @@ class AppearanceBloc {
   final BehaviorSubject<bool> _darkModeSubject = BehaviorSubject.seeded(true);
   Stream<bool> get darkMode => _darkModeSubject.stream;
 
+  bool get isDarkMode => _darkModeSubject.value;
+
   AppearanceBloc() {
     final darkMode = GetIt.I<SharedManager>().getBool(SharedKey.appearance);
     if (darkMode != null) {

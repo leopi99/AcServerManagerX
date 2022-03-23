@@ -6,6 +6,7 @@ import 'package:acservermanager/models/server.dart';
 import 'package:acservermanager/presentation/advanced_server_settings/widgets/textbox_entry_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 
 class ServerAdvancedSettingsPage extends StatefulWidget {
@@ -22,10 +23,14 @@ class _ServerAdvancedSettingsPageState
   final TextEditingController _tcpPortController = TextEditingController();
   final TextEditingController _httpPortController = TextEditingController();
   final TextEditingController _packetHzController = TextEditingController();
-  late StreamSubscription<Server> sub;
+  late final StreamSubscription<Server> sub;
+
+  ///Width of the numeric input fields
+  late double _portsWidth;
 
   @override
   void didChangeDependencies() {
+    _portsWidth = MediaQuery.of(context).size.width * .1;
     sub = SelectedServerInherited.of(context)
         .selectedServerStream
         .listen((event) {
@@ -55,21 +60,66 @@ class _ServerAdvancedSettingsPageState
         padding: const EdgeInsets.all(32),
         children: [
           TextBoxEntryWidget(
-              controller: _udpPortController,
-              label: 'udp_port'.tr(),
-              placeHolder: '9600'),
+            inputFormatters: [
+              FilteringTextInputFormatter.digitsOnly,
+            ],
+            onTextChanged: (value) {
+              SelectedServerInherited.of(context).changeServer(
+                  SelectedServerInherited.of(context)
+                      .selectedServer
+                      .copyWith(udpPort: value));
+            },
+            controller: _udpPortController,
+            label: 'udp_port'.tr(),
+            textBoxWidth: _portsWidth,
+            placeHolder: '9600',
+          ),
           TextBoxEntryWidget(
-              controller: _tcpPortController,
-              label: 'tcp_port'.tr(),
-              placeHolder: '9600'),
+            inputFormatters: [
+              FilteringTextInputFormatter.digitsOnly,
+            ],
+            onTextChanged: (value) {
+              SelectedServerInherited.of(context).changeServer(
+                  SelectedServerInherited.of(context)
+                      .selectedServer
+                      .copyWith(tcpPort: value));
+            },
+            controller: _tcpPortController,
+            label: 'tcp_port'.tr(),
+            textBoxWidth: _portsWidth,
+            placeHolder: '9600',
+          ),
           TextBoxEntryWidget(
-              controller: _httpPortController,
-              label: 'http_port'.tr(),
-              placeHolder: '9600'),
+            inputFormatters: [
+              FilteringTextInputFormatter.digitsOnly,
+            ],
+            onTextChanged: (value) {
+              SelectedServerInherited.of(context).changeServer(
+                  SelectedServerInherited.of(context)
+                      .selectedServer
+                      .copyWith(httpPort: value));
+            },
+            controller: _httpPortController,
+            label: 'http_port'.tr(),
+            textBoxWidth: _portsWidth,
+            placeHolder: '9600',
+          ),
           TextBoxEntryWidget(
-              controller: _packetHzController,
-              label: 'packet_hz'.tr(),
-              placeHolder: '9600'),
+            inputFormatters: [
+              FilteringTextInputFormatter.digitsOnly,
+            ],
+            onTextChanged: (value) {
+              final int? newValue = int.tryParse(value);
+              SelectedServerInherited.of(context).changeServer(
+                  SelectedServerInherited.of(context)
+                      .selectedServer
+                      .copyWith(packetHz: newValue));
+            },
+            controller: _packetHzController,
+            label: 'packet_hz'.tr(),
+            textBoxWidth: _portsWidth,
+            placeHolder: '9600',
+          ),
         ],
       ),
     );

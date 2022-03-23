@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:acservermanager/common/appearance_bloc/appearance_bloc.dart';
 import 'package:acservermanager/common/inherited_widgets/selected_server_inherited.dart';
 import 'package:acservermanager/common/logger.dart';
 import 'package:acservermanager/common/shared_manager.dart';
+import 'package:acservermanager/common/svg_paths.dart';
 import 'package:acservermanager/models/enums/shared_key.dart';
 import 'package:acservermanager/models/server.dart';
 import 'package:acservermanager/presentation/advanced_server_settings/presentation/server_advanced_settings.dart';
@@ -17,6 +19,7 @@ import 'package:acservermanager/presentation/track_selection_page/presentation/t
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 
 class SkeletonPage extends StatefulWidget {
@@ -175,7 +178,19 @@ class _SkeletonPageState extends State<SkeletonPage> {
                     title: Text('server_advanced_settings'.tr()),
                   ),
                   PaneItem(
-                    icon: const Icon(FluentIcons.exercise_tracker),
+                    icon: StreamBuilder<bool>(
+                      stream: GetIt.I<AppearanceBloc>().darkMode,
+                      initialData: true,
+                      builder: (context, snapshot) {
+                        return SvgPicture.asset(
+                          SvgPaths.trackSvgPath,
+                          width: 24,
+                          color: snapshot.data!
+                              ? Colors.white
+                              : Colors.black.withOpacity(.55),
+                        );
+                      },
+                    ),
                     title: Text('track_selection'.tr()),
                   ),
                   PaneItem(

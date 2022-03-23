@@ -26,6 +26,7 @@ dependencies:
 
   flutter:
     sdk: flutter
+  flutter_svg: ^1.0.3
 
 dev_dependencies:
   flutter_test:
@@ -38,3 +39,4 @@ flutter:
   uses-material-design: true
   assets:
     - assets/translations/
+    - assets/svgs/
