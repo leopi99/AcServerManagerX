@@ -22,9 +22,14 @@ class TrackBottomSheetWidget extends StatefulWidget {
 
 class _TrackBottomSheetWidgetState extends State<TrackBottomSheetWidget> {
   static const double _kImageWidthDiv = 2;
+
+  ///The Layout selected for the image preview
   late Layout _selectedLayout;
 
+  ///The layout selected for the server
   Layout? _addedLayout;
+
+  ///All the available layouts
   List<List<Layout>> _layouts = [];
 
   @override

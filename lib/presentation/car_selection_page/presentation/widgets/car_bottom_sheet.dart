@@ -18,8 +18,11 @@ class CarBottomSheetWidget extends StatefulWidget {
 
 class _CarBottomSheetWidgetState extends State<CarBottomSheetWidget> {
   static const double _kImageWidthDiv = 2;
+
+  ///The skin selected for the preview
   late CarSkin _selectedSkin;
 
+  ///The skins added to the server
   List<CarSkin> _addedSkins = [];
 
   ///Skins that are available to the car
