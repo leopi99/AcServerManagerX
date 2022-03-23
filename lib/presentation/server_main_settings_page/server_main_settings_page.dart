@@ -62,12 +62,35 @@ class _ServerMainSettingsState extends State<ServerMainSettings> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         TextBoxEntryWidget(
-            controller: _nameController, label: 'server_name'.tr()),
+          controller: _nameController,
+          label: 'server_name'.tr(),
+          onTextChanged: (value) {
+            SelectedServerInherited.of(context).changeServer(
+                SelectedServerInherited.of(context)
+                    .selectedServer
+                    .copyWith(name: value));
+          },
+        ),
         TextBoxEntryWidget(
-            controller: _passwordController, label: 'password'.tr()),
+          onTextChanged: (value) {
+            SelectedServerInherited.of(context).changeServer(
+                SelectedServerInherited.of(context)
+                    .selectedServer
+                    .copyWith(password: value));
+          },
+          controller: _passwordController,
+          label: 'password'.tr(),
+        ),
         TextBoxEntryWidget(
-            controller: _adminPasswordController,
-            label: "admin".tr() + " " + "password".tr()),
+          onTextChanged: (value) {
+            SelectedServerInherited.of(context).changeServer(
+                SelectedServerInherited.of(context)
+                    .selectedServer
+                    .copyWith(adminPassword: value));
+          },
+          controller: _adminPasswordController,
+          label: "admin".tr() + " " + "password".tr(),
+        ),
       ],
     );
   }
