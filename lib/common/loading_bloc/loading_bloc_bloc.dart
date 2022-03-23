@@ -123,16 +123,12 @@ class LoadingBlocBloc extends Bloc<LoadingBlocEvent, LoadingBlocState> {
     final tracks =
         await TrackHelper.loadTracks(acPath: acPath, onError: onError);
     for (int i = 0; i < servers.length; i++) {
-      Logger().log(
-          "Searching track ${trackNames[i]} for server ${servers[i].name}");
       if (tracks.any((element) => element.path
           .toLowerCase()
           .contains(trackNames[i]['name']!.toLowerCase()))) {
         final track = tracks.firstWhere((element) => element.path
             .toLowerCase()
             .contains(trackNames[i]['name']!.toLowerCase()));
-        Logger().log(
-            "found track name:\"${track.name}\" path: ${track.path} for track ${trackNames[i]["name"]} layout: ${trackNames[i]['layout']}");
         servers[i] = servers[i].copyWith(
           session: Session(
             selectedTrack: track.copyWith(

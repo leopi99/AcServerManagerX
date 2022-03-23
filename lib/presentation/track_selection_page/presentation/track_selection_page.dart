@@ -25,7 +25,7 @@ class _TrackSelectionPageState extends State<TrackSelectionPage> {
       _sessionBloc = BlocProvider.of<SessionBloc>(context);
       _sessionBloc!.add(SessionLoadTracksEvent());
       debugPrint(
-          "Selected track: ${_sessionBloc?.currentSession.selectedTrack?.name} layout: ${_sessionBloc?.currentSession.selectedTrack?.layouts.first.name}");
+          "Selected track: ${_sessionBloc?.currentSession.selectedTrack?.circuitName} layout: ${_sessionBloc?.currentSession.selectedTrack?.layouts.first.name}");
     });
     super.initState();
   }

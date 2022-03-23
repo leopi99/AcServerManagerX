@@ -59,7 +59,7 @@ class _TrackBottomSheetWidgetState extends State<TrackBottomSheetWidget> {
       showDivider: false,
       showHandle: false,
       description: Text(
-        widget.track.name,
+        widget.track.circuitName,
         style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
       ),
       children: [
@@ -127,7 +127,7 @@ class _TrackBottomSheetWidgetState extends State<TrackBottomSheetWidget> {
                         Padding(
                           padding: const EdgeInsets.only(right: 8.0),
                           child: RadioButton(
-                            checked: _addedLayout == layout,
+                            checked: _selectedLayout == layout,
                             onChanged: (value) {
                               if (value) {
                                 _changeSelectedLayout(layout);
