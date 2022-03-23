@@ -33,5 +33,6 @@
     "search_track": "Cerca un tracciato",
     "no_track_found": "Nessun tracciato trovato",
     "no_car_found": "Nessuna macchina trovata",
-    "threads": "Threads"
+    "threads": "Threads",
+    "start_server": "Avvia il server"
 }

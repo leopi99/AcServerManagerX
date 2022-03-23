@@ -18,6 +18,7 @@ import 'package:acservermanager/presentation/skeleton/presentation/widgets/serve
 import 'package:acservermanager/presentation/track_selection_page/presentation/track_selection_page.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:flutter/material.dart' as material;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
@@ -127,34 +128,37 @@ class _SkeletonPageState extends State<SkeletonPage> {
                     borderRadius: BorderRadius.circular(4),
                   ),
                   buttons: [
-                    SizedBox(
-                      height: 24,
-                      child: Button(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8),
-                          child: Text('select_server'.tr()),
-                        ),
-                        onPressed: () {
-                          showDialog(
-                            context: context,
-                            barrierDismissible: true,
-                            builder: (context) => ContentDialog(
-                              title: Text('select_server_edit'.tr()),
-                              content: ServerSelectorWidget(
-                                servers: GetIt.I<List<Server>>(),
+                    Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(right: 4),
+                          child: Tooltip(
+                            message: "start_server".tr(),
+                            child: Button(
+                              child: const Padding(
+                                padding: EdgeInsets.all(4),
+                                child: Icon(material.Icons.start),
                               ),
-                              actions: [
-                                FilledButton(
-                                  child: Text('ok'.tr()),
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                ),
-                              ],
+                              onPressed: () {
+                                //TODO: Opens the .exe file to start the server
+                              },
                             ),
-                          );
-                        },
-                      ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 24,
+                          child: Button(
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 8),
+                              child: Text('select_server'.tr()),
+                            ),
+                            onPressed: () {
+                              _showSelectServer();
+                            },
+                          ),
+                        ),
+                      ],
                     ),
                     Button(
                       child: const Icon(FluentIcons.add),
@@ -260,5 +264,26 @@ class _SkeletonPageState extends State<SkeletonPage> {
       Logger().log('Error: $e\nStacktrace:\n$stacktrace');
       return;
     }
+  }
+
+  void _showSelectServer() {
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (context) => ContentDialog(
+        title: Text('select_server_edit'.tr()),
+        content: ServerSelectorWidget(
+          servers: GetIt.I<List<Server>>(),
+        ),
+        actions: [
+          FilledButton(
+            child: Text('ok'.tr()),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+        ],
+      ),
+    );
   }
 }
