@@ -11,7 +11,7 @@ class Logger {
 
   void log(String message) {
     if (kDebugMode) {
-      debugPrint(message);
+      debugPrint("Log: $message");
     }
   }
 }

@@ -101,7 +101,6 @@ class LoadingBlocBloc extends Bloc<LoadingBlocEvent, LoadingBlocState> {
         emit(LoadingBlocErrorState("An error accoured, please try again.\n$e"));
       },
     );
-    Logger().log(servers.first.session.selectedTrack?.name ?? "none");
     GetIt.instance.registerSingleton(servers);
     SelectedServerInherited.of(context).changeServer(servers.first);
     emit(LoadingBlocLoadedState(servers));
