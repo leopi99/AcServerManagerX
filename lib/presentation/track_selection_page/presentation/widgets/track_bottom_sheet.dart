@@ -127,7 +127,7 @@ class _TrackBottomSheetWidgetState extends State<TrackBottomSheetWidget> {
                         Padding(
                           padding: const EdgeInsets.only(right: 8.0),
                           child: RadioButton(
-                            checked: _selectedLayout == layout,
+                            checked: _addedLayout?.path == layout.path,
                             onChanged: (value) {
                               if (value) {
                                 _changeSelectedLayout(layout);
