@@ -45,6 +45,13 @@ class _SkeletonPageState extends State<SkeletonPage> {
   }
 
   @override
+  void dispose() {
+    _sessionBloc.close();
+    _bloc.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => _sessionBloc,
