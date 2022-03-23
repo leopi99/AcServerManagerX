@@ -23,15 +23,17 @@ class _ServerMainSettingsState extends State<ServerMainSettings> {
   late StreamSubscription<Server> sub;
 
   @override
-  void didChangeDependencies() {
-    sub = SelectedServerInherited.of(context)
-        .selectedServerStream
-        .listen((event) {
-      _nameController.text = event.name;
-      _passwordController.text = event.password ?? '';
-      _adminPasswordController.text = event.adminPassword;
+  void initState() {
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      sub = SelectedServerInherited.of(context)
+          .selectedServerStream
+          .listen((event) {
+        _nameController.text = event.name;
+        _passwordController.text = event.password ?? '';
+        _adminPasswordController.text = event.adminPassword;
+      });
     });
-    super.didChangeDependencies();
+    super.initState();
   }
 
   @override

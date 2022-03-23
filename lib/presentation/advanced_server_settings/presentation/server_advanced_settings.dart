@@ -29,16 +29,23 @@ class _ServerAdvancedSettingsPageState
   late double _portsWidth;
 
   @override
+  void initState() {
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      sub = SelectedServerInherited.of(context)
+          .selectedServerStream
+          .listen((event) {
+        _udpPortController.text = event.udpPort.toString();
+        _tcpPortController.text = event.tcpPort.toString();
+        _httpPortController.text = event.httpPort.toString();
+        _packetHzController.text = event.packetHz.toString();
+      });
+    });
+    super.initState();
+  }
+
+  @override
   void didChangeDependencies() {
     _portsWidth = MediaQuery.of(context).size.width * .1;
-    sub = SelectedServerInherited.of(context)
-        .selectedServerStream
-        .listen((event) {
-      _udpPortController.text = event.udpPort.toString();
-      _tcpPortController.text = event.tcpPort.toString();
-      _httpPortController.text = event.httpPort.toString();
-      _packetHzController.text = event.packetHz.toString();
-    });
     super.didChangeDependencies();
   }
 
@@ -120,8 +127,36 @@ class _ServerAdvancedSettingsPageState
             textBoxWidth: _portsWidth,
             placeHolder: '9600',
           ),
+          const SizedBox(height: 16),
+          _buildThreads()
         ],
       ),
+    );
+  }
+
+  Widget _buildThreads() {
+    return Row(
+      children: [
+        DropDownButton(
+          placement: FlyoutPlacement.left,
+          title: Text(
+              "${SelectedServerInherited.of(context).selectedServer.threads} Threads"),
+          items: List.generate(
+            7,
+            (index) => DropDownButtonItem(
+              onTap: () {
+                SelectedServerInherited.of(context).changeServer(
+                    SelectedServerInherited.of(context)
+                        .selectedServer
+                        .copyWith(threads: index + 2));
+                setState(() {});
+              },
+              title: Text("Thread${index > 1 ? "s" : ""}"),
+              leading: Text("${index + 2}"),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
