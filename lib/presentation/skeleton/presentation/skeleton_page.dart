@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:acservermanager/common/inherited_widgets/selected_server_inherited.dart';
@@ -30,6 +31,8 @@ class _SkeletonPageState extends State<SkeletonPage> {
 
   final SessionBloc _sessionBloc = SessionBloc();
 
+  late StreamSubscription<Server> _serverSubscription;
+
   @override
   void initState() {
     WidgetsBinding.instance!.addPostFrameCallback((_) {
@@ -37,7 +40,9 @@ class _SkeletonPageState extends State<SkeletonPage> {
       _sessionBloc.add(SessionChangeSessionEvent(
           SelectedServerInherited.of(context).selectedServer.session));
       //Sets the session for the current selected server
-      SelectedServerInherited.of(context).selectedServerStream.listen((server) {
+      _serverSubscription = SelectedServerInherited.of(context)
+          .selectedServerStream
+          .listen((server) {
         _sessionBloc.add(SessionChangeSessionEvent(server.session));
       });
     });
@@ -48,6 +53,7 @@ class _SkeletonPageState extends State<SkeletonPage> {
   void dispose() {
     _sessionBloc.close();
     _bloc.dispose();
+    _serverSubscription.cancel();
     super.dispose();
   }
 
