@@ -31,17 +31,14 @@ class _CarBottomSheetWidgetState extends State<CarBottomSheetWidget> {
     _selectedSkin = widget.car.skins.first;
 
     WidgetsBinding.instance!.addPostFrameCallback((_) {
-      int index = SelectedServerInherited.of(context)
+      if (SelectedServerInherited.of(context)
           .selectedServer
           .cars
-          .indexOf(widget.car);
-
-      if (index != -1) {
-        Logger().log("car found");
+          .any((element) => element.path == widget.car.path)) {
         _addedSkins = SelectedServerInherited.of(context)
             .selectedServer
             .cars
-            .elementAt(index)
+            .firstWhere((element) => element.path == widget.car.path)
             .skins;
         setState(() {});
       }
@@ -179,12 +176,14 @@ class _CarBottomSheetWidgetState extends State<CarBottomSheetWidget> {
     cars.addAll(SelectedServerInherited.of(context).selectedServer.cars);
 
     List<CarSkin> skins = [];
-    skins.addAll(cars.firstWhere((element) => element == widget.car).skins);
+    skins.addAll(
+        cars.firstWhere((element) => element.path == widget.car.path).skins);
     skins.remove(skin);
     if (skins.isEmpty) {
       cars.remove(widget.car);
     } else {
-      int carIndex = cars.indexWhere((element) => element == widget.car);
+      int carIndex =
+          cars.indexWhere((element) => element.path == widget.car.path);
       cars[carIndex] = cars[carIndex].copyWith(skins: skins);
     }
     //Updates the server with the skin
