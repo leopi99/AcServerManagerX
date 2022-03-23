@@ -61,7 +61,7 @@ class Weather {
   }
 
   List<String> toStringList() => [
-        'GRAPHICS=3_clear', //TODO:
+        'GRAPHICS=${_getGraphicText()}',
         'BASE_TEMPERATURE_AMBIENT=$baseAmbientTemp',
         'BASE_TEMPERATURE_ROAD=$baseRoadTemp',
         'VARIATION_AMBIENT=$ambientVariation',
@@ -71,4 +71,24 @@ class Weather {
         'WIND_BASE_DIRECTION=$baseWindDirection',
         'WIND_VARIATION_DIRECTION=$windDirectionVar',
       ];
+
+  ///Returns a [String] rappresentation of the [WeatherTypeEnum] for the graphics line in the config file.
+  String _getGraphicText() {
+    switch (type) {
+      case WeatherTypeEnum.clear:
+        return "3_clear";
+      case WeatherTypeEnum.heavyClouds:
+        return "7_heavy_clouds";
+      case WeatherTypeEnum.heavyFog:
+        return "1_heavy_fog";
+      case WeatherTypeEnum.lightClouds:
+        return "5_light_clouds";
+      case WeatherTypeEnum.lightFog:
+        return "2_light_fog";
+      case WeatherTypeEnum.midClear:
+        return "4_mid_clear";
+      case WeatherTypeEnum.midClouds:
+        return "6_mid_clouds";
+    }
+  }
 }
