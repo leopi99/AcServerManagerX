@@ -35,7 +35,8 @@ class Track extends SearcheableElement implements Equatable {
 
   static Future<Track> fromDir(Directory directory, int index) async {
     List<Layout> layouts = [];
-    final Directory uiDir = Directory(directory.path + kUiDirPath);
+    final Directory uiDir =
+        Directory(directory.path.replaceAll('\\', '/') + kUiDirPath);
     final bool hasLayouts = !await (uiDir.list())
         .any((element) => element.path.split('/').last.contains('.json'));
     _TrackInfo? info = !hasLayouts
@@ -54,8 +55,7 @@ class Track extends SearcheableElement implements Equatable {
         (element) async {
           element as FileSystemEntity;
           if (element.path.contains('.dds')) return;
-          final Directory layoutDir =
-              Directory(element.path.replaceAll('//', '/'));
+          final Directory layoutDir = Directory(element.path);
           String? name;
           try {
             final String fileContent = String.fromCharCodes((await File(
@@ -83,7 +83,7 @@ class Track extends SearcheableElement implements Equatable {
 
     return Track(
       index: index,
-      path: directory.path,
+      path: directory.path.replaceAll('\\', '/'),
       circuitName: info?.name ??
           directory.path
               .replaceAll('\\', '/')

@@ -102,7 +102,7 @@ class LoadingBlocBloc extends Bloc<LoadingBlocEvent, LoadingBlocState> {
       },
     );
     GetIt.instance.registerSingleton(servers);
-    SelectedServerInherited.of(context).changeServer(servers.first);
+    SelectedServerInherited.of(context).changeServer(servers.first, false);
     emit(LoadingBlocLoadedState(servers));
     await close();
   }
