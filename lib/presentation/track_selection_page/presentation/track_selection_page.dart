@@ -24,6 +24,8 @@ class _TrackSelectionPageState extends State<TrackSelectionPage> {
     WidgetsBinding.instance!.addPostFrameCallback((_) {
       _sessionBloc = BlocProvider.of<SessionBloc>(context);
       _sessionBloc!.add(SessionLoadTracksEvent());
+      debugPrint(
+          "Selected track: ${_sessionBloc?.currentSession.selectedTrack?.name} layout: ${_sessionBloc?.currentSession.selectedTrack?.layouts.first.name}");
     });
     super.initState();
   }

@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:acservermanager/common/appearance_bloc/appearance_bloc.dart';
 import 'package:acservermanager/common/inherited_widgets/selected_server_inherited.dart';
-import 'package:acservermanager/common/logger.dart';
 import 'package:acservermanager/models/server.dart';
 import 'package:acservermanager/presentation/advanced_server_settings/widgets/textbox_entry_widget.dart';
 import 'package:easy_localization/easy_localization.dart';

@@ -33,6 +33,8 @@ class SessionBloc extends Bloc<SessionEvent, SessionState> {
     on<SessionUnloadCarsEvent>((event, emit) => _unloadCars(emit));
     on<SessionSelectCarEvent>((event, emit) => _selectCar(emit, event));
     on<SessionUnselectTrackEvent>((event, emit) => _unselectTrack(emit, event));
+    on<SessionChangeSessionEvent>(
+        (event, emit) => _changeCurrentSession(emit, event));
   }
 
   ///Loads all the tracks available
@@ -107,5 +109,11 @@ class SessionBloc extends Bloc<SessionEvent, SessionState> {
           .copyWith(session: _currentSession),
     );
     emit(SessionTracksLoadedState());
+  }
+
+  void _changeCurrentSession(
+      Emitter<SessionState> emit, SessionChangeSessionEvent event) {
+    _currentSession = event.session;
+    emit(state);
   }
 }

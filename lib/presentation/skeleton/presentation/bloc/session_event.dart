@@ -36,3 +36,9 @@ class SessionSelectCarEvent extends SessionEvent {
     required this.context,
   });
 }
+
+class SessionChangeSessionEvent extends SessionEvent {
+  final Session session;
+
+  SessionChangeSessionEvent(this.session);
+}

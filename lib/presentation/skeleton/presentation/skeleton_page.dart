@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:acservermanager/common/inherited_widgets/selected_server_inherited.dart';
 import 'package:acservermanager/common/logger.dart';
 import 'package:acservermanager/common/shared_manager.dart';
 import 'package:acservermanager/models/enums/shared_key.dart';
@@ -28,6 +29,20 @@ class _SkeletonPageState extends State<SkeletonPage> {
   final SkeletonBloc _bloc = SkeletonBloc();
 
   final SessionBloc _sessionBloc = SessionBloc();
+
+  @override
+  void initState() {
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      //Sets the current session
+      _sessionBloc.add(SessionChangeSessionEvent(
+          SelectedServerInherited.of(context).selectedServer.session));
+      //Sets the session for the current selected server
+      SelectedServerInherited.of(context).selectedServerStream.listen((server) {
+        _sessionBloc.add(SessionChangeSessionEvent(server.session));
+      });
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

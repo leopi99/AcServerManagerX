@@ -132,14 +132,13 @@ class LoadingBlocBloc extends Bloc<LoadingBlocEvent, LoadingBlocState> {
             .toLowerCase()
             .contains(trackNames[i]['name']!.toLowerCase()));
         Logger().log(
-            "found track name:\"${track.name}\" path: ${track.path} for track ${trackNames[i]["name"]}");
+            "found track name:\"${track.name}\" path: ${track.path} for track ${trackNames[i]["name"]} layout: ${trackNames[i]['layout']}");
         servers[i] = servers[i].copyWith(
           session: Session(
             selectedTrack: track.copyWith(
               layouts: track.layouts.length > 1
                   ? [
                       track.layouts.firstWhere((element) => element.path
-                          .trim()
                           .toLowerCase()
                           .contains(trackNames[i]['layout']!.toLowerCase()))
                     ]
