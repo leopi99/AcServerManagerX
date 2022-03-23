@@ -48,6 +48,7 @@ class _ServerMainSettingsState extends State<ServerMainSettings> {
     return Container(
       color: GetIt.instance<AppearanceBloc>().backgroundColor,
       child: ListView(
+        padding: const EdgeInsets.all(32),
         children: [
           _buildServerBaseTextBox(),
         ],

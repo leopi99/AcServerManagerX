@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:acservermanager/common/inherited_widgets/selected_server_inherited.dart';
-import 'package:acservermanager/common/logger.dart';
 import 'package:acservermanager/models/car.dart';
 import 'package:acservermanager/models/car/skin.dart';
 import 'package:fluent_ui/fluent_ui.dart';
