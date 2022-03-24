@@ -80,6 +80,21 @@ class Car extends SearcheableElement implements Equatable {
     );
   }
 
+  ///Returns the List<String> of this [Car] to be written to a file.
+  List<String> toStringList(int carIndex) {
+    return [
+      '[CAR_$carIndex]',
+      'MODEL=${skins.first.path.split('/').last}',
+      'SKIN=${skins.first.liveryPath.split('/').last}',
+      'SPECTATOR_MODE=0',
+      'DRIVERNAME=${skins.first.details?.driverName}',
+      'TEAM=',
+      'GUID=',
+      'BALLAST=0',
+      'RESTRICTOR=0',
+    ];
+  }
+
   @override
   String get searchTerm => name;
 
