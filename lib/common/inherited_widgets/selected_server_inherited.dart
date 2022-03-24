@@ -25,15 +25,20 @@ class SelectedServerInherited extends InheritedWidget {
 
   Future<void> changeServer(Server server, [bool saveFile = true]) async {
     _selectedServerSubject.add(server);
-    if (!saveFile) return;
-    Logger().log("Saving server cfg file");
+    if (saveFile) {
+      await _saveServerFiles(server);
+    }
+  }
+
+  Future<void> _saveServerFiles(Server server) async {
+    Logger().log("Saving cfg file", name: "Server");
     await _saveFile(server.toStringList(), server.cfgFilePath);
-    Logger().log("Server cfg file saved");
-    Logger().log("Saving entry_list file");
+    Logger().log("cfg file saved", name: "Server");
+    Logger().log("Saving entry_list file", name: "Server");
     List<String> data = [];
     int carIndex = 0;
     for (int i = 0; i < server.cars.length; i++) {
-      for (int o = 0; o < server.cars[i].skins.length; o++) {
+      for (var _ in server.cars[i].skins) {
         data.add("""
 [CAR_$carIndex]
 MODEL=${server.cars[i].skins.first.path.split('/')[server.cars[i].skins.first.path.split('/').length - 3]}
@@ -49,7 +54,7 @@ RESTRICTOR=0
       }
     }
     await _saveFile(data, server.entryListPath);
-    Logger().log("Server entry_list file saved");
+    Logger().log("entry_list file saved", name: "Server");
   }
 
   Future<void> _saveFile(List<String> data, String filePath) async {
