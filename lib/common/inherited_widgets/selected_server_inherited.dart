@@ -23,6 +23,7 @@ class SelectedServerInherited extends InheritedWidget {
   static SelectedServerInherited of(BuildContext context) =>
       context.dependOnInheritedWidgetOfExactType<SelectedServerInherited>()!;
 
+  ///Changes the current selected [Server]
   Future<void> changeServer(Server server, [bool saveFile = true]) async {
     _selectedServerSubject.add(server);
     if (saveFile) {
@@ -30,6 +31,7 @@ class SelectedServerInherited extends InheritedWidget {
     }
   }
 
+  ///Saves the server files
   Future<void> _saveServerFiles(Server server) async {
     Logger().log("Saving cfg file", name: "Server");
     await _saveFile(server.toStringList(), server.cfgFilePath);
@@ -41,7 +43,7 @@ class SelectedServerInherited extends InheritedWidget {
       for (var _ in server.cars[i].skins) {
         data.add("""
 [CAR_$carIndex]
-MODEL=${server.cars[i].skins.first.path.split('/')[server.cars[i].skins.first.path.split('/').length - 3]}
+MODEL=${server.cars[i].path.split('/').last}
 SKIN=${server.cars[i].skins.first.path.split('/').last}
 SPECTATOR_MODE=0
 DRIVERNAME=${server.cars[i].skins.first.details?.driverName ?? ""}
@@ -57,6 +59,7 @@ RESTRICTOR=0
     Logger().log("entry_list file saved", name: "Server");
   }
 
+  ///Saves a file
   Future<void> _saveFile(List<String> data, String filePath) async {
     final file = File(filePath);
     final link = file.openWrite();
