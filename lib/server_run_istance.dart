@@ -30,7 +30,8 @@ class _ServerRunInstanceState extends State<_ServerRunInstance> {
   late Process _shellProcess;
 
   Future<void> _runServer(String acPath) async {
-    _shellProcess = await Process.start("$acPath/server/acServer.exe", []);
+    _shellProcess = await Process.start("$acPath/server/acServer.exe", [],
+        workingDirectory: acPath + '/server/');
     sub = _shellProcess.outLines.listen((event) {
       _responsesSubject.add([..._responsesSubject.value, event]);
     });
