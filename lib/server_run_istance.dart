@@ -28,6 +28,8 @@ class _ServerRunInstanceState extends State<_ServerRunInstance> {
       BehaviorSubject.seeded([]);
   late StreamSubscription<String> sub;
   late Process _shellProcess;
+  final ScrollController _scrollController =
+      ScrollController(keepScrollOffset: false);
 
   Future<void> _runServer(String acPath) async {
     _shellProcess = await Process.start("$acPath/server/acServer.exe", [],
@@ -39,12 +41,24 @@ class _ServerRunInstanceState extends State<_ServerRunInstance> {
 
   @override
   void initState() {
+    _scrollController.addListener(
+      () {
+        if (_scrollController.position.atEdge) {
+          _scrollController.animateTo(
+            _scrollController.position.maxScrollExtent,
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.bounceOut,
+          );
+        }
+      },
+    );
     _runServer(widget.acPath);
     super.initState();
   }
 
   @override
   void dispose() {
+    _scrollController.dispose();
     _responsesSubject.close();
     sub.cancel();
     final bool exit = Process.killPid(_shellProcess.pid);
@@ -63,13 +77,15 @@ class _ServerRunInstanceState extends State<_ServerRunInstance> {
 
   Widget _buildStringList() {
     return SizedBox(
-      width: MediaQuery.of(context).size.width * .8,
+      width: MediaQuery.of(context).size.width * .9,
       height: MediaQuery.of(context).size.height * .7,
       child: StreamBuilder<List<String>>(
         stream: _responsesSubject.stream,
         initialData: const [],
         builder: (context, snapshot) {
           return ListView.builder(
+            physics: const ClampingScrollPhysics(),
+            controller: _scrollController,
             itemCount: snapshot.data!.length,
             itemBuilder: (context, index) {
               return Text(snapshot.data![index]);

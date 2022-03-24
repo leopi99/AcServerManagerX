@@ -149,7 +149,9 @@ class _SkeletonPageState extends State<SkeletonPage> {
                                   builder: (context) {
                                     return ContentDialog(
                                       content: widget,
-                                      title: const Text("Server running"),
+                                      title: Text(
+                                          "${SelectedServerInherited.of(context).selectedServer.name} " +
+                                              "running".tr()),
                                       actions: [
                                         Button(
                                           child: Text('close'.tr()),

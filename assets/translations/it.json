@@ -35,5 +35,6 @@
     "no_car_found": "Nessuna macchina trovata",
     "threads": "Threads",
     "start_server": "Avvia il server",
-    "close": "Chiudi"
+    "close": "Chiudi",
+    "running": "avviato"
 }
