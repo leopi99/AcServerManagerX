@@ -15,8 +15,8 @@ class TrackHelper {
     int index = 0;
 
     try {
-      await Future.forEach(trackDir.listSync(), (element) async {
-        element as FileSystemEntity;
+      await Future.forEach<FileSystemEntity>(trackDir.listSync(),
+          (element) async {
         final dir = Directory(element.path);
         tracks.add(await Track.fromDir(dir, index));
         index++;
@@ -27,5 +27,22 @@ class TrackHelper {
       return [];
     }
     return tracks;
+  }
+
+  ///Loads a single [Track] from [trackPath].
+  ///
+  ///If the result is null, the track couldn't be loaded
+  static Future<Track?> loadTrackFrom(String trackPath) async {
+    final Directory dir = Directory(trackPath);
+    if (!dir.existsSync()) return null;
+
+    Track? track;
+    try {
+      track = await Track.fromDir(dir, 0);
+    } catch (e) {
+      Logger().log(e.toString(), name: "loadTrackFrom");
+      return null;
+    }
+    return track;
   }
 }

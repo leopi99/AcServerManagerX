@@ -43,4 +43,33 @@ class CarHelper {
     }
     return cars;
   }
+
+  ///Loads a single [Car] from [carPath].
+  ///
+  ///If the result is null, the car couldn't be loaded
+  Future<Car?> loadCarFrom(String carPath) async {
+    final Directory dir = Directory(carPath);
+    if (!dir.existsSync()) return null;
+
+    Car? car;
+
+    final file = File(dir.path + _kCarJson);
+    //Adds the car only if the file exists
+    if (file.existsSync()) {
+      try {
+        car = await Car.fromJson(
+          jsonDecode(
+              (await file.readAsString()).replaceAll(RegExp(r"\s+"), ' ')),
+          dir.path,
+        );
+      } catch (e) {
+        car = await Car.fromJson(
+          jsonDecode(String.fromCharCodes((await file.readAsBytes()))
+              .replaceAll(RegExp(r"\s+"), ' ')),
+          dir.path,
+        );
+      }
+    }
+    return car;
+  }
 }
