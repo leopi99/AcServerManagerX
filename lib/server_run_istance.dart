@@ -1,8 +1,9 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:acservermanager/common/logger.dart';
 import 'package:fluent_ui/fluent_ui.dart';
-import 'package:process_run/shell.dart';
+import 'package:process_run/utils/process_result_extension.dart';
 import 'package:rxdart/rxdart.dart';
 
 class ServerRunInstance {
@@ -25,27 +26,14 @@ class _ServerRunInstance extends StatefulWidget {
 class _ServerRunInstanceState extends State<_ServerRunInstance> {
   final BehaviorSubject<List<String>> _responsesSubject =
       BehaviorSubject.seeded([]);
-  late StreamSubscription<List<int>> sub;
-
-  late Completer _completer;
-
-  final Shell shell = Shell();
+  late StreamSubscription<String> sub;
+  late Process _shellProcess;
 
   Future<void> _runServer(String acPath) async {
-    _completer = Completer();
-    _completer.complete(
-      shell.run(
-        "$acPath/server/acServer.exe",
-        onProcess: (process) {
-          sub = process.stdout.listen(
-            (event) {
-              _responsesSubject.add(
-                  [..._responsesSubject.value, String.fromCharCodes(event)]);
-            },
-          );
-        },
-      ),
-    );
+    _shellProcess = await Process.start("$acPath/server/acServer.exe", []);
+    sub = _shellProcess.outLines.listen((event) {
+      _responsesSubject.add([..._responsesSubject.value, event]);
+    });
   }
 
   @override
@@ -56,12 +44,9 @@ class _ServerRunInstanceState extends State<_ServerRunInstance> {
 
   @override
   void dispose() {
-    sub.cancel();
     _responsesSubject.close();
-    if (!_completer.isCompleted) {
-      _completer.completeError(1);
-    }
-    final bool exit = shell.kill();
+    sub.cancel();
+    final bool exit = Process.killPid(_shellProcess.pid);
     if (exit) {
       Logger().log("Server killer successfully");
     } else {

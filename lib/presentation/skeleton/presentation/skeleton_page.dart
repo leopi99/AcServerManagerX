@@ -156,7 +156,7 @@ class _SkeletonPageState extends State<SkeletonPage> {
                                           onPressed: () {
                                             Navigator.pop(context);
                                           },
-                                        )
+                                        ),
                                       ],
                                     );
                                   },
