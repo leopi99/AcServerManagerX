@@ -50,7 +50,8 @@ class CodegenLoader extends AssetLoader{
   "no_track_found": "No track found",
   "no_car_found": "No car found",
   "threads": "Threads",
-  "start_server": "Start the server"
+  "start_server": "Start the server",
+  "close": "Close"
 };
 static const Map<String,dynamic> it = {
   "ops_error": "Ops! Qualcosa e andato storto",
@@ -88,7 +89,8 @@ static const Map<String,dynamic> it = {
   "no_track_found": "Nessun tracciato trovato",
   "no_car_found": "Nessuna macchina trovata",
   "threads": "Threads",
-  "start_server": "Avvia il server"
+  "start_server": "Avvia il server",
+  "close": "Chiudi"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en": en, "it": it};
 }

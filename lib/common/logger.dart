@@ -9,9 +9,9 @@ class Logger {
 
   Logger._internal();
 
-  void log(String message) {
+  void log(String message, {String? name}) {
     if (kDebugMode) {
-      debugPrint("Log: $message");
+      print("${name ?? 'Log'}: $message");
     }
   }
 }

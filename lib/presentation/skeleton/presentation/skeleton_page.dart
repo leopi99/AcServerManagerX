@@ -16,6 +16,7 @@ import 'package:acservermanager/presentation/skeleton/bloc/skeleton_bloc.dart';
 import 'package:acservermanager/presentation/skeleton/presentation/bloc/session_bloc.dart';
 import 'package:acservermanager/presentation/skeleton/presentation/widgets/server_selector_widget.dart';
 import 'package:acservermanager/presentation/track_selection_page/presentation/track_selection_page.dart';
+import 'package:acservermanager/server_run_istance.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter/material.dart' as material;
@@ -139,8 +140,31 @@ class _SkeletonPageState extends State<SkeletonPage> {
                                 padding: EdgeInsets.all(4),
                                 child: Icon(material.Icons.start),
                               ),
-                              onPressed: () {
-                                //TODO: Opens the .exe file to start the server
+                              onPressed: () async {
+                                final Widget widget = ServerRunInstance.run(
+                                  [
+                                    "--acPath",
+                                    (await GetIt.I<SharedManager>()
+                                        .getString(SharedKey.acPath))!
+                                  ],
+                                );
+                                showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return ContentDialog(
+                                      content: widget,
+                                      title: const Text("Server running"),
+                                      actions: [
+                                        Button(
+                                          child: Text('close'.tr()),
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                        )
+                                      ],
+                                    );
+                                  },
+                                );
                               },
                             ),
                           ),
