@@ -142,12 +142,8 @@ class _SkeletonPageState extends State<SkeletonPage> {
                               ),
                               onPressed: () async {
                                 final Widget widget = ServerRunInstance.run(
-                                  [
-                                    "--acPath",
                                     (await GetIt.I<SharedManager>()
-                                        .getString(SharedKey.acPath))!
-                                  ],
-                                );
+                                        .getString(SharedKey.acPath))!);
                                 showDialog(
                                   context: context,
                                   builder: (context) {

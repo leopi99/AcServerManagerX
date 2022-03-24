@@ -6,16 +6,16 @@ import 'package:process_run/shell.dart';
 import 'package:rxdart/rxdart.dart';
 
 class ServerRunInstance {
-  static Widget run(List<String> arguments) {
-    return _ServerRunInstance(arguments: arguments);
+  static Widget run(String acPath) {
+    return _ServerRunInstance(acPath: acPath);
   }
 }
 
 class _ServerRunInstance extends StatefulWidget {
-  final List<String> arguments;
+  final String acPath;
   const _ServerRunInstance({
     Key? key,
-    required this.arguments,
+    required this.acPath,
   }) : super(key: key);
 
   @override
@@ -50,8 +50,7 @@ class _ServerRunInstanceState extends State<_ServerRunInstance> {
 
   @override
   void initState() {
-    final int acPathIndex = widget.arguments.indexOf("--acPath") + 1;
-    _runServer(widget.arguments[acPathIndex]);
+    _runServer(widget.acPath);
     super.initState();
   }
 
