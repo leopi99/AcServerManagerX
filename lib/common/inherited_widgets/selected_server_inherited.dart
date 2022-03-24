@@ -35,15 +35,15 @@ class SelectedServerInherited extends InheritedWidget {
     for (int i = 0; i < server.cars.length; i++) {
       for (int o = 0; o < server.cars[i].skins.length; o++) {
         data.add("""
-[CAR_$carIndex],
-MODEL=${server.cars[i].skins.first.path.split('/')[server.cars[i].skins.first.path.split('/').length - 3]},
-SKIN=${server.cars[i].skins.first.path.split('/').last},
-SPECTATOR_MODE=0,
-DRIVERNAME=${server.cars[i].skins.first.details?.driverName ?? ""},
-TEAM=,
-GUID=,
-BALLAST=0,
-RESTRICTOR=0,
+[CAR_$carIndex]
+MODEL=${server.cars[i].skins.first.path.split('/')[server.cars[i].skins.first.path.split('/').length - 3]}
+SKIN=${server.cars[i].skins.first.path.split('/').last}
+SPECTATOR_MODE=0
+DRIVERNAME=${server.cars[i].skins.first.details?.driverName ?? ""}
+TEAM=
+GUID=
+BALLAST=0
+RESTRICTOR=0
 """);
         carIndex++;
       }
