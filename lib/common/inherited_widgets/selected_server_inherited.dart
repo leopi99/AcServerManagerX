@@ -21,12 +21,15 @@ class SelectedServerInherited extends InheritedWidget {
     Key? key,
   })  : _selectedServerSubject = selectedServer,
         super(child: child, key: key) {
+    bool isQueueLocked = false;
     //Executes the queue as in LIFO, once the save is done, clears the queue
     _selectedServerSubject.listen((value) async {
       await Future.delayed(const Duration(milliseconds: 500));
-      if (_saveQueue.isNotEmpty) {
+      if (_saveQueue.isNotEmpty && !isQueueLocked) {
+        isQueueLocked = true;
         await _saveQueue.first();
         _saveQueue.clear();
+        isQueueLocked = false;
       }
     });
   }
