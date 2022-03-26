@@ -3,7 +3,11 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 
 class ClientsAllowedWidget extends StatefulWidget {
-  const ClientsAllowedWidget({Key? key}) : super(key: key);
+  final Function() showSelectedCars;
+  const ClientsAllowedWidget({
+    Key? key,
+    required this.showSelectedCars,
+  }) : super(key: key);
 
   @override
   State<ClientsAllowedWidget> createState() => _ClientsAllowedWidgetState();
@@ -79,7 +83,9 @@ class _ClientsAllowedWidgetState extends State<ClientsAllowedWidget> {
               ],
             ),
           ),
-          onPressed: () {},
+          onPressed: () {
+            widget.showSelectedCars();
+          },
         ),
       ],
     );
