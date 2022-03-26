@@ -7,13 +7,14 @@ In the future (since Steam's proton makes assetto corsa work on Linux) will be t
 ## Why use this app?
 
 The main concept of this app is not to recreate something that works, instead to create an app that "overrides" the stock one, with a much more modern ui and performance improvements.
+Also, automatically saves the changes.
 
 ## What are the implemented features?
 
 - [x] Reads the previously created servers.
-- [x] Reads installed tracks (Not completely implemented, some errors in stock tracks with layouts).
-- [ ] Reads the installed cars.
-- [ ] Saves the changes.
+- [x] Reads installed tracks.
+- [X] Reads the installed cars.
+- [X] Saves the changes.
 - [ ] Creates new servers.
 - [ ] Selects the server that can be started from the .bat file.
 

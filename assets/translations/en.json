@@ -36,5 +36,9 @@
     "threads": "Threads",
     "start_server": "Start the server",
     "close": "Close",
-    "running": "running"
+    "running": "running",
+    "clients_allowed": "Clients allowed",
+    "update_available": "Update available.",
+    "update": "Update",
+    "update_encourage": "To have the best experience update the app"
 }

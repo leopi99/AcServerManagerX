@@ -10,7 +10,7 @@
     "yes": "Si",
     "dark_mode": "Dark Mode",
     "light_mode": "Light Mode",
-    "close_dialog_server_change": "Chiudi il dialog quando il server selezionato cambia",
+    "close_dialog_server_change": "Chiudi il dialog quando cambi il server",
     "server_name": "Nome server",
     "password": "Password",
     "admin": "Admin",
@@ -36,5 +36,9 @@
     "threads": "Threads",
     "start_server": "Avvia il server",
     "close": "Chiudi",
-    "running": "avviato"
+    "running": "avviato",
+    "clients_allowed": "Utenti ammessi",
+    "update_available": "Aggiornamento disponibile.",
+    "update": "Aggiorna",
+    "update_encourage": "Per avere la miglior esperienza possibile, aggiorna l'app"
 }

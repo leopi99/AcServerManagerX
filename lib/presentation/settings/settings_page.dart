@@ -4,6 +4,8 @@ import 'package:acservermanager/models/enums/shared_key.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:get_it/get_it.dart';
+import 'package:flutter/material.dart' as material;
+import 'package:url_launcher/url_launcher.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -14,6 +16,10 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPageState extends State<SettingsPage> {
   late final AppearanceBloc _bloc;
+
+  static const bool _kEnableUpdateCheck = false;
+
+  static const String _kGitHubUrl = "";
 
   @override
   void initState() {
@@ -32,6 +38,29 @@ class _SettingsPageState extends State<SettingsPage> {
           child: ListView(
             padding: const EdgeInsets.all(32),
             children: [
+              if (_kEnableUpdateCheck)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    InfoBar(
+                      title: Text(
+                        "update_available".tr(),
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      content: Text("update_encourage".tr()),
+                      severity: InfoBarSeverity.info,
+                      action: Padding(
+                        padding: const EdgeInsets.only(left: 8),
+                        child: Button(
+                          child: Text("update".tr()),
+                          onPressed: () {
+                            launch(_kGitHubUrl);
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ToggleSwitch(
                 content: Text('dark_mode'.tr()),
                 checked: darkModeSnapshot.data!,
