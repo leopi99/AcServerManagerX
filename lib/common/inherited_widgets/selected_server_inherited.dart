@@ -13,14 +13,23 @@ class SelectedServerInherited extends InheritedWidget {
   final BehaviorSubject<Server> _selectedServerSubject;
   Server get selectedServer => _selectedServerSubject.value;
   Stream<Server> get selectedServerStream => _selectedServerSubject.stream;
-  Queue<Future> _saveQueue = Queue();
+  final Queue<Function> _saveQueue = Queue();
 
   SelectedServerInherited({
     required Widget child,
     required BehaviorSubject<Server> selectedServer,
     Key? key,
   })  : _selectedServerSubject = selectedServer,
-        super(child: child, key: key);
+        super(child: child, key: key) {
+    //Executes the queue as in LIFO, once the save is done, clears the queue
+    _selectedServerSubject.listen((value) async {
+      await Future.delayed(const Duration(milliseconds: 500));
+      if (_saveQueue.isNotEmpty) {
+        await _saveQueue.first();
+        _saveQueue.clear();
+      }
+    });
+  }
 
   @override
   bool updateShouldNotify(SelectedServerInherited oldWidget) => true;
@@ -32,7 +41,7 @@ class SelectedServerInherited extends InheritedWidget {
   Future<void> changeServer(Server server, [bool saveFile = true]) async {
     _selectedServerSubject.add(server);
     if (saveFile) {
-      _saveQueue.add(_saveAllTheThings(server));
+      _saveQueue.addFirst(() async => await _saveAllTheThings(server));
     }
   }
 
@@ -52,10 +61,7 @@ class SelectedServerInherited extends InheritedWidget {
 
   ///Saves the server files
   Future<void> _saveServerFiles(Server server) async {
-    Logger().log("Saving cfg file", name: "Server");
     await _saveFile(server.toStringList(), server.cfgFilePath);
-    Logger().log("cfg file saved", name: "Server");
-    Logger().log("Saving entry_list file", name: "Server");
     List<String> data = [];
     int carIndex = 0;
     for (int i = 0; i < server.cars.length; i++) {
@@ -75,7 +81,7 @@ RESTRICTOR=0
       }
     }
     await _saveFile(data, server.entryListPath);
-    Logger().log("entry_list file saved", name: "Server");
+    Logger().log("config files saved", name: "Server");
   }
 
   ///Saves a file
