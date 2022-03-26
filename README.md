@@ -11,12 +11,13 @@ Also, automatically saves the changes.
 
 ## What are the implemented features?
 
-- [x] Reads the previously created servers.
-- [x] Reads installed tracks.
+- [X] Reads the previously created servers.
+- [X] Reads installed tracks.
 - [X] Reads the installed cars.
 - [X] Saves the changes.
 - [ ] Creates new servers.
 - [ ] Selects the server that can be started from the .bat file.
+- [X] Start the server inside the app.
 
 ## Run the app from the repo's clone
 
