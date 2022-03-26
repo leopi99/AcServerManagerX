@@ -52,7 +52,12 @@ class CodegenLoader extends AssetLoader{
   "threads": "Threads",
   "start_server": "Start the server",
   "close": "Close",
-  "running": "running"
+  "running": "running",
+  "clients_allowed": "Clients allowed",
+  "update_available": "Update available.",
+  "update": "Update",
+  "update_encourage": "To have the best experience update the app",
+  "view_selected_cars": "View the selected cars"
 };
 static const Map<String,dynamic> it = {
   "ops_error": "Ops! Qualcosa e andato storto",
@@ -66,7 +71,7 @@ static const Map<String,dynamic> it = {
   "yes": "Si",
   "dark_mode": "Dark Mode",
   "light_mode": "Light Mode",
-  "close_dialog_server_change": "Chiudi il dialog quando il server selezionato cambia",
+  "close_dialog_server_change": "Chiudi il dialog quando cambi il server",
   "server_name": "Nome server",
   "password": "Password",
   "admin": "Admin",
@@ -92,7 +97,12 @@ static const Map<String,dynamic> it = {
   "threads": "Threads",
   "start_server": "Avvia il server",
   "close": "Chiudi",
-  "running": "avviato"
+  "running": "avviato",
+  "clients_allowed": "Utenti ammessi",
+  "update_available": "Aggiornamento disponibile.",
+  "update": "Aggiorna",
+  "update_encourage": "Per avere la miglior esperienza possibile, aggiorna l'app",
+  "view_selected_cars": "Visualizza le macchine selezionate"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en": en, "it": it};
 }

@@ -24,10 +24,12 @@ dependencies:
 
   easy_localization: ^3.0.0
   
-  #Run the server
+  #To run the server
   process_run: ^0.12.3+1
 
   flutter_svg: ^1.0.3
+
+  url_launcher: ^6.0.20
 
   flutter:
     sdk: flutter

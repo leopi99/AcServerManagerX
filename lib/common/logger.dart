@@ -14,4 +14,7 @@ class Logger {
       print("${name ?? 'Log'}: $message");
     }
   }
+
+  static logg(String message, {String? name}) =>
+      Logger().log(message, name: name);
 }

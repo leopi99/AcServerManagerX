@@ -1,9 +1,11 @@
 import 'dart:io';
 
+import 'package:acservermanager/common/helpers/car_helper.dart';
 import 'package:acservermanager/common/helpers/track_helper.dart';
 import 'package:acservermanager/common/inherited_widgets/selected_server_inherited.dart';
 import 'package:acservermanager/common/logger.dart';
 import 'package:acservermanager/common/shared_manager.dart';
+import 'package:acservermanager/models/car.dart';
 import 'package:acservermanager/models/enums/shared_key.dart';
 import 'package:acservermanager/models/server.dart';
 import 'package:acservermanager/models/session.dart';
@@ -65,8 +67,7 @@ class LoadingBlocBloc extends Bloc<LoadingBlocEvent, LoadingBlocState> {
       }
       Logger().log('Servers: ${serverNames.toString()}');
     } catch (e, stacktrace) {
-      Logger().log("Error: $e\nStacktrace:\n$stacktrace");
-      emit(LoadingBlocErrorState("An error accoured, please try again.\n$e"));
+      _emitError(e.toString(), emit, stackTrace: stacktrace.toString());
       return;
     }
     List<Server> servers = [];
@@ -89,16 +90,28 @@ class LoadingBlocBloc extends Bloc<LoadingBlocEvent, LoadingBlocState> {
         servers.add(Server(serverFilesPath: '$presetsPath/SERVER_00'));
       }
     } catch (e, stacktrace) {
-      Logger().log("Error: $e\nStacktrace:\n$stacktrace");
-      emit(LoadingBlocErrorState("An error accoured, please try again.\n$e"));
+      _emitError(e.toString(), emit, stackTrace: stacktrace.toString());
       return;
     }
+    //Loads the selected track for each server
     await _getTracksSetTrack(
       acPath: acPath,
       servers: servers,
       trackNames: _trackNames,
-      onError: (e) {
-        emit(LoadingBlocErrorState("An error accoured, please try again.\n$e"));
+      onError: (e) => _emitError(e, emit),
+    );
+    int index = 0;
+    //Loads the selected cars for each server
+    await Future.forEach<Server>(
+      servers,
+      (element) async {
+        servers[index] = await _getCarsSetCars(
+          server: element,
+          onError: (e) => _emitError(e, emit),
+          acPath: acPath,
+          carNames: await element.getSavedCars(),
+        );
+        index++;
       },
     );
     GetIt.instance.registerSingleton(servers);
@@ -112,6 +125,8 @@ class LoadingBlocBloc extends Bloc<LoadingBlocEvent, LoadingBlocState> {
   ///The [trackNames] list is the list of the names of the tracks inside the server config file.
   ///
   ///The [trackNames] must be the same length as the [servers] list and in the correct order.
+  ///
+  ///TODO: Will be updated to a much faster way ex. _getCarsSetCars.
   Future<void> _getTracksSetTrack({
     required List<Server> servers,
     required Function(String) onError,
@@ -143,5 +158,49 @@ class LoadingBlocBloc extends Bloc<LoadingBlocEvent, LoadingBlocState> {
         );
       }
     }
+  }
+
+  ///Assignes to the servers the selected [Car]s from the [carNames] list.
+  ///
+  ///The [carNames] list is the list of the names of the cars inside the server entry_list file, arranged like this:
+  ///
+  ///[{"CarName": "CarSkinName1, CarSkinName2"}...]
+  Future<Server> _getCarsSetCars({
+    required Server server,
+    required Function(String) onError,
+    required String acPath,
+    required List<Map<String, String>> carNames,
+  }) async {
+    await Future.forEach<Map<String, String>>(
+      carNames,
+      (element) async {
+        Car? car = await CarHelper.loadCarFrom(
+            "$acPath/content/cars/${element.keys.first}");
+        if (car == null) {
+          Logger().log(
+              "No car found with the path: ${acPath + element.keys.first}",
+              name: "_getCarsSetCars ${server.name}");
+          return server;
+        }
+        car = car.copyWith(
+          skins: car.skins
+              .where(
+                (skin) => element.values.first
+                    .split(',')
+                    .contains(skin.path.split('/').last),
+              )
+              .toList(),
+        );
+        final serverCars = [...server.cars, car];
+        server = server.copyWith(cars: serverCars);
+      },
+    );
+    return server;
+  }
+
+  void _emitError(String error, Emitter<LoadingBlocState> emit,
+      {String? stackTrace}) {
+    emit(LoadingBlocErrorState("An error accoured, please try again.\n$error"));
+    debugPrint("Error: $error\nStacktrace:\n$stackTrace");
   }
 }

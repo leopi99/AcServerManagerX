@@ -7,15 +7,17 @@ In the future (since Steam's proton makes assetto corsa work on Linux) will be t
 ## Why use this app?
 
 The main concept of this app is not to recreate something that works, instead to create an app that "overrides" the stock one, with a much more modern ui and performance improvements.
+Also, automatically saves the changes.
 
 ## What are the implemented features?
 
 - [x] Reads the previously created servers.
-- [x] Reads installed tracks (Not completely implemented, some errors in stock tracks with layouts).
-- [ ] Reads the installed cars.
-- [ ] Saves the changes.
-- [ ] Creates new servers.
-- [ ] Selects the server that can be started from the .bat file.
+- [x] Reads installed tracks.
+- [x] Reads the installed cars.
+- [x] Saves the changes.
+- [X] Creates new servers.
+- [X] Selects the server that can be started from the .bat file.
+- [x] Start the server inside the app.
 
 ## Run the app from the repo's clone
 
@@ -31,4 +33,4 @@ The app supports localizations, currently for the following languages:
 - English
 - Italian
 
-Want to add your language? Clone the repository, create the file yourCountryCode.json inside the directory assets/translations, copy the content of another file and translate it; then run this command: `flutter pub run easy_localization:generate -S assets/translations -O lib/generated-translations`, copy the fluent_localizations_delegate_it.dart (inside the lib/common/custom_delegates folder) and translate it  (remember to change the supported locale).
+Want to add your language? Clone the repository, create the file yourCountryCode.json inside the directory assets/translations, copy the content of another file and translate it; then run this command: `flutter pub run easy_localization:generate -S assets/translations -O lib/generated-translations`, copy the fluent_localizations_delegate_it.dart (inside the lib/common/custom_delegates folder) and translate it (remember to change the supported locale).
