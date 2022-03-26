@@ -1,8 +1,11 @@
 import 'dart:io';
 
 import 'package:acservermanager/common/logger.dart';
+import 'package:acservermanager/common/shared_manager.dart';
+import 'package:acservermanager/models/enums/shared_key.dart';
 import 'package:acservermanager/models/server.dart';
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:get_it/get_it.dart';
 import 'package:rxdart/rxdart.dart';
 
 class SelectedServerInherited extends InheritedWidget {
@@ -27,7 +30,17 @@ class SelectedServerInherited extends InheritedWidget {
   Future<void> changeServer(Server server, [bool saveFile = true]) async {
     _selectedServerSubject.add(server);
     if (saveFile) {
+      //Saves the files in its preset dir
       await _saveServerFiles(server);
+      //Copies the files in the cfg dir from the preset
+      final String acPath =
+          (await GetIt.I<SharedManager>().getString(SharedKey.acPath))!;
+      final entryListFile = File("$acPath/server/cfg/entry_list.ini");
+      final serverCfgFile = File("$acPath/server/cfg/server_cfg.ini");
+      await entryListFile
+          .writeAsString(await File(server.entryListPath).readAsString());
+      await serverCfgFile
+          .writeAsString(await File(server.cfgFilePath).readAsString());
     }
   }
 
