@@ -125,6 +125,8 @@ class LoadingBlocBloc extends Bloc<LoadingBlocEvent, LoadingBlocState> {
   ///The [trackNames] list is the list of the names of the tracks inside the server config file.
   ///
   ///The [trackNames] must be the same length as the [servers] list and in the correct order.
+  ///
+  ///TODO: Will be updated to a much faster way ex. _getCarsSetCars.
   Future<void> _getTracksSetTrack({
     required List<Server> servers,
     required Function(String) onError,
