@@ -275,17 +275,12 @@ class _SkeletonPageState extends State<SkeletonPage> {
         : currentIndex.toString();
     final Server server = Server(
         serverFilesPath:
-            '${GetIt.I<SharedManager>().getString(SharedKey.acPath)}/server/preset/SERVER_$serverIndex');
+            '${await GetIt.I<SharedManager>().getString(SharedKey.acPath)}/server/presets/SERVER_$serverIndex');
     if (currentIndex >= 4) {
       await Directory(server.serverFilesPath).create();
     }
-    try {
-      final file = File(server.cfgFilePath);
-      await file.writeAsString(server.toStringList().join('\n'));
-    } catch (e, stacktrace) {
-      Logger().log('Error: $e\nStacktrace:\n$stacktrace');
-      return;
-    }
+    GetIt.I<List<Server>>().add(server);
+    SelectedServerInherited.of(context).changeServer(server);
   }
 
   void _showSelectServer() {
