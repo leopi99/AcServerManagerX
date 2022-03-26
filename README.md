@@ -16,7 +16,7 @@ Also, automatically saves the changes.
 - [x] Reads the installed cars.
 - [x] Saves the changes.
 - [X] Creates new servers.
-- [ ] Selects the server that can be started from the .bat file.
+- [X] Selects the server that can be started from the .bat file.
 - [x] Start the server inside the app.
 
 ## Run the app from the repo's clone
