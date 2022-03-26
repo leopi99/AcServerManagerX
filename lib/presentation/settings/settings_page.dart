@@ -4,7 +4,6 @@ import 'package:acservermanager/models/enums/shared_key.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:get_it/get_it.dart';
-import 'package:flutter/material.dart' as material;
 import 'package:url_launcher/url_launcher.dart';
 
 class SettingsPage extends StatefulWidget {
