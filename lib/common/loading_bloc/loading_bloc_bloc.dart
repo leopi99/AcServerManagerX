@@ -1,9 +1,11 @@
 import 'dart:io';
 
+import 'package:acservermanager/common/helpers/car_helper.dart';
 import 'package:acservermanager/common/helpers/track_helper.dart';
 import 'package:acservermanager/common/inherited_widgets/selected_server_inherited.dart';
 import 'package:acservermanager/common/logger.dart';
 import 'package:acservermanager/common/shared_manager.dart';
+import 'package:acservermanager/models/car.dart';
 import 'package:acservermanager/models/enums/shared_key.dart';
 import 'package:acservermanager/models/server.dart';
 import 'package:acservermanager/models/session.dart';
@@ -66,7 +68,7 @@ class LoadingBlocBloc extends Bloc<LoadingBlocEvent, LoadingBlocState> {
       Logger().log('Servers: ${serverNames.toString()}');
     } catch (e, stacktrace) {
       Logger().log("Error: $e\nStacktrace:\n$stacktrace");
-      emit(LoadingBlocErrorState("An error accoured, please try again.\n$e"));
+      _emitError(e.toString(), emit);
       return;
     }
     List<Server> servers = [];
@@ -90,17 +92,28 @@ class LoadingBlocBloc extends Bloc<LoadingBlocEvent, LoadingBlocState> {
       }
     } catch (e, stacktrace) {
       Logger().log("Error: $e\nStacktrace:\n$stacktrace");
-      emit(LoadingBlocErrorState("An error accoured, please try again.\n$e"));
+      _emitError(e.toString(), emit);
       return;
     }
     await _getTracksSetTrack(
       acPath: acPath,
       servers: servers,
       trackNames: _trackNames,
-      onError: (e) {
-        emit(LoadingBlocErrorState("An error accoured, please try again.\n$e"));
-      },
+      onError: (e) => _emitError(e, emit),
     );
+    await Future.forEach<Server>(
+      servers,
+      (element) async => await _getCarsSetCars(
+        server: element,
+        onError: (e) => _emitError(e, emit),
+        acPath: acPath,
+        carNames: await element.getSavedCars(),
+      ),
+    );
+    for (var element in servers) {
+      Logger()
+          .log(element.cars.toString(), name: "${element.name} loaded cars");
+    }
     GetIt.instance.registerSingleton(servers);
     SelectedServerInherited.of(context).changeServer(servers.first, false);
     emit(LoadingBlocLoadedState(servers));
@@ -143,5 +156,53 @@ class LoadingBlocBloc extends Bloc<LoadingBlocEvent, LoadingBlocState> {
         );
       }
     }
+  }
+
+  ///Assignes to the servers the selected [Car]s from the [carNames] list.
+  ///
+  ///The [carNames] list is the list of the names of the cars inside the server entry_list file, arranged like this:
+  ///
+  ///[{"CarName": "CarSkinName1, CarSkinName2"}...]
+  Future<void> _getCarsSetCars({
+    required Server server,
+    required Function(String) onError,
+    required String acPath,
+    required List<Map<String, String>> carNames,
+  }) async {
+    await Future.forEach<Map<String, String>>(
+      carNames,
+      (element) async {
+        Logger().log("Searching for car ${element.keys.first}",
+            name: "_getCarsSetCars");
+        Car? car = await CarHelper.loadCarFrom(
+            "$acPath/content/cars/${element.keys.first}");
+        if (car == null) {
+          Logger().log(
+              "No car found with the path: ${acPath + element.keys.first}",
+              name: "_getCarsSetCars");
+          return;
+        }
+        car = car.copyWith(
+          skins: car.skins
+              .where(
+                (skin) => element.values.first
+                    .split(',')
+                    .contains(skin.path.split('/').last),
+              )
+              .toList(),
+        );
+        Logger().log(
+            "Found car ${car.name} for car ${element.keys.first} with ${car.skins.length} skins",
+            name: "_getCarsSetCars");
+        final serverCars = [...server.cars, car];
+        Logger().log("server ${server.name} car length: ${server.cars.length}",
+            name: "_getCarsSetCars");
+        server = server.copyWith(cars: serverCars);
+      },
+    );
+  }
+
+  void _emitError(String error, Emitter<LoadingBlocState> emit) {
+    emit(LoadingBlocErrorState("An error accoured, please try again.\n$error"));
   }
 }

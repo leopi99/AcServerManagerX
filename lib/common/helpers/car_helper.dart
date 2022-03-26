@@ -47,7 +47,7 @@ class CarHelper {
   ///Loads a single [Car] from [carPath].
   ///
   ///If the result is null, the car couldn't be loaded
-  Future<Car?> loadCarFrom(String carPath) async {
+  static Future<Car?> loadCarFrom(String carPath) async {
     final Directory dir = Directory(carPath);
     if (!dir.existsSync()) return null;
 

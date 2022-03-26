@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:acservermanager/common/logger.dart';
 import 'package:acservermanager/models/assists.dart';
 import 'package:acservermanager/models/car.dart';
@@ -160,6 +162,34 @@ class Server extends ServerBaseSettings implements Equatable {
         serverFilesPath: serverFilesPath ?? this.serverFilesPath,
         cars: cars ?? this.cars,
       );
+
+  ///Returns the cars previously saved
+  Future<List<Map<String, String>>> getSavedCars() async {
+    const int carLineLength = 9;
+    List<Map<String, String>> cars = [];
+    final file = File(entryListPath);
+    final List<String> fileData = await file.readAsLines();
+    List<List<String>> subCars = [];
+    final int carLength = (await file.readAsLines()).length ~/ carLineLength;
+    for (int i = 0; i < carLength; i++) {
+      //Note: The +1 for the start of the sublist is to avoid the empty line at the end of each car (not applicable for the first line obv)
+      subCars.add(fileData.sublist((i * carLineLength) + (i == 0 ? 0 : 1),
+          (i * carLineLength) + carLineLength));
+    }
+    for (List<String> car in subCars) {
+      final carName = getStringFromData(car, "MODEL");
+      final skinName = getStringFromData(car, "SKIN");
+      if (cars.any((element) => element.keys.contains(carName))) {
+        Map<String, String> carMap =
+            cars.firstWhere((element) => element.keys.contains(carName));
+        carMap[carName] = "${carMap[carName]},$skinName";
+      } else {
+        cars.add({carName: skinName});
+      }
+    }
+    Logger().log(cars.toString(), name: "Car map");
+    return cars;
+  }
 
   ///TODO: complete
   ///
