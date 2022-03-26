@@ -56,7 +56,8 @@ class CodegenLoader extends AssetLoader{
   "clients_allowed": "Clients allowed",
   "update_available": "Update available.",
   "update": "Update",
-  "update_encourage": "To have the best experience update the app"
+  "update_encourage": "To have the best experience update the app",
+  "view_selected_cars": "View the selected cars"
 };
 static const Map<String,dynamic> it = {
   "ops_error": "Ops! Qualcosa e andato storto",
@@ -100,7 +101,8 @@ static const Map<String,dynamic> it = {
   "clients_allowed": "Utenti ammessi",
   "update_available": "Aggiornamento disponibile.",
   "update": "Aggiorna",
-  "update_encourage": "Per avere la miglior esperienza possibile, aggiorna l'app"
+  "update_encourage": "Per avere la miglior esperienza possibile, aggiorna l'app",
+  "view_selected_cars": "Visualizza le macchine selezionate"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en": en, "it": it};
 }

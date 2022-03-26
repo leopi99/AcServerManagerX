@@ -61,8 +61,24 @@ class _ClientsAllowedWidgetState extends State<ClientsAllowedWidget> {
           ),
         ),
         Button(
-          child: Text(
-              "Visualizza le macchine abilitate (${SelectedServerInherited.of(context).selectedServer.skinLength}/${SelectedServerInherited.of(context).selectedServer.clientsAllowed})"),
+          child: RichText(
+            text: TextSpan(
+              text: "view_selected_cars".tr(),
+              children: [
+                TextSpan(
+                  text:
+                      " (${SelectedServerInherited.of(context).selectedServer.skinLength}/${currentValue.toInt()})",
+                  style: TextStyle(
+                      color: SelectedServerInherited.of(context)
+                                  .selectedServer
+                                  .skinLength <
+                              currentValue.toInt()
+                          ? Colors.red
+                          : null),
+                )
+              ],
+            ),
+          ),
           onPressed: () {},
         ),
       ],
