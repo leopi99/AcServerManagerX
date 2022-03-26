@@ -36,26 +36,36 @@ class _ClientsAllowedWidgetState extends State<ClientsAllowedWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8),
-      child: InfoLabel(
-        label: "clients_allowed".tr() +": ${currentValue.toInt()}",
-        child: SizedBox(
-          width: 256,
-          child: Slider(
-            value: currentValue,
-            onChanged: (value) {
-              setState(() {
-                currentValue = value;
-              });
-            },
-            onChangeEnd: _updateServer,
-            max: _kMaxClients,
-            min: _kMinClients,
-            divisions: _kMaxClients.toInt(),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8),
+          child: InfoLabel(
+            label: "clients_allowed".tr() + ": ${currentValue.toInt()}",
+            child: SizedBox(
+              width: 256,
+              child: Slider(
+                value: currentValue,
+                onChanged: (value) {
+                  setState(() {
+                    currentValue = value;
+                  });
+                },
+                onChangeEnd: _updateServer,
+                max: _kMaxClients,
+                min: _kMinClients,
+                divisions: _kMaxClients.toInt(),
+              ),
+            ),
           ),
         ),
-      ),
+        Button(
+          child: Text(
+              "Visualizza le macchine abilitate (${SelectedServerInherited.of(context).selectedServer.skinLength}/${SelectedServerInherited.of(context).selectedServer.clientsAllowed})"),
+          onPressed: () {},
+        ),
+      ],
     );
   }
 }

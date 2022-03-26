@@ -190,6 +190,15 @@ class Server extends ServerBaseSettings implements Equatable {
     return cars;
   }
 
+  ///Returns the number of skins added to the server
+  int get skinLength {
+    int length = 0;
+    for (var element in cars) {
+      length += element.skins.length;
+    }
+    return length;
+  }
+
   ///TODO: complete
   ///
   ///Returns the List<String> of this [Server] to be written to a file.
