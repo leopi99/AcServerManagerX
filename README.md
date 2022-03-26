@@ -15,7 +15,7 @@ Also, automatically saves the changes.
 - [x] Reads installed tracks.
 - [x] Reads the installed cars.
 - [x] Saves the changes.
-- [ ] Creates new servers.
+- [X] Creates new servers.
 - [ ] Selects the server that can be started from the .bat file.
 - [x] Start the server inside the app.
 
