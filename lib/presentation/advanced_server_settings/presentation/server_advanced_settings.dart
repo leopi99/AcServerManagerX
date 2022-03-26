@@ -24,6 +24,7 @@ class _ServerAdvancedSettingsPageState
   final TextEditingController _httpPortController = TextEditingController();
   final TextEditingController _packetHzController = TextEditingController();
   late final StreamSubscription<Server> sub;
+  String _lastServerPath = "";
 
   ///Width of the numeric input fields
   late double _portsWidth;
@@ -34,10 +35,13 @@ class _ServerAdvancedSettingsPageState
       sub = SelectedServerInherited.of(context)
           .selectedServerStream
           .listen((event) {
-        _udpPortController.text = event.udpPort.toString();
-        _tcpPortController.text = event.tcpPort.toString();
-        _httpPortController.text = event.httpPort.toString();
-        _packetHzController.text = event.packetHz.toString();
+        if (event.cfgFilePath != _lastServerPath) {
+          _lastServerPath = event.cfgFilePath;
+          _udpPortController.text = event.udpPort.toString();
+          _tcpPortController.text = event.tcpPort.toString();
+          _httpPortController.text = event.httpPort.toString();
+          _packetHzController.text = event.packetHz.toString();
+        }
       });
     });
     super.initState();

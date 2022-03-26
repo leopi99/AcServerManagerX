@@ -22,6 +22,7 @@ class _ServerMainSettingsState extends State<ServerMainSettings> {
   final TextEditingController _adminPasswordController =
       TextEditingController();
   late StreamSubscription<Server> sub;
+  String _lastServerPath = "";
 
   @override
   void initState() {
@@ -29,9 +30,12 @@ class _ServerMainSettingsState extends State<ServerMainSettings> {
       sub = SelectedServerInherited.of(context)
           .selectedServerStream
           .listen((event) {
-        _nameController.text = event.name;
-        _passwordController.text = event.password ?? '';
-        _adminPasswordController.text = event.adminPassword;
+        if (event.cfgFilePath != _lastServerPath) {
+          _lastServerPath = event.cfgFilePath;
+          _nameController.text = event.name;
+          _passwordController.text = event.password ?? '';
+          _adminPasswordController.text = event.adminPassword;
+        }
       });
     });
     super.initState();
