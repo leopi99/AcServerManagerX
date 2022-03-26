@@ -67,8 +67,7 @@ class LoadingBlocBloc extends Bloc<LoadingBlocEvent, LoadingBlocState> {
       }
       Logger().log('Servers: ${serverNames.toString()}');
     } catch (e, stacktrace) {
-      Logger().log("Error: $e\nStacktrace:\n$stacktrace");
-      _emitError(e.toString(), emit);
+      _emitError(e.toString(), emit, stackTrace: stacktrace.toString());
       return;
     }
     List<Server> servers = [];
@@ -91,29 +90,30 @@ class LoadingBlocBloc extends Bloc<LoadingBlocEvent, LoadingBlocState> {
         servers.add(Server(serverFilesPath: '$presetsPath/SERVER_00'));
       }
     } catch (e, stacktrace) {
-      Logger().log("Error: $e\nStacktrace:\n$stacktrace");
-      _emitError(e.toString(), emit);
+      _emitError(e.toString(), emit, stackTrace: stacktrace.toString());
       return;
     }
+    //Loads the selected track for each server
     await _getTracksSetTrack(
       acPath: acPath,
       servers: servers,
       trackNames: _trackNames,
       onError: (e) => _emitError(e, emit),
     );
+    int index = 0;
+    //Loads the selected cars for each server
     await Future.forEach<Server>(
       servers,
-      (element) async => await _getCarsSetCars(
-        server: element,
-        onError: (e) => _emitError(e, emit),
-        acPath: acPath,
-        carNames: await element.getSavedCars(),
-      ),
+      (element) async {
+        servers[index] = await _getCarsSetCars(
+          server: element,
+          onError: (e) => _emitError(e, emit),
+          acPath: acPath,
+          carNames: await element.getSavedCars(),
+        );
+        index++;
+      },
     );
-    for (var element in servers) {
-      Logger()
-          .log(element.cars.toString(), name: "${element.name} loaded cars");
-    }
     GetIt.instance.registerSingleton(servers);
     SelectedServerInherited.of(context).changeServer(servers.first, false);
     emit(LoadingBlocLoadedState(servers));
@@ -163,7 +163,7 @@ class LoadingBlocBloc extends Bloc<LoadingBlocEvent, LoadingBlocState> {
   ///The [carNames] list is the list of the names of the cars inside the server entry_list file, arranged like this:
   ///
   ///[{"CarName": "CarSkinName1, CarSkinName2"}...]
-  Future<void> _getCarsSetCars({
+  Future<Server> _getCarsSetCars({
     required Server server,
     required Function(String) onError,
     required String acPath,
@@ -172,15 +172,13 @@ class LoadingBlocBloc extends Bloc<LoadingBlocEvent, LoadingBlocState> {
     await Future.forEach<Map<String, String>>(
       carNames,
       (element) async {
-        Logger().log("Searching for car ${element.keys.first}",
-            name: "_getCarsSetCars");
         Car? car = await CarHelper.loadCarFrom(
             "$acPath/content/cars/${element.keys.first}");
         if (car == null) {
           Logger().log(
               "No car found with the path: ${acPath + element.keys.first}",
-              name: "_getCarsSetCars");
-          return;
+              name: "_getCarsSetCars ${server.name}");
+          return server;
         }
         car = car.copyWith(
           skins: car.skins
@@ -191,18 +189,16 @@ class LoadingBlocBloc extends Bloc<LoadingBlocEvent, LoadingBlocState> {
               )
               .toList(),
         );
-        Logger().log(
-            "Found car ${car.name} for car ${element.keys.first} with ${car.skins.length} skins",
-            name: "_getCarsSetCars");
         final serverCars = [...server.cars, car];
-        Logger().log("server ${server.name} car length: ${server.cars.length}",
-            name: "_getCarsSetCars");
         server = server.copyWith(cars: serverCars);
       },
     );
+    return server;
   }
 
-  void _emitError(String error, Emitter<LoadingBlocState> emit) {
+  void _emitError(String error, Emitter<LoadingBlocState> emit,
+      {String? stackTrace}) {
     emit(LoadingBlocErrorState("An error accoured, please try again.\n$error"));
+    debugPrint("Error: $error\nStacktrace:\n$stackTrace");
   }
 }

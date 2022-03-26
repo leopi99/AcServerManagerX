@@ -187,7 +187,6 @@ class Server extends ServerBaseSettings implements Equatable {
         cars.add({carName: skinName});
       }
     }
-    Logger().log(cars.toString(), name: "Car map");
     return cars;
   }
 
