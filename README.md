@@ -11,13 +11,13 @@ Also, automatically saves the changes.
 
 ## What are the implemented features?
 
-- [X] Reads the previously created servers.
-- [X] Reads installed tracks.
-- [X] Reads the installed cars.
-- [X] Saves the changes.
+- [x] Reads the previously created servers.
+- [x] Reads installed tracks.
+- [x] Reads the installed cars.
+- [x] Saves the changes.
 - [ ] Creates new servers.
 - [ ] Selects the server that can be started from the .bat file.
-- [X] Start the server inside the app.
+- [x] Start the server inside the app.
 
 ## Run the app from the repo's clone
 
@@ -33,4 +33,4 @@ The app supports localizations, currently for the following languages:
 - English
 - Italian
 
-Want to add your language? Clone the repository, create the file yourCountryCode.json inside the directory assets/translations, copy the content of another file and translate it; then run this command: `flutter pub run easy_localization:generate -S assets/translations -O lib/generated-translations`, copy the fluent_localizations_delegate_it.dart (inside the lib/common/custom_delegates folder) and translate it  (remember to change the supported locale).
+Want to add your language? Clone the repository, create the file yourCountryCode.json inside the directory assets/translations, copy the content of another file and translate it; then run this command: `flutter pub run easy_localization:generate -S assets/translations -O lib/generated-translations`, copy the fluent_localizations_delegate_it.dart (inside the lib/common/custom_delegates folder) and translate it (remember to change the supported locale).
