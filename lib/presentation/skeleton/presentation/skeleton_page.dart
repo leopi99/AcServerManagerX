@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:acservermanager/common/appearance_bloc/appearance_bloc.dart';
 import 'package:acservermanager/common/inherited_widgets/selected_server_inherited.dart';
-import 'package:acservermanager/common/logger.dart';
 import 'package:acservermanager/common/shared_manager.dart';
 import 'package:acservermanager/common/svg_paths.dart';
 import 'package:acservermanager/models/enums/shared_key.dart';
