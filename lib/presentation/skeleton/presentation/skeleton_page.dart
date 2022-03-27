@@ -151,14 +151,17 @@ class _SkeletonPageState extends State<SkeletonPage> {
                                     builder: (context) {
                                       return ContentDialog(
                                         content: Text(
-                                            "not_enought_cars".tr(namedArgs: {
-                                          "carNumber":
-                                              SelectedServerInherited.of(
-                                                      context)
-                                                  .selectedServer
-                                                  .clientsAllowed
-                                                  .toString()
-                                        })),
+                                          "not_enought_cars".tr(
+                                            namedArgs: {
+                                              "carNumber":
+                                                  SelectedServerInherited.of(
+                                                          context)
+                                                      .selectedServer
+                                                      .clientsAllowed
+                                                      .toString()
+                                            },
+                                          ),
+                                        ),
                                         title: Text("cant_run_server".tr()),
                                         actions: [
                                           Button(

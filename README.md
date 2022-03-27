@@ -26,6 +26,7 @@ Also, automatically saves the changes.
 - [X] Selects the server that can be started from the .bat file.
 - [x] Start the server inside the app.
 - [ ] Allows to change all settings.
+- [ ] Search the cars with filters.
 
 ## Run the app from the repo's clone
 

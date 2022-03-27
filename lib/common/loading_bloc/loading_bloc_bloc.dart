@@ -102,18 +102,22 @@ class LoadingBlocBloc extends Bloc<LoadingBlocEvent, LoadingBlocState> {
     );
     int index = 0;
     //Loads the selected cars for each server
-    await Future.forEach<Server>(
-      servers,
-      (element) async {
-        servers[index] = await _getCarsSetCars(
-          server: element,
-          onError: (e) => _emitError(e, emit),
-          acPath: acPath,
-          carNames: await element.getSavedCars(),
-        );
-        index++;
-      },
-    );
+    try {
+      await Future.forEach<Server>(
+        servers,
+        (element) async {
+          servers[index] = await _getCarsSetCars(
+            server: element,
+            onError: (e) => _emitError(e, emit),
+            acPath: acPath,
+            carNames: await element.getSavedCars(),
+          );
+          index++;
+        },
+      );
+    } catch (e, stacktrace) {
+      _emitError(e.toString(), emit, stackTrace: stacktrace.toString());
+    }
     GetIt.instance.registerSingleton(servers);
     SelectedServerInherited.of(context).changeServer(servers.first, false);
     emit(LoadingBlocLoadedState(servers));
