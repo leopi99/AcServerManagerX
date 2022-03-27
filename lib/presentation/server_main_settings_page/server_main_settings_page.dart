@@ -63,10 +63,16 @@ class _ServerMainSettingsState extends State<ServerMainSettings> {
         stream: _showSelectedCars.stream,
         builder: ((context, snapshot) {
           if (snapshot.data!) {
-            return AddedCarsWidget(
-              cars: SelectedServerInherited.of(context).selectedServer.cars,
-              onClose: () {
-                _showSelectedCars.add(false);
+            return StreamBuilder<Server>(
+              stream: SelectedServerInherited.of(context).selectedServerStream,
+              initialData: SelectedServerInherited.of(context).selectedServer,
+              builder: (context, snapshot) {
+                return AddedCarsWidget(
+                  cars: snapshot.data!.cars,
+                  onClose: () {
+                    _showSelectedCars.add(false);
+                  },
+                );
               },
             );
           }
