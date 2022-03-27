@@ -140,6 +140,39 @@ class _SkeletonPageState extends State<SkeletonPage> {
                                 child: Icon(material.Icons.start),
                               ),
                               onPressed: () async {
+                                if (SelectedServerInherited.of(context)
+                                        .selectedServer
+                                        .skinLength <
+                                    SelectedServerInherited.of(context)
+                                        .selectedServer
+                                        .clientsAllowed) {
+                                  await showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return ContentDialog(
+                                        content: Text(
+                                            "not_enought_cars".tr(namedArgs: {
+                                          "carNumber":
+                                              SelectedServerInherited.of(
+                                                      context)
+                                                  .selectedServer
+                                                  .clientsAllowed
+                                                  .toString()
+                                        })),
+                                        title: Text("cant_run_server".tr()),
+                                        actions: [
+                                          Button(
+                                            child: Text('close'.tr()),
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                  return;
+                                }
                                 final Widget widget = ServerRunInstance.run(
                                     (await GetIt.I<SharedManager>()
                                         .getString(SharedKey.acPath))!);

@@ -41,5 +41,7 @@
     "update_available": "Update available.",
     "update": "Update",
     "update_encourage": "To have the best experience update the app",
-    "view_selected_cars": "View the selected cars"
+    "view_selected_cars": "View the selected cars",
+    "not_enought_cars": "To run the server you need to have selected at least {carNumber} cars",
+    "cant_run_server": "Can't run the server"
 }
