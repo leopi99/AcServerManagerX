@@ -9,6 +9,7 @@ import 'package:acservermanager/models/car.dart';
 import 'package:acservermanager/models/enums/shared_key.dart';
 import 'package:acservermanager/models/server.dart';
 import 'package:acservermanager/models/session.dart';
+import 'package:acservermanager/models/track.dart';
 import 'package:bloc/bloc.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter/services.dart';
@@ -129,8 +130,6 @@ class LoadingBlocBloc extends Bloc<LoadingBlocEvent, LoadingBlocState> {
   ///The [trackNames] list is the list of the names of the tracks inside the server config file.
   ///
   ///The [trackNames] must be the same length as the [servers] list and in the correct order.
-  ///
-  ///TODO: Will be updated to a much faster way ex. _getCarsSetCars.
   Future<void> _getTracksSetTrack({
     required List<Server> servers,
     required Function(String) onError,
@@ -138,30 +137,26 @@ class LoadingBlocBloc extends Bloc<LoadingBlocEvent, LoadingBlocState> {
     required List<Map<String, String>> trackNames,
   }) async {
     assert(servers.length == trackNames.length);
-    final tracks =
-        await TrackHelper.loadTracks(acPath: acPath, onError: onError);
-    for (int i = 0; i < servers.length; i++) {
-      if (tracks.any((element) => element.path
-          .toLowerCase()
-          .contains(trackNames[i]['name']!.toLowerCase()))) {
-        final track = tracks.firstWhere((element) => element.path
-            .toLowerCase()
-            .contains(trackNames[i]['name']!.toLowerCase()));
-        servers[i] = servers[i].copyWith(
-          session: Session(
-            selectedTrack: track.copyWith(
-              layouts: track.layouts.length > 1
-                  ? [
-                      track.layouts.firstWhere((element) => element.path
-                          .toLowerCase()
-                          .contains(trackNames[i]['layout']!.toLowerCase()))
-                    ]
-                  : track.layouts,
-            ),
+    int index = 0;
+    await Future.forEach<Map<String, String>>(trackNames, (trackName) async {
+      Track? track = await TrackHelper.loadTrackFrom(
+          "$acPath/content/tracks/${trackName['name']}");
+      if (track == null) return;
+      servers[index] = servers[index].copyWith(
+        session: Session(
+          selectedTrack: track.copyWith(
+            layouts: [
+              track.layouts.firstWhere(
+                (element) => element.path.toLowerCase().contains(
+                      trackName['layout']!.toLowerCase(),
+                    ),
+              )
+            ],
           ),
-        );
-      }
-    }
+        ),
+      );
+      index++;
+    });
   }
 
   ///Assignes to the servers the selected [Car]s from the [carNames] list.
