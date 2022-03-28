@@ -43,5 +43,13 @@
     "update_encourage": "Per avere la miglior esperienza possibile, aggiorna l'app",
     "view_selected_cars": "Visualizza le macchine selezionate",
     "not_enought_cars": "Per avviare il server devi aver selezionato almeno {carNumber} macchine",
-    "cant_run_server": "Impossibile avviare il server"
+    "cant_run_server": "Impossibile avviare il server",
+    "clear": "Sereno",
+    "heavyClouds": "Brutto",
+    "heavyFog": "Nebbia fitta",
+    "lightClouds": "Leggermente nuvoloso",
+    "lightFog": "Nebbia",
+    "midClear": "Abbastanza sereno",
+    "midClouds": "Nuvoloso",
+    "weather_type": "Meteo"
 }

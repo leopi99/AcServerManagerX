@@ -59,7 +59,15 @@ class CodegenLoader extends AssetLoader{
   "update_encourage": "To have the best experience update the app",
   "view_selected_cars": "View the selected cars",
   "not_enought_cars": "To run the server you need to have selected at least {carNumber} cars",
-  "cant_run_server": "Can't run the server"
+  "cant_run_server": "Can't run the server",
+  "clear": "Clear",
+  "heavyClouds": "Heavy Clouds",
+  "heavyFog": "Heavy Fog",
+  "lightClouds": "Light Clouds",
+  "lightFog": "Light Fog",
+  "midClear": "Mid Clear",
+  "midClouds": "Mid Clouds",
+  "weather_type": "Weather"
 };
 static const Map<String,dynamic> it = {
   "ops_error": "Ops! Qualcosa e andato storto",
@@ -106,7 +114,15 @@ static const Map<String,dynamic> it = {
   "update_encourage": "Per avere la miglior esperienza possibile, aggiorna l'app",
   "view_selected_cars": "Visualizza le macchine selezionate",
   "not_enought_cars": "Per avviare il server devi aver selezionato almeno {carNumber} macchine",
-  "cant_run_server": "Impossibile avviare il server"
+  "cant_run_server": "Impossibile avviare il server",
+  "clear": "Sereno",
+  "heavyClouds": "Brutto",
+  "heavyFog": "Nebbia fitta",
+  "lightClouds": "Leggermente nuvoloso",
+  "lightFog": "Nebbia",
+  "midClear": "Abbastanza sereno",
+  "midClouds": "Nuvoloso",
+  "weather_type": "Meteo"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en": en, "it": it};
 }

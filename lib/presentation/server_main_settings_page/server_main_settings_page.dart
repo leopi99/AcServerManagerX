@@ -6,6 +6,7 @@ import 'package:acservermanager/models/server.dart';
 import 'package:acservermanager/presentation/advanced_server_settings/widgets/textbox_entry_widget.dart';
 import 'package:acservermanager/presentation/server_main_settings_page/widgets/added_cars_widget.dart';
 import 'package:acservermanager/presentation/server_main_settings_page/widgets/clients_allowed_widget.dart';
+import 'package:acservermanager/presentation/server_main_settings_page/widgets/weather_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:get_it/get_it.dart';
@@ -83,6 +84,22 @@ class _ServerMainSettingsState extends State<ServerMainSettings> {
               ClientsAllowedWidget(
                 showSelectedCars: () {
                   _showSelectedCars.add(true);
+                },
+              ),
+              WeatherWidget(
+                weather: SelectedServerInherited.of(context)
+                    .selectedServer
+                    .session
+                    .weather,
+                onChanged: (value) {
+                  SelectedServerInherited.of(context).changeServer(
+                    SelectedServerInherited.of(context).selectedServer.copyWith(
+                          session: SelectedServerInherited.of(context)
+                              .selectedServer
+                              .session
+                              .copyWith(weather: value),
+                        ),
+                  );
                 },
               ),
             ],
