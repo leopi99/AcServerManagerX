@@ -8,6 +8,7 @@ import 'package:acservermanager/models/server/server_base_settings.dart';
 import 'package:acservermanager/models/server/server_file_names.dart';
 import 'package:acservermanager/models/session.dart';
 import 'package:acservermanager/models/voting_banning.dart';
+import 'package:acservermanager/models/weather.dart';
 import 'package:equatable/equatable.dart';
 
 class Server extends ServerBaseSettings implements Equatable {
@@ -76,6 +77,7 @@ class Server extends ServerBaseSettings implements Equatable {
           _getBoolFromData(data, ServerFileNames.lockedEntryList),
       threads: _getIntFromData(data, ServerFileNames.numThreads, 2),
       showOnLobby: _getBoolFromData(data, ServerFileNames.registerToLobby),
+      session: Session(weather: Weather.fromServerData(data)),
       serverFilesPath: path,
     );
   }
