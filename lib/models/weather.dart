@@ -33,7 +33,6 @@ class Weather {
 
   ///Returns a [Weather] instance from the [data]
   static Weather fromServerData(List<String> data) {
-    print("Weather type found: ${_getGraphicEnum(Server.getStringFromData(data, "GRAPHICS"))}");
     return Weather(
       ambientVariation:
           int.parse(Server.getStringFromData(data, "VARIATION_AMBIENT")),
