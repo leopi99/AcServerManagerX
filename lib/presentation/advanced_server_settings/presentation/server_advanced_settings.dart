@@ -142,7 +142,7 @@ class _ServerAdvancedSettingsPageState
     return Row(
       children: [
         DropDownButton(
-          placement: FlyoutPlacement.left,
+          placement: FlyoutPlacement.start,
           title: Text(
               "${SelectedServerInherited.of(context).selectedServer.threads} " +
                   "threads".tr()),
