@@ -15,11 +15,14 @@ class WeatherWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: const EdgeInsets.symmetric(vertical: 16),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           InfoLabel(
             label: "weather_type".tr(),
             child: DropDownButton(
+              title: Text(weather.type.name.tr()),
               items: List.generate(
                 WeatherTypeEnum.values.length,
                 (index) => DropDownButtonItem(

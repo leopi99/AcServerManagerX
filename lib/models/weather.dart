@@ -31,7 +31,9 @@ class Weather {
     this.timeOfDayMultiplier = 1,
   });
 
+  ///Returns a [Weather] instance from the [data]
   static Weather fromServerData(List<String> data) {
+    print("Weather type found: ${_getGraphicEnum(Server.getStringFromData(data, "GRAPHICS"))}");
     return Weather(
       ambientVariation:
           int.parse(Server.getStringFromData(data, "VARIATION_AMBIENT")),
@@ -115,6 +117,8 @@ class Weather {
         return "4_mid_clear";
       case WeatherTypeEnum.midClouds:
         return "6_mid_clouds";
+      default:
+        return "3_clear";
     }
   }
 

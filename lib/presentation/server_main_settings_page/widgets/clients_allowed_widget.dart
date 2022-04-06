@@ -44,7 +44,7 @@ class _ClientsAllowedWidgetState extends State<ClientsAllowedWidget> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.all(8),
+          padding: const EdgeInsets.all(8).copyWith(left: 0),
           child: InfoLabel(
             label: "clients_allowed".tr() + ": ${currentValue.toInt()}",
             child: SizedBox(
