@@ -47,8 +47,8 @@ class Weather {
       baseWindMinSpeed:
           int.parse(Server.getStringFromData(data, "WIND_BASE_SPEED_MIN")),
       realisticRoadTemp: 7,
-      // roadVariation: Server.getStringFromData(data, "VARIATION_AMBIENT"), TODO:
-      // timeOfDay: Server.getStringFromData(data, "VARIATION_AMBIENT"), TODO:
+      roadVariation: int.parse(Server.getStringFromData(data, "VARIATION_AMBIENT")),
+      // timeOfDay: Server.getStringFromData(data, "VARIATION_AMBIENT"),
       timeOfDayMultiplier:
           int.parse(Server.getStringFromData(data, "TIME_OF_DAY_MULT")),
       type: _getGraphicEnum(Server.getStringFromData(data, "GRAPHICS")),
@@ -70,22 +70,21 @@ class Weather {
     int? windDirectionVar,
     TimeOfDay? timeOfDay,
     int? timeOfDayMultiplier,
-  }) {
-    return Weather(
-      type: type ?? this.type,
-      baseAmbientTemp: baseAmbientTemp ?? this.baseAmbientTemp,
-      realisticRoadTemp: realisticRoadTemp ?? this.realisticRoadTemp,
-      baseRoadTemp: baseRoadTemp ?? this.baseRoadTemp,
-      ambientVariation: ambientVariation ?? this.ambientVariation,
-      roadVariation: roadVariation ?? this.roadVariation,
-      baseWindMinSpeed: baseWindMinSpeed ?? this.baseWindMinSpeed,
-      baseWindMaxSpeed: baseWindMaxSpeed ?? this.baseWindMaxSpeed,
-      baseWindDirection: baseWindDirection ?? this.baseWindDirection,
-      windDirectionVar: windDirectionVar ?? this.windDirectionVar,
-      timeOfDay: timeOfDay ?? this.timeOfDay,
-      timeOfDayMultiplier: timeOfDayMultiplier ?? this.timeOfDayMultiplier,
-    );
-  }
+  }) =>
+      Weather(
+        type: type ?? this.type,
+        baseAmbientTemp: baseAmbientTemp ?? this.baseAmbientTemp,
+        realisticRoadTemp: realisticRoadTemp ?? this.realisticRoadTemp,
+        baseRoadTemp: baseRoadTemp ?? this.baseRoadTemp,
+        ambientVariation: ambientVariation ?? this.ambientVariation,
+        roadVariation: roadVariation ?? this.roadVariation,
+        baseWindMinSpeed: baseWindMinSpeed ?? this.baseWindMinSpeed,
+        baseWindMaxSpeed: baseWindMaxSpeed ?? this.baseWindMaxSpeed,
+        baseWindDirection: baseWindDirection ?? this.baseWindDirection,
+        windDirectionVar: windDirectionVar ?? this.windDirectionVar,
+        timeOfDay: timeOfDay ?? this.timeOfDay,
+        timeOfDayMultiplier: timeOfDayMultiplier ?? this.timeOfDayMultiplier,
+      );
 
   List<String> toStringList() => [
         'GRAPHICS=${_getGraphicText()}',

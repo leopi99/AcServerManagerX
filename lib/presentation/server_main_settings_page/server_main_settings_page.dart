@@ -80,26 +80,16 @@ class _ServerMainSettingsState extends State<ServerMainSettings> {
           return ListView(
             padding: const EdgeInsets.all(32),
             children: [
-              _buildServerBaseTextBox(),
+              Flex(
+                direction: Axis.horizontal,
+                children: [
+                  Flexible(flex: 5, child: _buildServerBaseTextBox()),
+                  Flexible(flex: 5, child: _buildWeather()),
+                ],
+              ),
               ClientsAllowedWidget(
                 showSelectedCars: () {
                   _showSelectedCars.add(true);
-                },
-              ),
-              WeatherWidget(
-                weather: SelectedServerInherited.of(context)
-                    .selectedServer
-                    .session
-                    .weather,
-                onChanged: (value) {
-                  SelectedServerInherited.of(context).changeServer(
-                    SelectedServerInherited.of(context).selectedServer.copyWith(
-                          session: SelectedServerInherited.of(context)
-                              .selectedServer
-                              .session
-                              .copyWith(weather: value),
-                        ),
-                  );
                 },
               ),
             ],
@@ -145,6 +135,33 @@ class _ServerMainSettingsState extends State<ServerMainSettings> {
           label: "admin".tr() + " " + "password".tr(),
         ),
       ],
+    );
+  }
+
+  Widget _buildWeather() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(right: 32),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          WeatherWidget(
+            weather: SelectedServerInherited.of(context)
+                .selectedServer
+                .session
+                .weather,
+            onChanged: (value) {
+              SelectedServerInherited.of(context).changeServer(
+                SelectedServerInherited.of(context).selectedServer.copyWith(
+                      session: SelectedServerInherited.of(context)
+                          .selectedServer
+                          .session
+                          .copyWith(weather: value),
+                    ),
+              );
+            },
+          ),
+        ],
+      ),
     );
   }
 }
