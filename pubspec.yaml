@@ -29,6 +29,8 @@ dependencies:
 
   flutter_svg: ^1.0.3
 
+  weather_icons: ^3.0.0
+
   url_launcher: ^6.0.20
 
   flutter:
