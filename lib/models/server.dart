@@ -10,7 +10,6 @@ import 'package:acservermanager/models/session.dart';
 import 'package:acservermanager/models/voting_banning.dart';
 import 'package:acservermanager/models/weather.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/foundation.dart';
 
 class Server extends ServerBaseSettings implements Equatable {
   final Session session;
