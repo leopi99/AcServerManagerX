@@ -79,6 +79,7 @@ class Server extends ServerBaseSettings implements Equatable {
       showOnLobby: _getBoolFromData(data, ServerFileNames.registerToLobby),
       session: Session(weather: Weather.fromServerData(data)),
       serverFilesPath: path,
+      clientsAllowed: _getIntFromData(data, ServerFileNames.maxClients, 12),
     );
   }
 
