@@ -38,7 +38,8 @@ class LoadingBlocBloc extends Bloc<LoadingBlocEvent, LoadingBlocState> {
             showAcPath: acPath == null, showAppearance: darkMode == null));
         return;
       }
-      await _loadServers(emit, event.context);
+      final serverInherited = SelectedServerInherited.of(event.context);
+      await _loadServers(emit, serverInherited);
     });
     on<LoadingBlocShowOnboardingEvent>((event, emit) {
       emit(LoadingBlocShowOnboardingState(
@@ -46,8 +47,8 @@ class LoadingBlocBloc extends Bloc<LoadingBlocEvent, LoadingBlocState> {
     });
   }
 
-  Future<void> _loadServers(
-      Emitter<LoadingBlocState> emit, BuildContext context) async {
+  Future<void> _loadServers(Emitter<LoadingBlocState> emit,
+      SelectedServerInherited serverInherited) async {
     emit(LoadingBlocLoadingState());
     final String acPath =
         (await GetIt.instance<SharedManager>().getString(SharedKey.acPath))!;
@@ -120,7 +121,7 @@ class LoadingBlocBloc extends Bloc<LoadingBlocEvent, LoadingBlocState> {
       _emitError(e.toString(), emit, stackTrace: stacktrace.toString());
     }
     GetIt.instance.registerSingleton(servers);
-    SelectedServerInherited.of(context).changeServer(servers.first, false);
+    serverInherited.changeServer(servers.first, false);
     emit(LoadingBlocLoadedState(servers));
     await close();
   }
