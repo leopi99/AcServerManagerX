@@ -21,12 +21,19 @@ Also, automatically saves the changes.
 - [x] Reads the previously created servers.
 - [x] Reads installed tracks.
 - [x] Reads the installed cars.
-- [x] Saves the changes.
+- [x] Saves the changes when something is changed.
 - [X] Creates new servers.
 - [X] Selects the server that can be started from the .bat file.
 - [x] Start the server inside the app.
-- [ ] Allows to change all settings.
-- [ ] Search the cars with filters.
+- [ ] Allows to change all settings. (see What is missing for more info)
+- [x] Search the cars with filters.
+
+## What is missing?
+
+- Read the configured assists.
+- Read the banning settings.
+- Set/Read the server description
+- Read the max thread for the current pc.
 
 ## Run the app from the repo's clone
 

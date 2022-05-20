@@ -30,18 +30,13 @@ class WeatherWidget extends StatelessWidget {
             items: List.generate(
               WeatherTypeEnum.values.length,
               (index) => MenuFlyoutItem(
+                leading: _buildWeatherIcon(WeatherTypeEnum.values[index]),
                 onPressed: () {
                   onChanged(
                       weather.copyWith(type: WeatherTypeEnum.values[index]));
                 },
-                text: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    _buildWeatherIcon(WeatherTypeEnum.values[index]),
-                    Text(
-                      WeatherTypeEnum.values[index].name.tr(),
-                    ),
-                  ],
+                text: Text(
+                  WeatherTypeEnum.values[index].name.tr(),
                 ),
               ),
             ),
