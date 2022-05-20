@@ -10,6 +10,7 @@ import 'package:acservermanager/models/session.dart';
 import 'package:acservermanager/models/voting_banning.dart';
 import 'package:acservermanager/models/weather.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 
 class Server extends ServerBaseSettings implements Equatable {
   final Session session;
@@ -167,13 +168,13 @@ class Server extends ServerBaseSettings implements Equatable {
 
   ///Returns the cars previously saved
   Future<List<Map<String, String>>> getSavedCars() async {
-    const int carLineLength = 9;
+    const int carLineLength = 10;
     List<Map<String, String>> cars = [];
     final file = File(entryListPath);
     final List<String> fileData = await file.readAsLines();
     List<List<String>> subCars = [];
     final int carLength = (await file.readAsLines()).length ~/ carLineLength;
-    for (int i = 0; i < carLength; i++) {
+    for (int i = 1; i < carLength - 1; i++) {
       //Note: The +1 for the start of the sublist is to avoid the empty line at the end of each car (not applicable for the first line obv)
       subCars.add(fileData.sublist((i * carLineLength) + (i == 0 ? 0 : 1),
           (i * carLineLength) + carLineLength));
