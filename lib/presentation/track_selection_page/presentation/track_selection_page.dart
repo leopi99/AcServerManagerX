@@ -21,7 +21,7 @@ class _TrackSelectionPageState extends State<TrackSelectionPage> {
 
   @override
   void initState() {
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       _sessionBloc = BlocProvider.of<SessionBloc>(context);
       _sessionBloc!.add(SessionLoadTracksEvent());
       debugPrint(

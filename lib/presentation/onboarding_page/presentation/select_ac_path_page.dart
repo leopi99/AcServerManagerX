@@ -23,7 +23,7 @@ class _SelectAcPathPageState extends State<SelectAcPathPage> {
 
   @override
   void initState() {
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       showDialog(
         context: context,
         barrierDismissible: false,

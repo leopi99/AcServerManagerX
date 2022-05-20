@@ -30,7 +30,7 @@ class _ServerMainSettingsState extends State<ServerMainSettings> {
 
   @override
   void initState() {
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       sub = SelectedServerInherited.of(context)
           .selectedServerStream
           .listen((event) {
@@ -132,7 +132,7 @@ class _ServerMainSettingsState extends State<ServerMainSettings> {
                     .copyWith(adminPassword: value));
           },
           controller: _adminPasswordController,
-          label: "admin".tr() + " " + "password".tr(),
+          label: "${"admin".tr()} ${"password".tr()}",
         ),
       ],
     );

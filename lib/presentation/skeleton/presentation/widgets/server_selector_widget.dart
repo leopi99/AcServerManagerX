@@ -22,8 +22,8 @@ class ServerSelectorWidget extends StatelessWidget {
           title: Text(snapshot.data!.name),
           items: List.generate(
             servers.length,
-            (index) => DropDownButtonItem(
-              onTap: () {
+            (index) => MenuFlyoutItem(
+              onPressed: () {
                 if (servers[index] != snapshot.data!) {
                   SelectedServerInherited.of(context)
                       .changeServer(servers[index]);
@@ -34,7 +34,7 @@ class ServerSelectorWidget extends StatelessWidget {
                   Navigator.pop(context);
                 }
               },
-              title: Text(servers[index].name),
+              text: Text(servers[index].name),
             ),
           ),
         );

@@ -39,7 +39,7 @@ class _SkeletonPageState extends State<SkeletonPage> {
 
   @override
   void initState() {
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       //Sets the current session
       _sessionBloc.add(SessionChangeSessionEvent(
           SelectedServerInherited.of(context).selectedServer.session));
@@ -185,8 +185,7 @@ class _SkeletonPageState extends State<SkeletonPage> {
                                     return ContentDialog(
                                       content: widget,
                                       title: Text(
-                                          "${SelectedServerInherited.of(context).selectedServer.name} " +
-                                              "running".tr()),
+                                          "${SelectedServerInherited.of(context).selectedServer.name} ${"running".tr()}"),
                                       actions: [
                                         Button(
                                           child: Text('close'.tr()),
@@ -306,7 +305,7 @@ class _SkeletonPageState extends State<SkeletonPage> {
       currentIndex++;
     }
     String serverIndex = currentIndex.toString().length != 2
-        ? "0" + currentIndex.toString()
+        ? "0${currentIndex.toString()}"
         : currentIndex.toString();
     final Server server = Server(
         serverFilesPath:

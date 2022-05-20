@@ -30,7 +30,7 @@ class Car extends SearcheableElement implements Equatable {
     List<CarSkin> skins = [];
     int index = 0;
     await Future.forEach<FileSystemEntity>(
-        Directory(path + "/skins").listSync(), (e) async {
+        Directory("$path/skins").listSync(), (e) async {
       skins.add(await CarSkin.fromDir(Directory(e.path), index));
       index++;
     });
@@ -49,7 +49,7 @@ class Car extends SearcheableElement implements Equatable {
     );
   }
 
-  String get logoPath => path + "/logo.png";
+  String get logoPath => "$path/logo.png";
 
   String get defaultPreview => skins.first.previewPath;
 

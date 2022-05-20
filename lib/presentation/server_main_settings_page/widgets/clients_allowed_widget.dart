@@ -20,7 +20,7 @@ class _ClientsAllowedWidgetState extends State<ClientsAllowedWidget> {
 
   @override
   void initState() {
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {
         currentValue = SelectedServerInherited.of(context)
             .selectedServer
@@ -46,7 +46,7 @@ class _ClientsAllowedWidgetState extends State<ClientsAllowedWidget> {
         Padding(
           padding: const EdgeInsets.all(8).copyWith(left: 0),
           child: InfoLabel(
-            label: "clients_allowed".tr() + ": ${currentValue.toInt()}",
+            label: "${"clients_allowed".tr()}: ${currentValue.toInt()}",
             child: SizedBox(
               width: 256,
               child: Slider(

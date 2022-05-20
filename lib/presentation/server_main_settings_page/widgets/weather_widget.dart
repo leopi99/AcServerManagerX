@@ -2,7 +2,6 @@ import 'package:acservermanager/models/enums/weather_type_enum.dart';
 import 'package:acservermanager/models/weather.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fluent_ui/fluent_ui.dart';
-import 'package:weather_icons/weather_icons.dart';
 
 class WeatherWidget extends StatelessWidget {
   final Weather weather;
@@ -30,12 +29,12 @@ class WeatherWidget extends StatelessWidget {
             ),
             items: List.generate(
               WeatherTypeEnum.values.length,
-              (index) => DropDownButtonItem(
-                onTap: () {
+              (index) => MenuFlyoutItem(
+                onPressed: () {
                   onChanged(
                       weather.copyWith(type: WeatherTypeEnum.values[index]));
                 },
-                title: Row(
+                text: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     _buildWeatherIcon(WeatherTypeEnum.values[index]),
