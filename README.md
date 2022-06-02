@@ -4,16 +4,19 @@ This app is written using the Flutter framework.
 Since this app uses Windows level apis is currently locked to the Windows platform.
 In the future (since Steam's proton makes assetto corsa work on Linux) will be tested and unlocked for Windows and Linux; for now is in development only the Windows version.
 
+This is still a project in the beta state, it can mess with your server configuration
 
 #### **Table of contents**
   - [Why use this app?](#why-use-this-app)
   - [What are the implemented features?](#what-are-the-implemented-features)
+  - [What is missing?](#what-is-missing)
   - [Run the app from the repo's clone](#run-the-app-from-the-repos-clone)
   - [Localizations](#localizations)
+  - [Known problems](#known-problems)
 
 ## Why use this app?
 
-The main concept of this app is not to recreate something that works, instead to create an app that "overrides" the stock one, with a much more modern ui and performance improvements.
+The main concept of this app is not to recreate something that works, but to create an app that can be used instead of the stock one, with a much more modern ui and performance improvements.
 Also, automatically saves the changes.
 
 ## What are the implemented features?
@@ -27,6 +30,7 @@ Also, automatically saves the changes.
 - [x] Start the server inside the app.
 - [ ] Allows to change all settings. (see What is missing for more info)
 - [x] Search the cars with filters.
+- [ ] Updates check.
 
 ## What is missing?
 
@@ -50,3 +54,8 @@ The app supports localizations, currently for the following languages:
 - Italian
 
 Feel free to ask for new feature that you find interesting and/or contribute to the project.
+
+## Known problems
+
+- Some cars have a bad formatted json file and can not be read. (ex. vrc_1997_ferrari_f310b)
+- Some livelries (for the selected cars) are not read at startup.
