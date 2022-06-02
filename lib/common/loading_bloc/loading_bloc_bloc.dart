@@ -10,9 +10,9 @@ import 'package:acservermanager/models/enums/shared_key.dart';
 import 'package:acservermanager/models/server.dart';
 import 'package:acservermanager/models/session.dart';
 import 'package:acservermanager/models/track.dart';
-import 'package:bloc/bloc.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
 part 'loading_bloc_event.dart';
@@ -26,9 +26,10 @@ class LoadingBlocBloc extends Bloc<LoadingBlocEvent, LoadingBlocState> {
     if (!Platform.isWindows) {
       throw (PlatformException(
           code: "platform_not_supported",
-          message: "${Platform.environment} is not supported."));
+          message: "${Platform.environment} is not yet supported."));
     }
     on<LoadingBlocLoadEvent>((event, emit) async {
+      final serverInherited = SelectedServerInherited.of(event.context);
       final darkMode =
           GetIt.instance<SharedManager>().getBool(SharedKey.appearance);
       final acPath =
@@ -38,7 +39,6 @@ class LoadingBlocBloc extends Bloc<LoadingBlocEvent, LoadingBlocState> {
             showAcPath: acPath == null, showAppearance: darkMode == null));
         return;
       }
-      final serverInherited = SelectedServerInherited.of(event.context);
       await _loadServers(emit, serverInherited);
     });
     on<LoadingBlocShowOnboardingEvent>((event, emit) {
@@ -73,14 +73,14 @@ class LoadingBlocBloc extends Bloc<LoadingBlocEvent, LoadingBlocState> {
       return;
     }
     List<Server> servers = [];
-    List<Map<String, String>> _trackNames = [];
+    List<Map<String, String>> trackNames = [];
     //Loads the servers found in the previous step
     try {
       servers = List.generate(
         files.length,
         (index) {
           final List<String> fileData = files[index].readAsLinesSync();
-          _trackNames.add({
+          trackNames.add({
             "name": Server.getStringFromData(fileData, "TRACK"),
             "layout": Server.getStringFromData(fileData, "CONFIG_TRACK"),
           });
@@ -99,7 +99,7 @@ class LoadingBlocBloc extends Bloc<LoadingBlocEvent, LoadingBlocState> {
     await _getTracksSetTrack(
       acPath: acPath,
       servers: servers,
-      trackNames: _trackNames,
+      trackNames: trackNames,
       onError: (e) => _emitError(e, emit),
     );
     int index = 0;

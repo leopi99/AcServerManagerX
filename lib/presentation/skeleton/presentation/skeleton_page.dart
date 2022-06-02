@@ -268,6 +268,7 @@ class _SkeletonPageState extends State<SkeletonPage> {
 
   Future<void> _createServer(BuildContext context) async {
     bool create = false;
+    final serverInherited = SelectedServerInherited.of(context);
     await showDialog(
       context: context,
       barrierDismissible: true,
@@ -292,17 +293,16 @@ class _SkeletonPageState extends State<SkeletonPage> {
     );
     if (!create) return;
 
-    final List<int> _serverIndexes = GetIt.I<List<Server>>()
+    final List<int> serverIndexes = GetIt.I<List<Server>>()
         .map(
             (e) => int.parse(e.serverFilesPath.split('/').last.split('_').last))
         .toList();
     //Finds the next available slot for the server
     int currentIndex = 0;
-    for (var _ in _serverIndexes) {
-      if (!_serverIndexes.contains(currentIndex)) {
+    for (currentIndex; currentIndex < serverIndexes.length; currentIndex++) {
+      if (!serverIndexes.contains(currentIndex)) {
         break;
       }
-      currentIndex++;
     }
     String serverIndex = currentIndex.toString().length != 2
         ? "0${currentIndex.toString()}"
@@ -314,7 +314,7 @@ class _SkeletonPageState extends State<SkeletonPage> {
       await Directory(server.serverFilesPath).create();
     }
     GetIt.I<List<Server>>().add(server);
-    SelectedServerInherited.of(context).changeServer(server);
+    serverInherited.changeServer(server);
   }
 
   void _showSelectServer() {

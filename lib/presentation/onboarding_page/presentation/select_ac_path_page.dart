@@ -34,9 +34,9 @@ class _SelectAcPathPageState extends State<SelectAcPathPage> {
             onSubmitted: (value) async {
               if (value.isEmpty) return;
               Logger().log('Selected directory: $value');
+              Navigator.pop(context);
               await GetIt.I<SharedManager>()
                   .setString(SharedKey.acPath, _controller.text);
-              Navigator.pop(context);
               widget.onDone();
             },
             suffix: Tooltip(
@@ -64,9 +64,9 @@ class _SelectAcPathPageState extends State<SelectAcPathPage> {
               child: Text('set_path'.tr()),
               onPressed: () async {
                 if (_controller.text.isEmpty) return;
+                Navigator.pop(context);
                 await GetIt.I<SharedManager>()
                     .setString(SharedKey.acPath, _controller.text);
-                Navigator.pop(context);
                 widget.onDone();
               },
             ),

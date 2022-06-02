@@ -68,7 +68,7 @@ class SelectedServerInherited extends InheritedWidget {
     List<String> data = [];
     int carIndex = 0;
     for (int i = 0; i < server.cars.length; i++) {
-      for (var _ in server.cars[i].skins) {
+      for (int o = 0; o < server.cars[i].skins.length; o++) {
         data.add("""
 [CAR_$carIndex]
 MODEL=${server.cars[i].path.split('/').last}
