@@ -19,7 +19,7 @@ extension WeatherTypeEnumExtension on WeatherTypeEnum {
         icon = WeatherIcons.day_sunny;
         break;
       case WeatherTypeEnum.heavyClouds:
-        icon = WeatherIcons.cloudy_windy;
+        icon = WeatherIcons.cloudy;
         break;
       case WeatherTypeEnum.heavyFog:
         icon = WeatherIcons.fog;
@@ -34,7 +34,7 @@ extension WeatherTypeEnumExtension on WeatherTypeEnum {
         icon = WeatherIcons.day_sunny;
         break;
       case WeatherTypeEnum.midClouds:
-        icon = WeatherIcons.cloudy;
+        icon = WeatherIcons.night_partly_cloudy;
         break;
     }
     return icon;
