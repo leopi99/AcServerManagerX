@@ -4,10 +4,13 @@ import 'package:acservermanager/common/appearance_bloc/appearance_bloc.dart';
 import 'package:acservermanager/common/inherited_widgets/selected_server_inherited.dart';
 import 'package:acservermanager/models/server.dart';
 import 'package:acservermanager/presentation/advanced_server_settings/widgets/textbox_entry_widget.dart';
+import 'package:acservermanager/presentation/server_main_settings_page/widgets/added_cars_widget.dart';
 import 'package:acservermanager/presentation/server_main_settings_page/widgets/clients_allowed_widget.dart';
+import 'package:acservermanager/presentation/server_main_settings_page/widgets/weather_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:get_it/get_it.dart';
+import 'package:rxdart/rxdart.dart';
 
 class ServerMainSettings extends StatefulWidget {
   const ServerMainSettings({Key? key}) : super(key: key);
@@ -22,11 +25,12 @@ class _ServerMainSettingsState extends State<ServerMainSettings> {
   final TextEditingController _adminPasswordController =
       TextEditingController();
   late StreamSubscription<Server> sub;
+  final BehaviorSubject<bool> _showSelectedCars = BehaviorSubject.seeded(false);
   String _lastServerPath = "";
 
   @override
   void initState() {
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       sub = SelectedServerInherited.of(context)
           .selectedServerStream
           .listen((event) {
@@ -43,6 +47,7 @@ class _ServerMainSettingsState extends State<ServerMainSettings> {
 
   @override
   void dispose() {
+    _showSelectedCars.close();
     sub.cancel();
     _nameController.dispose();
     _passwordController.dispose();
@@ -54,12 +59,42 @@ class _ServerMainSettingsState extends State<ServerMainSettings> {
   Widget build(BuildContext context) {
     return Container(
       color: GetIt.instance<AppearanceBloc>().backgroundColor,
-      child: ListView(
-        padding: const EdgeInsets.all(32),
-        children: [
-          _buildServerBaseTextBox(),
-          const ClientsAllowedWidget(),
-        ],
+      child: StreamBuilder<bool>(
+        initialData: false,
+        stream: _showSelectedCars.stream,
+        builder: ((context, snapshot) {
+          if (snapshot.data!) {
+            return StreamBuilder<Server>(
+              stream: SelectedServerInherited.of(context).selectedServerStream,
+              initialData: SelectedServerInherited.of(context).selectedServer,
+              builder: (context, snapshot) {
+                return AddedCarsWidget(
+                  cars: snapshot.data!.cars,
+                  onClose: () {
+                    _showSelectedCars.add(false);
+                  },
+                );
+              },
+            );
+          }
+          return ListView(
+            padding: const EdgeInsets.all(32),
+            children: [
+              Flex(
+                direction: Axis.horizontal,
+                children: [
+                  Flexible(flex: 5, child: _buildServerBaseTextBox()),
+                  Flexible(flex: 5, child: _buildWeather()),
+                ],
+              ),
+              ClientsAllowedWidget(
+                showSelectedCars: () {
+                  _showSelectedCars.add(true);
+                },
+              ),
+            ],
+          );
+        }),
       ),
     );
   }
@@ -97,9 +132,36 @@ class _ServerMainSettingsState extends State<ServerMainSettings> {
                     .copyWith(adminPassword: value));
           },
           controller: _adminPasswordController,
-          label: "admin".tr() + " " + "password".tr(),
+          label: "${"admin".tr()} ${"password".tr()}",
         ),
       ],
+    );
+  }
+
+  Widget _buildWeather() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(right: 32),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          WeatherWidget(
+            weather: SelectedServerInherited.of(context)
+                .selectedServer
+                .session
+                .weather,
+            onChanged: (value) {
+              SelectedServerInherited.of(context).changeServer(
+                SelectedServerInherited.of(context).selectedServer.copyWith(
+                      session: SelectedServerInherited.of(context)
+                          .selectedServer
+                          .session
+                          .copyWith(weather: value),
+                    ),
+              );
+            },
+          ),
+        ],
+      ),
     );
   }
 }

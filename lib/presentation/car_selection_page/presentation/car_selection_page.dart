@@ -23,7 +23,7 @@ class _CarSelectionPageState extends State<CarSelectionPage> {
 
   @override
   void initState() {
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       _sessionBloc ??= BlocProvider.of<SessionBloc>(context);
       _sessionBloc!.add(SessionLoadCarsEvent());
       availableCars.add(_sessionBloc!.loadedCars);

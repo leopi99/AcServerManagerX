@@ -3,7 +3,11 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 
 class ClientsAllowedWidget extends StatefulWidget {
-  const ClientsAllowedWidget({Key? key}) : super(key: key);
+  final Function() showSelectedCars;
+  const ClientsAllowedWidget({
+    Key? key,
+    required this.showSelectedCars,
+  }) : super(key: key);
 
   @override
   State<ClientsAllowedWidget> createState() => _ClientsAllowedWidgetState();
@@ -16,7 +20,7 @@ class _ClientsAllowedWidgetState extends State<ClientsAllowedWidget> {
 
   @override
   void initState() {
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {
         currentValue = SelectedServerInherited.of(context)
             .selectedServer
@@ -40,9 +44,9 @@ class _ClientsAllowedWidgetState extends State<ClientsAllowedWidget> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.all(8),
+          padding: const EdgeInsets.all(8).copyWith(left: 0),
           child: InfoLabel(
-            label: "clients_allowed".tr() + ": ${currentValue.toInt()}",
+            label: "${"clients_allowed".tr()}: ${currentValue.toInt()}",
             child: SizedBox(
               width: 256,
               child: Slider(
@@ -79,7 +83,9 @@ class _ClientsAllowedWidgetState extends State<ClientsAllowedWidget> {
               ],
             ),
           ),
-          onPressed: () {},
+          onPressed: () {
+            widget.showSelectedCars();
+          },
         ),
       ],
     );

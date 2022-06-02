@@ -20,7 +20,7 @@ class Track extends SearcheableElement implements Equatable {
 
   final List<Layout> layouts;
 
-  final _TrackInfo? info;
+  final TrackInfo? info;
 
   final int index;
 
@@ -39,8 +39,8 @@ class Track extends SearcheableElement implements Equatable {
         Directory(directory.path.replaceAll('\\', '/') + kUiDirPath);
     final bool hasLayouts = !await (uiDir.list())
         .any((element) => element.path.split('/').last.contains('.json'));
-    _TrackInfo? info = !hasLayouts
-        ? _TrackInfo.fromJson(
+    TrackInfo? info = !hasLayouts
+        ? TrackInfo.fromJson(
             jsonDecode(
               await File(
                       _getTrackInfoPath(directory.path.replaceAll('\\', '/')))
@@ -131,7 +131,7 @@ class Track extends SearcheableElement implements Equatable {
     String? path,
     List<Layout>? layouts,
     int? index,
-    _TrackInfo? info,
+    TrackInfo? info,
   }) {
     return Track(
       name: name ?? this.name,
@@ -144,7 +144,7 @@ class Track extends SearcheableElement implements Equatable {
   }
 }
 
-class _TrackInfo {
+class TrackInfo {
   final String description;
   final String country;
   final String length;
@@ -154,7 +154,7 @@ class _TrackInfo {
   final int run;
   final int pitBoxes;
 
-  const _TrackInfo({
+  const TrackInfo({
     required this.description,
     required this.country,
     required this.length,
@@ -163,8 +163,8 @@ class _TrackInfo {
     required this.name,
   });
 
-  factory _TrackInfo.fromJson(Map<String, dynamic> json) {
-    return _TrackInfo(
+  factory TrackInfo.fromJson(Map<String, dynamic> json) {
+    return TrackInfo(
       description: json['description'],
       country: json['country'],
       length: json['length'],

@@ -1,10 +1,10 @@
 name: acservermanager
-description: Manage you Assetto Corsa servers
+description: Manage your Assetto Corsa servers
 
-version: 1.0.0+1
+version: 0.7.0+1
 
 environment:
-  sdk: ">=2.16.0 <3.0.0"
+  sdk: ">=2.17.0 <3.0.0"
 
 dependencies:
 
@@ -29,6 +29,8 @@ dependencies:
 
   flutter_svg: ^1.0.3
 
+  weather_icons: ^3.0.0
+
   url_launcher: ^6.0.20
 
   flutter:
@@ -38,7 +40,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  flutter_lints: ^1.0.0
+  flutter_lints: ^2.0.1
 
 flutter:
 

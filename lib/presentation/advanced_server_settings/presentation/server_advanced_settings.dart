@@ -31,7 +31,7 @@ class _ServerAdvancedSettingsPageState
 
   @override
   void initState() {
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       sub = SelectedServerInherited.of(context)
           .selectedServerStream
           .listen((event) {
@@ -142,21 +142,20 @@ class _ServerAdvancedSettingsPageState
     return Row(
       children: [
         DropDownButton(
-          placement: FlyoutPlacement.left,
+          placement: FlyoutPlacement.start,
           title: Text(
-              "${SelectedServerInherited.of(context).selectedServer.threads} " +
-                  "threads".tr()),
+              "${SelectedServerInherited.of(context).selectedServer.threads} ${"threads".tr()}"),
           items: List.generate(
             7,
-            (index) => DropDownButtonItem(
-              onTap: () {
+            (index) => MenuFlyoutItem(
+              onPressed: () {
                 SelectedServerInherited.of(context).changeServer(
                     SelectedServerInherited.of(context)
                         .selectedServer
                         .copyWith(threads: index + 2));
                 setState(() {});
               },
-              title: Text("threads".tr()),
+              text: Text("threads".tr()),
               leading: Text("${index + 2}"),
             ),
           ),

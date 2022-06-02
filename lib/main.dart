@@ -22,7 +22,6 @@ void main() async {
   await Singletons.initSingletons();
   runApp(
     EasyLocalization(
-      child: const MyApp(),
       supportedLocales: const [Locale('it', ''), Locale('en', '')],
       fallbackLocale: const Locale('en', ''),
       useOnlyLangCode: true,
@@ -30,6 +29,7 @@ void main() async {
       assetLoader: const CodegenLoader(),
       useFallbackTranslations: true,
       path: 'assets/translations',
+      child: const MyApp(),
     ),
   );
 }

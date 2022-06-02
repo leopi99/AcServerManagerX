@@ -32,7 +32,7 @@ class _CarBottomSheetWidgetState extends State<CarBottomSheetWidget> {
   void initState() {
     _selectedSkin = widget.car.skins.first;
 
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       if (SelectedServerInherited.of(context)
           .selectedServer
           .cars

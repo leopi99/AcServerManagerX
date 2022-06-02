@@ -24,7 +24,7 @@ class SelectedServerInherited extends InheritedWidget {
     bool isQueueLocked = false;
     //Executes the queue as in LIFO, once the save is done, clears the queue
     _selectedServerSubject.listen((value) async {
-      await Future.delayed(const Duration(milliseconds: 500));
+      await Future.delayed(const Duration(milliseconds: 800));
       if (_saveQueue.isNotEmpty && !isQueueLocked) {
         isQueueLocked = true;
         await _saveQueue.first();
@@ -68,7 +68,7 @@ class SelectedServerInherited extends InheritedWidget {
     List<String> data = [];
     int carIndex = 0;
     for (int i = 0; i < server.cars.length; i++) {
-      for (var _ in server.cars[i].skins) {
+      for (int o = 0; o < server.cars[i].skins.length; o++) {
         data.add("""
 [CAR_$carIndex]
 MODEL=${server.cars[i].path.split('/').last}

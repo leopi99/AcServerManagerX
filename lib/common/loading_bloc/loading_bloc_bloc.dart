@@ -9,9 +9,10 @@ import 'package:acservermanager/models/car.dart';
 import 'package:acservermanager/models/enums/shared_key.dart';
 import 'package:acservermanager/models/server.dart';
 import 'package:acservermanager/models/session.dart';
-import 'package:bloc/bloc.dart';
+import 'package:acservermanager/models/track.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
 part 'loading_bloc_event.dart';
@@ -25,9 +26,10 @@ class LoadingBlocBloc extends Bloc<LoadingBlocEvent, LoadingBlocState> {
     if (!Platform.isWindows) {
       throw (PlatformException(
           code: "platform_not_supported",
-          message: "${Platform.environment} is not supported."));
+          message: "${Platform.environment} is not yet supported."));
     }
     on<LoadingBlocLoadEvent>((event, emit) async {
+      final serverInherited = SelectedServerInherited.of(event.context);
       final darkMode =
           GetIt.instance<SharedManager>().getBool(SharedKey.appearance);
       final acPath =
@@ -37,7 +39,7 @@ class LoadingBlocBloc extends Bloc<LoadingBlocEvent, LoadingBlocState> {
             showAcPath: acPath == null, showAppearance: darkMode == null));
         return;
       }
-      await _loadServers(emit, event.context);
+      await _loadServers(emit, serverInherited);
     });
     on<LoadingBlocShowOnboardingEvent>((event, emit) {
       emit(LoadingBlocShowOnboardingState(
@@ -45,8 +47,8 @@ class LoadingBlocBloc extends Bloc<LoadingBlocEvent, LoadingBlocState> {
     });
   }
 
-  Future<void> _loadServers(
-      Emitter<LoadingBlocState> emit, BuildContext context) async {
+  Future<void> _loadServers(Emitter<LoadingBlocState> emit,
+      SelectedServerInherited serverInherited) async {
     emit(LoadingBlocLoadingState());
     final String acPath =
         (await GetIt.instance<SharedManager>().getString(SharedKey.acPath))!;
@@ -71,14 +73,14 @@ class LoadingBlocBloc extends Bloc<LoadingBlocEvent, LoadingBlocState> {
       return;
     }
     List<Server> servers = [];
-    List<Map<String, String>> _trackNames = [];
+    List<Map<String, String>> trackNames = [];
     //Loads the servers found in the previous step
     try {
       servers = List.generate(
         files.length,
         (index) {
           final List<String> fileData = files[index].readAsLinesSync();
-          _trackNames.add({
+          trackNames.add({
             "name": Server.getStringFromData(fileData, "TRACK"),
             "layout": Server.getStringFromData(fileData, "CONFIG_TRACK"),
           });
@@ -97,25 +99,29 @@ class LoadingBlocBloc extends Bloc<LoadingBlocEvent, LoadingBlocState> {
     await _getTracksSetTrack(
       acPath: acPath,
       servers: servers,
-      trackNames: _trackNames,
+      trackNames: trackNames,
       onError: (e) => _emitError(e, emit),
     );
     int index = 0;
     //Loads the selected cars for each server
-    await Future.forEach<Server>(
-      servers,
-      (element) async {
-        servers[index] = await _getCarsSetCars(
-          server: element,
-          onError: (e) => _emitError(e, emit),
-          acPath: acPath,
-          carNames: await element.getSavedCars(),
-        );
-        index++;
-      },
-    );
+    try {
+      await Future.forEach<Server>(
+        servers,
+        (element) async {
+          servers[index] = await _getCarsSetCars(
+            server: element,
+            onError: (e) => _emitError(e, emit),
+            acPath: acPath,
+            carNames: await element.getSavedCars(),
+          );
+          index++;
+        },
+      );
+    } catch (e, stacktrace) {
+      _emitError(e.toString(), emit, stackTrace: stacktrace.toString());
+    }
     GetIt.instance.registerSingleton(servers);
-    SelectedServerInherited.of(context).changeServer(servers.first, false);
+    serverInherited.changeServer(servers.first, false);
     emit(LoadingBlocLoadedState(servers));
     await close();
   }
@@ -125,8 +131,6 @@ class LoadingBlocBloc extends Bloc<LoadingBlocEvent, LoadingBlocState> {
   ///The [trackNames] list is the list of the names of the tracks inside the server config file.
   ///
   ///The [trackNames] must be the same length as the [servers] list and in the correct order.
-  ///
-  ///TODO: Will be updated to a much faster way ex. _getCarsSetCars.
   Future<void> _getTracksSetTrack({
     required List<Server> servers,
     required Function(String) onError,
@@ -134,30 +138,26 @@ class LoadingBlocBloc extends Bloc<LoadingBlocEvent, LoadingBlocState> {
     required List<Map<String, String>> trackNames,
   }) async {
     assert(servers.length == trackNames.length);
-    final tracks =
-        await TrackHelper.loadTracks(acPath: acPath, onError: onError);
-    for (int i = 0; i < servers.length; i++) {
-      if (tracks.any((element) => element.path
-          .toLowerCase()
-          .contains(trackNames[i]['name']!.toLowerCase()))) {
-        final track = tracks.firstWhere((element) => element.path
-            .toLowerCase()
-            .contains(trackNames[i]['name']!.toLowerCase()));
-        servers[i] = servers[i].copyWith(
-          session: Session(
-            selectedTrack: track.copyWith(
-              layouts: track.layouts.length > 1
-                  ? [
-                      track.layouts.firstWhere((element) => element.path
-                          .toLowerCase()
-                          .contains(trackNames[i]['layout']!.toLowerCase()))
-                    ]
-                  : track.layouts,
-            ),
+    int index = 0;
+    await Future.forEach<Map<String, String>>(trackNames, (trackName) async {
+      Track? track = await TrackHelper.loadTrackFrom(
+          "$acPath/content/tracks/${trackName['name']}");
+      if (track == null) return;
+      servers[index] = servers[index].copyWith(
+        session: Session(
+          selectedTrack: track.copyWith(
+            layouts: [
+              track.layouts.firstWhere(
+                (element) => element.path.toLowerCase().contains(
+                      trackName['layout']!.toLowerCase(),
+                    ),
+              )
+            ],
           ),
-        );
-      }
-    }
+        ),
+      );
+      index++;
+    });
   }
 
   ///Assignes to the servers the selected [Car]s from the [carNames] list.

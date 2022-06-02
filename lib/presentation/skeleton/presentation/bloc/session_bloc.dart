@@ -8,8 +8,8 @@ import 'package:acservermanager/models/car.dart';
 import 'package:acservermanager/models/enums/shared_key.dart';
 import 'package:acservermanager/models/session.dart';
 import 'package:acservermanager/models/track.dart';
-import 'package:bloc/bloc.dart';
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
 part 'session_event.dart';

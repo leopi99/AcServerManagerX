@@ -4,7 +4,7 @@ import 'package:acservermanager/models/enums/shared_key.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:get_it/get_it.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -53,7 +53,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         child: Button(
                           child: Text("update".tr()),
                           onPressed: () {
-                            launch(_kGitHubUrl);
+                            launchUrlString(_kGitHubUrl);
                           },
                         ),
                       ),
@@ -85,12 +85,12 @@ class _SettingsPageState extends State<SettingsPage> {
                   title: Text(context.locale.languageCode),
                   items: context.supportedLocales
                       .map(
-                        (e) => DropDownButtonItem(
+                        (e) => MenuFlyoutItem(
                           leading: const Icon(FluentIcons.locale_language),
-                          onTap: () async {
+                          onPressed: () async {
                             await context.setLocale(e);
                           },
-                          title: Text(e.languageCode),
+                          text: Text(e.languageCode),
                         ),
                       )
                       .toList(),
