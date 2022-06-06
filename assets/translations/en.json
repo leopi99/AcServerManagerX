@@ -53,5 +53,7 @@
     "lightFog": "Light Fog",
     "midClear": "Mid Clear",
     "midClouds": "Mid Clouds",
-    "weather_type": "Weather"
+    "weather_type": "Weather",
+    "track_loading_error_title": "Error while loading the tracks",
+    "cars_loading_error_title": "Error while loading the cars"
 }

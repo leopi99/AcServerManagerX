@@ -8,6 +8,7 @@ import 'package:acservermanager/models/car.dart';
 import 'package:acservermanager/models/enums/shared_key.dart';
 import 'package:acservermanager/models/session.dart';
 import 'package:acservermanager/models/track.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -43,7 +44,8 @@ class SessionBloc extends Bloc<SessionEvent, SessionState> {
     final tracks = await TrackHelper.loadTracks(
       acPath: (await GetIt.I<SharedManager>().getString(SharedKey.acPath))!,
       onError: (error) {
-        emit(SessionErrorState(error));
+        emit(SessionErrorState(error,
+            message: "track_loading_error_title".tr()));
         return;
       },
     );
@@ -57,7 +59,8 @@ class SessionBloc extends Bloc<SessionEvent, SessionState> {
     final cars = await CarHelper.loadCars(
       acPath: (await GetIt.I<SharedManager>().getString(SharedKey.acPath))!,
       onError: (error) {
-        emit(SessionErrorState(error));
+        emit(
+            SessionErrorState(error, message: "cars_loading_error_title".tr()));
         return;
       },
     );

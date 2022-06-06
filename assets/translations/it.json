@@ -53,5 +53,7 @@
     "lightFog": "Nebbia",
     "midClear": "Abbastanza sereno",
     "midClouds": "Nuvoloso",
-    "weather_type": "Meteo"
+    "weather_type": "Meteo",
+    "track_loading_error_title": "Errore nel caricamento dei circuiti",
+    "cars_loading_error_title": "Errore nel caricamento delle macchine"
 }
