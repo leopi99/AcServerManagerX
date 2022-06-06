@@ -9,6 +9,7 @@ class Singletons {
     //Registers the shared manager
     try {
       await SharedPreferences.getInstance().then((value) {
+        //Uncomment this to clear the shared preferences
         // value.clear();
         GetIt.I.registerSingleton<SharedManager>(SharedManager(value));
       });

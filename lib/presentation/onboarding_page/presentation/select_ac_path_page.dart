@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:acservermanager/common/appearance_bloc/appearance_bloc.dart';
 import 'package:acservermanager/common/logger.dart';
 import 'package:acservermanager/common/shared_manager.dart';
@@ -50,10 +52,6 @@ class _SelectAcPathPageState extends State<SelectAcPathPage> {
                     dir = dir.replaceAll('\\', "/");
                     _controller.text = dir;
                     Logger().log('Selected directory: $dir');
-                    await GetIt.I<SharedManager>()
-                        .setString(SharedKey.acPath, _controller.text);
-                    Navigator.pop(context);
-                    widget.onDone();
                   }
                 },
               ),
@@ -61,14 +59,39 @@ class _SelectAcPathPageState extends State<SelectAcPathPage> {
           ),
           actions: [
             FilledButton(
-              child: Text('set_path'.tr()),
               onPressed: () async {
                 if (_controller.text.isEmpty) return;
+                final dirContent = Directory(_controller.text).listSync();
+                //If there is no AssettoCorsa.exe in the selected directory
+                // will show an error, since the path is not correct
+                const String fileName = "AssettoCorsa.exe";
+                if (!dirContent
+                    .any((element) => element.path.contains(fileName))) {
+                  showDialog(
+                    context: context,
+                    builder: (context) => ContentDialog(
+                      backgroundDismiss: true,
+                      title: Text("path_select_error_title".tr()),
+                      content: Text(
+                        "path_select_error_desc"
+                            .tr(namedArgs: {"fileName": fileName}),
+                      ),
+                      actions: [
+                        FilledButton(
+                          child: Text("ok".tr()),
+                          onPressed: () => Navigator.pop(context),
+                        ),
+                      ],
+                    ),
+                  );
+                  return;
+                }
                 Navigator.pop(context);
                 await GetIt.I<SharedManager>()
                     .setString(SharedKey.acPath, _controller.text);
                 widget.onDone();
               },
+              child: Text('set_path'.tr()),
             ),
           ],
         ),

@@ -5,6 +5,8 @@
     "splash_loading": "Loading...",
     "select_server": "Select server",
     "select_server_edit": "Select the server to edit",
+    "path_select_error_desc": "Please, select the server directory of AC where the file \"{fileName}\" is located",
+    "path_select_error_title": "Wrong path selected",
     "ok": "Ok",
     "no": "No",
     "yes": "Yes",
