@@ -78,7 +78,7 @@ static const Map<String,dynamic> it = {
   "splash_loading": "Caricamento...",
   "select_server": "Seleziona il server",
   "select_server_edit": "Seleziona il server da modificare",
-  "path_select_error": "Seleziona la cartella \"server\" di AC in cui e' contenuto il file {fileName}",
+  "path_select_error_desc": "Seleziona la cartella \"server\" di AC in cui e' contenuto il file {fileName}",
   "path_select_error_title": "Cartella selezionata non corretta",
   "ok": "Ok",
   "no": "No",
