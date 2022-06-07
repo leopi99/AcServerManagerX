@@ -13,6 +13,7 @@ This is still a project in the beta state, it can mess with your server configur
   - [Run the app from the repo's clone](#run-the-app-from-the-repos-clone)
   - [Localizations](#localizations)
   - [Known problems](#known-problems)
+  - [Info](#info)
 
 ## Why use this app?
 
@@ -59,3 +60,6 @@ Feel free to ask for new feature that you find interesting and/or contribute to 
 
 - Some cars have a bad formatted json file and can not be read. (ex. vrc_1997_ferrari_f310b)
 - Some livelries (for the selected cars) are not read at startup.
+
+## Info
+If you find any problems while using the application, you can share the log file (server_manager_x.log, located inside the installation path of assetto corsa selected at the first start of the application) with the developer, or inside the issue to help resolve the issue faster.
