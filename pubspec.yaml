@@ -1,7 +1,7 @@
 name: acservermanager
 description: Manage your Assetto Corsa servers
 
-version: 0.7.0+1
+version: 0.7.1+2
 
 environment:
   sdk: ">=2.17.0 <3.0.0"

@@ -30,7 +30,7 @@ class Logger {
         }
         _logSink = log.openWrite(mode: FileMode.write);
         _logSink.write("*****************************\n");
-        _logSink.write("** ServerManagerX v0.7.0+1 **\n");
+        _logSink.write("** ServerManagerX v0.7.1+2 **\n");
         _logSink.write("*****************************\n");
       }),
     );
