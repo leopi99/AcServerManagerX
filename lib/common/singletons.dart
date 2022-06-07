@@ -15,7 +15,8 @@ class Singletons {
       });
       GetIt.I.registerLazySingleton<AppearanceBloc>(() => AppearanceBloc());
     } catch (e) {
-      Logger().log('Unable to register Singletons using GetIt:\n$e');
+      Logger().log('Unable to register Singletons using GetIt:\n$e',
+          name: "Singletons.initSingletons");
     }
   }
 }

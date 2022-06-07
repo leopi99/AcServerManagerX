@@ -35,7 +35,8 @@ class _SelectAcPathPageState extends State<SelectAcPathPage> {
             controller: _controller,
             onSubmitted: (value) async {
               if (value.isEmpty) return;
-              Logger().log('Selected directory: $value');
+              Logger().log('Selected directory: $value',
+                  name: "select_ac_path_page");
               Navigator.pop(context);
               await GetIt.I<SharedManager>()
                   .setString(SharedKey.acPath, _controller.text);
@@ -51,7 +52,11 @@ class _SelectAcPathPageState extends State<SelectAcPathPage> {
                   if (dir != null) {
                     dir = dir.replaceAll('\\', "/");
                     _controller.text = dir;
-                    Logger().log('Selected directory: $dir');
+                    Logger().log(
+                      'Selected directory: $dir',
+                      name: "select_ac_path_page",
+                      writeLog: false,
+                    );
                   }
                 },
               ),

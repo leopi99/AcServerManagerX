@@ -71,7 +71,9 @@ class CodegenLoader extends AssetLoader{
   "midClouds": "Mid Clouds",
   "weather_type": "Weather",
   "track_loading_error_title": "Error while loading the tracks",
-  "cars_loading_error_title": "Error while loading the cars"
+  "cars_loading_error_title": "Error while loading the cars",
+  "clear_log_file": "Clear log file",
+  "clear_log_file_desc": "By clearing the log file, you will make life harder to the developers if you find problems with the app"
 };
 static const Map<String,dynamic> it = {
   "ops_error": "Ops! Qualcosa e andato storto",
@@ -130,7 +132,9 @@ static const Map<String,dynamic> it = {
   "midClouds": "Nuvoloso",
   "weather_type": "Meteo",
   "track_loading_error_title": "Errore nel caricamento dei circuiti",
-  "cars_loading_error_title": "Errore nel caricamento delle macchine"
+  "cars_loading_error_title": "Errore nel caricamento delle macchine",
+  "clear_log_file": "Pulisci file di log",
+  "clear_log_file_desc": "Pulendo il file di log, renderai piu difficile la vita agli sviluppatori se trovi qualche problema"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en": en, "it": it};
 }

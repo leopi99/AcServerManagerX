@@ -29,9 +29,10 @@ class CarSkin extends Equatable {
           name: dir.path.replaceAll('\\', '/').split('/').last,
         );
       } catch (e, stacktrace) {
-        Logger().log("For car ${dir.path}");
-        Logger()
-            .log('Error retrieving skin details: $e\nStacktrace: $stacktrace');
+        Logger().log("For car ${dir.path}", name: "skin.fromDir");
+        Logger().log(
+            'Error retrieving skin details: $e\nStacktrace: $stacktrace',
+            name: "skin.fromDir");
       }
     }
     return CarSkin(

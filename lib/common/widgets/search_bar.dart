@@ -86,8 +86,9 @@ class _SearchBarState<T> extends State<SearchBar<T>> {
                     item.searchTerm.toLowerCase().contains(term.toLowerCase()))
                 .toList();
           } catch (e, stacktrace) {
-            Logger().log("Error: $e\nStacktrace:\n$stacktrace");
-            Logger().log('SearchTerm: $term');
+            Logger()
+                .log("Error: $e\nStacktrace:\n$stacktrace", name: "search_bar");
+            Logger().log('SearchTerm: $term', name: "search_bar");
           }
           widget.onSearch(filtered as List<T>);
         },

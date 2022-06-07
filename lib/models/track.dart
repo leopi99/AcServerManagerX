@@ -63,7 +63,8 @@ class Track extends SearcheableElement implements Equatable {
                 .readAsBytes()));
             name = jsonDecode(fileContent)['name'];
           } catch (e, stacktrace) {
-            Logger().log("Error: $e, stacktrace:\n$stacktrace");
+            Logger().log("Error: $e, stacktrace:\n$stacktrace",
+                name: "track.fromDir");
           }
           layouts.add(
             Layout(

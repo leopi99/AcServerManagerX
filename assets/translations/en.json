@@ -55,5 +55,7 @@
     "midClouds": "Mid Clouds",
     "weather_type": "Weather",
     "track_loading_error_title": "Error while loading the tracks",
-    "cars_loading_error_title": "Error while loading the cars"
+    "cars_loading_error_title": "Error while loading the cars",
+    "clear_log_file": "Clear log file",
+    "clear_log_file_desc": "By clearing the log file, you will make life harder to the developers if you find problems with the app"
 }

@@ -22,7 +22,8 @@ class TrackHelper {
         index++;
       });
     } catch (e, stacktrace) {
-      Logger().log('Error: $e\nStackTrace:\n$stacktrace');
+      Logger().log('Error: $e\nStackTrace:\n$stacktrace',
+          name: "track_helper.loadTracks");
       onError("${e.toString()} Stacktrace:\n$stacktrace");
       return [];
     }
