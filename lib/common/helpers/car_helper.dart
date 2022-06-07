@@ -37,7 +37,8 @@ class CarHelper {
         }
       });
     } catch (e, stacktrace) {
-      Logger().log('Error: $e\nStackTrace:\n$stacktrace');
+      Logger().log('Error: $e\nStackTrace:\n$stacktrace',
+          name: "car_helper.loadCars");
       onError("${e.toString()} Stacktrace:\n$stacktrace");
       return [];
     }

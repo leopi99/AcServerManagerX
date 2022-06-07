@@ -5,6 +5,8 @@
     "splash_loading": "Caricamento...",
     "select_server": "Seleziona il server",
     "select_server_edit": "Seleziona il server da modificare",
+    "path_select_error_desc": "Seleziona la cartella \"server\" di AC in cui e' contenuto il file {fileName}",
+    "path_select_error_title": "Cartella selezionata non corretta",
     "ok": "Ok",
     "no": "No",
     "yes": "Si",
@@ -51,5 +53,9 @@
     "lightFog": "Nebbia",
     "midClear": "Abbastanza sereno",
     "midClouds": "Nuvoloso",
-    "weather_type": "Meteo"
+    "weather_type": "Meteo",
+    "track_loading_error_title": "Errore nel caricamento dei circuiti",
+    "cars_loading_error_title": "Errore nel caricamento delle macchine",
+    "clear_log_file": "Pulisci file di log",
+    "clear_log_file_desc": "Pulendo il file di log, renderai piu difficile la vita agli sviluppatori se hai trovato qualche problema"
 }

@@ -9,12 +9,14 @@ class Singletons {
     //Registers the shared manager
     try {
       await SharedPreferences.getInstance().then((value) {
+        //Uncomment this to clear the shared preferences
         // value.clear();
         GetIt.I.registerSingleton<SharedManager>(SharedManager(value));
       });
       GetIt.I.registerLazySingleton<AppearanceBloc>(() => AppearanceBloc());
     } catch (e) {
-      Logger().log('Unable to register Singletons using GetIt:\n$e');
+      Logger().log('Unable to register Singletons using GetIt:\n$e',
+          name: "Singletons.initSingletons");
     }
   }
 }

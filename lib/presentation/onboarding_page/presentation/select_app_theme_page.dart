@@ -20,7 +20,6 @@ class _SelectAppThemePageState extends State<SelectAppThemePage> {
 
   @override
   void initState() {
-    Logger().log('SelectAppThemePage initState');
     _bloc = GetIt.instance<AppearanceBloc>();
     super.initState();
   }

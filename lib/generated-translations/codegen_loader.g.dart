@@ -21,6 +21,8 @@ class CodegenLoader extends AssetLoader{
   "splash_loading": "Loading...",
   "select_server": "Select server",
   "select_server_edit": "Select the server to edit",
+  "path_select_error_desc": "Please, select the server directory of AC where the file \"{fileName}\" is located",
+  "path_select_error_title": "Wrong path selected",
   "ok": "Ok",
   "no": "No",
   "yes": "Yes",
@@ -67,7 +69,11 @@ class CodegenLoader extends AssetLoader{
   "lightFog": "Light Fog",
   "midClear": "Mid Clear",
   "midClouds": "Mid Clouds",
-  "weather_type": "Weather"
+  "weather_type": "Weather",
+  "track_loading_error_title": "Error while loading the tracks",
+  "cars_loading_error_title": "Error while loading the cars",
+  "clear_log_file": "Clear log file",
+  "clear_log_file_desc": "By clearing the log file, you will make life harder to the developers if you have found problems with the app"
 };
 static const Map<String,dynamic> it = {
   "ops_error": "Ops! Qualcosa e andato storto",
@@ -76,6 +82,8 @@ static const Map<String,dynamic> it = {
   "splash_loading": "Caricamento...",
   "select_server": "Seleziona il server",
   "select_server_edit": "Seleziona il server da modificare",
+  "path_select_error_desc": "Seleziona la cartella \"server\" di AC in cui e' contenuto il file {fileName}",
+  "path_select_error_title": "Cartella selezionata non corretta",
   "ok": "Ok",
   "no": "No",
   "yes": "Si",
@@ -122,7 +130,11 @@ static const Map<String,dynamic> it = {
   "lightFog": "Nebbia",
   "midClear": "Abbastanza sereno",
   "midClouds": "Nuvoloso",
-  "weather_type": "Meteo"
+  "weather_type": "Meteo",
+  "track_loading_error_title": "Errore nel caricamento dei circuiti",
+  "cars_loading_error_title": "Errore nel caricamento delle macchine",
+  "clear_log_file": "Pulisci file di log",
+  "clear_log_file_desc": "Pulendo il file di log, renderai piu difficile la vita agli sviluppatori se hai trovato qualche problema"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en": en, "it": it};
 }

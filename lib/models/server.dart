@@ -110,7 +110,8 @@ class Server extends ServerBaseSettings implements Equatable {
         .last);
     if (result == null) {
       result = defaultValue;
-      Logger().log('Using defaultValue for $key -> $defaultValue');
+      Logger()
+          .log('Using defaultValue for $key -> $defaultValue', name: "server");
     }
     return result;
   }

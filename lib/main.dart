@@ -2,6 +2,7 @@ import 'package:acservermanager/common/appearance_bloc/appearance_bloc.dart';
 import 'package:acservermanager/common/custom_delegates/fluent_localizations_delegate_it.dart';
 import 'package:acservermanager/common/inherited_widgets/selected_server_inherited.dart';
 import 'package:acservermanager/common/loading_bloc/loading_bloc_bloc.dart';
+import 'package:acservermanager/common/logger.dart';
 import 'package:acservermanager/common/shared_manager.dart';
 import 'package:acservermanager/common/singletons.dart';
 import 'package:acservermanager/generated-translations/codegen_loader.g.dart';
@@ -22,8 +23,8 @@ void main() async {
   await Singletons.initSingletons();
   runApp(
     EasyLocalization(
-      supportedLocales: const [Locale('it', ''), Locale('en', '')],
-      fallbackLocale: const Locale('en', ''),
+      supportedLocales: const [Locale('it'), Locale('en')],
+      fallbackLocale: const Locale('en'),
       useOnlyLangCode: true,
       saveLocale: true,
       assetLoader: const CodegenLoader(),
@@ -52,6 +53,12 @@ class _MyAppState extends State<MyApp> {
     _appearanceBloc = GetIt.instance<AppearanceBloc>();
     _bloc = LoadingBlocBloc();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    Logger().closeLogFile();
+    super.dispose();
   }
 
   @override

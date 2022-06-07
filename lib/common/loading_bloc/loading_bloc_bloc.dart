@@ -30,6 +30,7 @@ class LoadingBlocBloc extends Bloc<LoadingBlocEvent, LoadingBlocState> {
     }
     on<LoadingBlocLoadEvent>((event, emit) async {
       final serverInherited = SelectedServerInherited.of(event.context);
+      await Logger().initialized;
       final darkMode =
           GetIt.instance<SharedManager>().getBool(SharedKey.appearance);
       final acPath =
@@ -67,7 +68,7 @@ class LoadingBlocBloc extends Bloc<LoadingBlocEvent, LoadingBlocState> {
       for (String name in serverNames) {
         files.add(File('$presetsPath/$name/$_kServerConfig'));
       }
-      Logger().log('Servers: ${serverNames.toString()}');
+      Logger().log('Servers found: ${serverNames.toString()}', name: "loading_bloc");
     } catch (e, stacktrace) {
       _emitError(e.toString(), emit, stackTrace: stacktrace.toString());
       return;

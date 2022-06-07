@@ -1,4 +1,5 @@
 import 'package:acservermanager/common/appearance_bloc/appearance_bloc.dart';
+import 'package:acservermanager/common/logger.dart';
 import 'package:acservermanager/common/shared_manager.dart';
 import 'package:acservermanager/models/enums/shared_key.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -94,6 +95,14 @@ class _SettingsPageState extends State<SettingsPage> {
                         ),
                       )
                       .toList(),
+                ),
+              ),
+              const SizedBox(height: 16),
+              InfoLabel(
+                label: "clear_log_file_desc".tr(),
+                child: FilledButton(
+                  child: Text("clear_log_file".tr()),
+                  onPressed: () => Logger().clearLogfile(),
                 ),
               ),
             ],

@@ -5,6 +5,8 @@
     "splash_loading": "Loading...",
     "select_server": "Select server",
     "select_server_edit": "Select the server to edit",
+    "path_select_error_desc": "Please, select the server directory of AC where the file \"{fileName}\" is located",
+    "path_select_error_title": "Wrong path selected",
     "ok": "Ok",
     "no": "No",
     "yes": "Yes",
@@ -51,5 +53,9 @@
     "lightFog": "Light Fog",
     "midClear": "Mid Clear",
     "midClouds": "Mid Clouds",
-    "weather_type": "Weather"
+    "weather_type": "Weather",
+    "track_loading_error_title": "Error while loading the tracks",
+    "cars_loading_error_title": "Error while loading the cars",
+    "clear_log_file": "Clear log file",
+    "clear_log_file_desc": "By clearing the log file, you will make life harder to the developers if you have found problems with the app"
 }

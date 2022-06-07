@@ -37,6 +37,7 @@ class _ServerRunInstanceState extends State<_ServerRunInstance> {
     sub = _shellProcess.outLines.listen((event) {
       _responsesSubject.add([..._responsesSubject.value, event]);
     });
+    Logger().log("Server started.", name: "server_run_instance._runServer");
   }
 
   @override
@@ -63,9 +64,11 @@ class _ServerRunInstanceState extends State<_ServerRunInstance> {
     sub.cancel();
     final bool exit = Process.killPid(_shellProcess.pid);
     if (exit) {
-      Logger().log("Server killer successfully");
+      Logger().log("Server killer successfully",
+          name: "server_run_instance.dispose");
     } else {
-      Logger().log("The server has killed itself");
+      Logger().log("The server has killed itself",
+          name: "server_run_instance.dispose");
     }
     super.dispose();
   }
