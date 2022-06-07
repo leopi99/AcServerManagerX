@@ -57,5 +57,5 @@
     "track_loading_error_title": "Errore nel caricamento dei circuiti",
     "cars_loading_error_title": "Errore nel caricamento delle macchine",
     "clear_log_file": "Pulisci file di log",
-    "clear_log_file_desc": "Pulendo il file di log, renderai piu difficile la vita agli sviluppatori se trovi qualche problema"
+    "clear_log_file_desc": "Pulendo il file di log, renderai piu difficile la vita agli sviluppatori se hai trovato qualche problema"
 }
