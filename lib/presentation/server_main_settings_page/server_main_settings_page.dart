@@ -148,15 +148,16 @@ class _ServerMainSettingsState extends State<ServerMainSettings> {
             weather: SelectedServerInherited.of(context)
                 .selectedServer
                 .session
-                .weather,
+                .weather
+                .first,
             onChanged: (value) {
-              SelectedServerInherited.of(context).changeServer(
-                SelectedServerInherited.of(context).selectedServer.copyWith(
-                      session: SelectedServerInherited.of(context)
-                          .selectedServer
-                          .session
-                          .copyWith(weather: value),
-                    ),
+              final server = SelectedServerInherited.of(context);
+              //TODO: This will erase all other weathers, needs to override only the one changed
+              server.changeServer(
+                server.selectedServer.copyWith(
+                  session:
+                      server.selectedServer.session.copyWith(weather: [value]),
+                ),
               );
             },
           ),

@@ -9,14 +9,14 @@ class Session extends Equatable {
   final Practice practice;
   final Qualifying qualifying;
   final Race race;
-  final Weather weather;
+  final List<Weather> weather;
   final Track? selectedTrack;
 
   const Session({
     this.practice = const Practice(),
     this.qualifying = const Qualifying(),
     this.race = const Race(),
-    this.weather = const Weather(),
+    this.weather = const [Weather()],
     this.selectedTrack,
   });
 
@@ -24,7 +24,7 @@ class Session extends Equatable {
     Practice? practice,
     Qualifying? qualifying,
     Race? race,
-    Weather? weather,
+    List<Weather>? weather,
     Track? selectedTrack,
   }) =>
       Session(

@@ -77,7 +77,7 @@ class Server extends ServerBaseSettings implements Equatable {
           _getBoolFromData(data, ServerFileNames.lockedEntryList),
       threads: _getIntFromData(data, ServerFileNames.numThreads, 2),
       showOnLobby: _getBoolFromData(data, ServerFileNames.registerToLobby),
-      session: Session(weather: Weather.fromServerData(data)),
+      session: Session(weather: [Weather.fromServerData(data)]),
       serverFilesPath: path,
       clientsAllowed: _getIntFromData(data, ServerFileNames.maxClients, 12),
     );
@@ -244,7 +244,7 @@ class Server extends ServerBaseSettings implements Equatable {
       'TC_ALLOWED=1',
       'START_RULE=0',
       'RACE_GAS_PENALTY_DISABLED=0',
-      'TIME_OF_DAY_MULT=${session.weather.timeOfDayMultiplier}',
+      'TIME_OF_DAY_MULT=${session.weather.first.timeOfDayMultiplier}',
       'RESULT_SCREEN_TIME=60',
       'MAX_CONTACTS_PER_KM=0',
       'STABILITY_ALLOWED=0',
@@ -272,8 +272,8 @@ class Server extends ServerBaseSettings implements Equatable {
       'RANDOMNESS=2',
       'SESSION_TRANSFER=100',
       'LAP_GAIN=22',
-      '[WEATHER_0]',
-      ...session.weather.toStringList(),
+      // ...session.weather.toStringList(),
+      ..._generateWeatherList(),
       '[DATA]',
       'DESCRIPTION=',
       'EXSERVEREXE=',
@@ -282,6 +282,14 @@ class Server extends ServerBaseSettings implements Equatable {
       'WEBLINK=',
       'WELCOME_PATH=',
     ];
+  }
+
+  List<String> _generateWeatherList() {
+    List<String> lista = [];
+    for (int i = 0; i < session.weather.length; i++) {
+      lista.add(session.weather[i].toStringList(i).join('\n'));
+    }
+    return lista;
   }
 
   @override

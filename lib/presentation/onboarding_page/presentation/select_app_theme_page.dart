@@ -1,5 +1,4 @@
 import 'package:acservermanager/common/appearance_bloc/appearance_bloc.dart';
-import 'package:acservermanager/common/logger.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:get_it/get_it.dart';

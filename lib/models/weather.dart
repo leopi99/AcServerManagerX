@@ -47,7 +47,8 @@ class Weather {
       baseWindMinSpeed:
           int.parse(Server.getStringFromData(data, "WIND_BASE_SPEED_MIN")),
       realisticRoadTemp: 7,
-      roadVariation: int.parse(Server.getStringFromData(data, "VARIATION_AMBIENT")),
+      roadVariation:
+          int.parse(Server.getStringFromData(data, "VARIATION_AMBIENT")),
       // timeOfDay: Server.getStringFromData(data, "VARIATION_AMBIENT"),
       timeOfDayMultiplier:
           int.parse(Server.getStringFromData(data, "TIME_OF_DAY_MULT")),
@@ -86,7 +87,8 @@ class Weather {
         timeOfDayMultiplier: timeOfDayMultiplier ?? this.timeOfDayMultiplier,
       );
 
-  List<String> toStringList() => [
+  List<String> toStringList(int index) => [
+        '[WEATHER_$index]',
         'GRAPHICS=${_getGraphicText()}',
         'BASE_TEMPERATURE_AMBIENT=$baseAmbientTemp',
         'BASE_TEMPERATURE_ROAD=$baseRoadTemp',
