@@ -10,7 +10,7 @@ class Logger {
   static final Logger _singleton = Logger._internal();
   static const String _kLogFilePath = '/server_manager_x.log';
 
-  late final IOSink? _logSink;
+  late IOSink? _logSink;
 
   final Completer _completer = Completer();
 
