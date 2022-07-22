@@ -39,6 +39,10 @@ class Logger {
     _logSink?.close();
   }
 
+  ///Sets the log file.
+  ///
+  ///Should be called once and only when the acPath is available,
+  /// otherwise won't initialize
   Future<void> setLogFile() async {
     final String? acPath =
         await GetIt.I<SharedManager>().getString(SharedKey.acPath);
