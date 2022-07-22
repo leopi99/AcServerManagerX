@@ -40,6 +40,7 @@ class LoadingBlocBloc extends Bloc<LoadingBlocEvent, LoadingBlocState> {
             showAcPath: acPath == null, showAppearance: darkMode == null));
         return;
       }
+      await Logger().setLogFile();
       await _loadServers(emit, serverInherited);
     });
     on<LoadingBlocShowOnboardingEvent>((event, emit) {
@@ -68,7 +69,8 @@ class LoadingBlocBloc extends Bloc<LoadingBlocEvent, LoadingBlocState> {
       for (String name in serverNames) {
         files.add(File('$presetsPath/$name/$_kServerConfig'));
       }
-      Logger().log('Servers found: ${serverNames.toString()}', name: "loading_bloc");
+      Logger().log('Servers found: ${serverNames.toString()}',
+          name: "loading_bloc");
     } catch (e, stacktrace) {
       _emitError(e.toString(), emit, stackTrace: stacktrace.toString());
       return;
