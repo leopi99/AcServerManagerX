@@ -4,6 +4,7 @@ import 'package:acservermanager/common/appearance_bloc/appearance_bloc.dart';
 import 'package:acservermanager/common/inherited_widgets/selected_server_inherited.dart';
 import 'package:acservermanager/models/server.dart';
 import 'package:acservermanager/presentation/advanced_server_settings/widgets/textbox_entry_widget.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter/services.dart';
@@ -141,25 +142,30 @@ class _ServerAdvancedSettingsPageState
   Widget _buildThreads() {
     return Row(
       children: [
-        DropDownButton(
-          placement: FlyoutPlacement.start,
-          title: Text(
-              "${SelectedServerInherited.of(context).selectedServer.threads} ${"threads".tr()}"),
-          items: List.generate(
-            7,
-            (index) => MenuFlyoutItem(
-              onPressed: () {
-                SelectedServerInherited.of(context).changeServer(
-                    SelectedServerInherited.of(context)
-                        .selectedServer
-                        .copyWith(threads: index + 2));
-                setState(() {});
-              },
-              text: Text("threads".tr()),
-              leading: Text("${index + 2}"),
-            ),
-          ),
-        ),
+        FutureBuilder<BaseDeviceInfo>(
+            future: DeviceInfoPlugin().deviceInfo,
+            builder: (context, snapshot) {
+              final int? cores = snapshot.data?.toMap()["numberOfCores"];
+              return DropDownButton(
+                placement: FlyoutPlacement.start,
+                title: Text(
+                    "${SelectedServerInherited.of(context).selectedServer.threads} ${"threads".tr()}"),
+                items: List.generate(
+                  cores ?? 4,
+                  (index) => MenuFlyoutItem(
+                    onPressed: () {
+                      SelectedServerInherited.of(context).changeServer(
+                          SelectedServerInherited.of(context)
+                              .selectedServer
+                              .copyWith(threads: index + 1));
+                      setState(() {});
+                    },
+                    text: Text("threads".tr()),
+                    leading: Text("${index + 1}"),
+                  ),
+                ),
+              );
+            }),
       ],
     );
   }
