@@ -85,6 +85,8 @@ RESTRICTOR=0
     }
     await _saveFile(data, server.entryListPath);
     Logger().log("config files saved", name: "Server");
+    GetIt.I<SharedManager>()
+        .setString(SharedKey.lastSelectedServer, selectedServer.cfgFilePath);
   }
 
   ///Saves a file

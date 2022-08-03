@@ -123,8 +123,14 @@ class LoadingBlocBloc extends Bloc<LoadingBlocEvent, LoadingBlocState> {
     } catch (e, stacktrace) {
       _emitError(e.toString(), emit, stackTrace: stacktrace.toString());
     }
+    final lastServer =
+        await GetIt.I<SharedManager>().getString(SharedKey.lastSelectedServer);
     GetIt.instance.registerSingleton(servers);
-    serverInherited.changeServer(servers.first, false);
+    //Sets the last selected server, if not found, sets the first in the list
+    serverInherited.changeServer(
+        servers.firstWhere((element) => element.cfgFilePath == lastServer,
+            orElse: () => servers.first),
+        false);
     emit(LoadingBlocLoadedState(servers));
     await close();
   }
